@@ -47,8 +47,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-0' class='srclink' href='../src/boxfnonce/src/lib.rs.html#1-239' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+               </span><a id='src-0' class='srclink' href='../src/boxfnonce/src/lib.rs.html#1-12' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>See <code>BoxFnOnce</code> and <code>SendBoxFnOnce</code>.</p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.BoxFnOnce.html'
@@ -56,6 +57,14 @@
                            <td class='docblock-short'>
                                 <p><code>BoxFnOnce</code> boxes any <code>FnOnce</code> function up to a certain number of
 arguments (10 as of now).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SendBoxFnOnce.html'
+                                  title='boxfnonce::SendBoxFnOnce'>SendBoxFnOnce</a></td>
+                           <td class='docblock-short'>
+                                <p><code>SendBoxFnOnce</code> boxes any <code>FnOnce + Send</code> function up to a certain
+number of arguments (10 as of now).</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
