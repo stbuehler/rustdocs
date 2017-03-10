@@ -76,6 +76,10 @@
 <span id="32">32</span>
 <span id="33">33</span>
 <span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
 </pre><pre class='rust '>
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>combined</span>::<span class='op'>*</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>direct</span>::<span class='op'>*</span>;
@@ -90,6 +94,8 @@
 <span class='kw'>mod</span> <span class='ident'>tests</span>;
 
 <span class='doccomment'>/// `Cidr` type representing an IPv4 network</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Ordering based on lexicographic bitstring representation.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Ipv4Cidr</span> {
 	<span class='ident'>address</span>: <span class='ident'>Ipv4Addr</span>,
@@ -97,6 +103,8 @@
 }
 
 <span class='doccomment'>/// `Cidr` type representing an IPv6 network</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>/// Ordering based on lexicographic bitstring representation.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>Hash</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Ipv6Cidr</span> {
 	<span class='ident'>address</span>: <span class='ident'>Ipv6Addr</span>,
@@ -104,7 +112,7 @@
 }
 
 <span class='doccomment'>/// `Cidr` type representing either an IPv4 or an IPv6 network</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>Hash</span>,<span class='ident'>Debug</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>PartialOrd</span>,<span class='ident'>Ord</span>,<span class='ident'>Hash</span>,<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>IpCidr</span> {
 	<span class='doccomment'>/// IPv4 network</span>
 	<span class='ident'>V4</span>(<span class='ident'>Ipv4Cidr</span>),

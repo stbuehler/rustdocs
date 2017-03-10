@@ -47,11 +47,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/cidr/lib.rs.html#1-26' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/cidr/lib.rs.html#1-29' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This library provides types to represent an IP network (<code>Cidr</code>) or
 an IP host withing a network (<code>Inet</code>)</p>
 
 <p>The naming follows the names of the <a href="https://www.postgresql.org/docs/current/static/datatype-net-types.html">PostgreSQL data types</a></p>
+
+<p>Address parsing also accepts IPv4 address with less than four octets (but always parses those as decimal).</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
