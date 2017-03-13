@@ -9,8 +9,8 @@
 
     <title>no_send.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     
@@ -221,10 +221,8 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
-<span id="180">180</span>
-<span id="181">181</span>
 </pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
+<span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>FnBox</span>;
 
 <span class='doccomment'>/// `BoxFnOnce` boxes any `FnOnce` function up to a certain number of</span>
 <span class='doccomment'>/// arguments (10 as of now).</span>
@@ -239,8 +237,8 @@
 <span class='doccomment'>/// return a value (i.e. the empty tuple) `Result` can be ommitted:</span>
 <span class='doccomment'>/// `BoxFnOnce&lt;(Args...,)&gt;`.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// Internally it constructs a FnMut which keeps the FnOnce in an</span>
-<span class='doccomment'>/// Option, and extracts the FnOnce on the first call.</span>
+<span class='doccomment'>/// Internally it is implemented similar to `Box&lt;FnBox()&gt;`, but there is</span>
+<span class='doccomment'>/// no `FnOnce` implementation for `BoxFnOnce`.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// You can build boxes for diverging functions too, but specifying the</span>
 <span class='doccomment'>/// type (like `BoxFnOnce&lt;(), !&gt;`) is not possible as the `!` type is</span>
@@ -273,25 +271,23 @@
 <span class='doccomment'>/// });</span>
 <span class='doccomment'>/// assert_eq!(f.call(), &quot;foo&quot;.to_string());</span>
 <span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BoxFnOnce</span><span class='op'>&lt;</span><span class='ident'>Args</span>, <span class='prelude-ty'>Result</span> <span class='op'>=</span> ()<span class='op'>&gt;</span> {
-	<span class='doccomment'>/// theoretically we could call the inner FnMut multiple times,</span>
-	<span class='doccomment'>/// but the public accessors make sure this won&#39;t happen.</span>
-	<span class='ident'>func</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>FnMut</span>(<span class='ident'>Args</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&gt;</span>,
-}
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BoxFnOnce</span><span class='op'>&lt;</span><span class='ident'>Arguments</span>, <span class='prelude-ty'>Result</span> <span class='op'>=</span> ()<span class='op'>&gt;</span> (<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>FnBox</span><span class='op'>&lt;</span><span class='ident'>Arguments</span>, <span class='prelude-ty'>Result</span><span class='op'>&gt;&gt;</span>);
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Args</span>, <span class='prelude-ty'>Result</span><span class='op'>&gt;</span> <span class='ident'>BoxFnOnce</span><span class='op'>&lt;</span><span class='ident'>Args</span>, <span class='prelude-ty'>Result</span><span class='op'>&gt;</span> {
 	<span class='doccomment'>/// call inner function, consumes the box.</span>
 	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// `call_tuple` can be used if the arguments are available as tuple.</span>
-	<span class='doccomment'>/// Each usable instance of BoxFnOnce&lt;(...), Result&gt; has a separate</span>
-	<span class='doccomment'>/// `call` method for passing arguments &quot;untupled&quot;.</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>call_tuple</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>args</span>: <span class='ident'>Args</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span> {
-		(<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>func</span>)(<span class='ident'>args</span>)
+	<span class='doccomment'>/// `call_tuple` can be used if the arguments are available as</span>
+	<span class='doccomment'>/// tuple. Each usable instance of BoxFnOnce&lt;(...), Result&gt; has a</span>
+	<span class='doccomment'>/// separate `call` method for passing arguments &quot;untupled&quot;.</span>
+	<span class='attribute'>#[<span class='ident'>inline</span>]</span>
+	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>call_tuple</span>(<span class='self'>self</span>, <span class='ident'>args</span>: <span class='ident'>Args</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span> {
+		<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>call</span>(<span class='ident'>args</span>)
 	}
 
 	<span class='doccomment'>/// `BoxFnOnce::new` is an alias for `BoxFnOnce::from`.</span>
+	<span class='attribute'>#[<span class='ident'>inline</span>]</span>
 	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>func</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-		<span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
+	<span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
 	{
 		<span class='self'>Self</span>::<span class='ident'>from</span>(<span class='ident'>func</span>)
 	}
@@ -460,11 +456,11 @@
     
 
     <script>
-        window.rootPath = "../../../";
+        window.rootPath = "../../";
         window.currentCrate = "boxfnonce";
     </script>
-    <script src="../../../jquery.js"></script>
-    <script src="../../../main.js"></script>
-    <script defer src="../../../search-index.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

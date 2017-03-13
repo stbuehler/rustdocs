@@ -9,8 +9,8 @@
 
     <title>lib.rs.html -- source</title>
 
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     
@@ -54,13 +54,45 @@
 <span id="10">10</span>
 <span id="11">11</span>
 <span id="12">12</span>
+<span id="13">13</span>
+<span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
+<span id="19">19</span>
+<span id="20">20</span>
+<span id="21">21</span>
+<span id="22">22</span>
+<span id="23">23</span>
+<span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
 
 <span class='doccomment'>//! See `BoxFnOnce` and `SendBoxFnOnce`.</span>
 
+<span class='comment'>/*
+This crate requires:
+a) A trait can dispatch through `self: Box&lt;TraitName&gt;` too: The &quot;object-
+   safety&quot; RFC[^1] lists the following arguments as &quot;dispatchable&quot;:
+   `self`, `&amp;self`, `&amp;mut self`, or `self: Box&lt;Self&gt;`
+b) If you have a v: Box&lt;T&gt; for a concrete (`Sized`) type T, you can
+   extract the boxed value with *t (seems undocumented).
+
+This basically duplicates what Box&lt;FnBox&gt; is doing, but without using
+any unstable interface.
+
+[1]: https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md#detailed-design
+*/</span>
+
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>mod</span> <span class='ident'>macros</span>;
+
+<span class='kw'>mod</span> <span class='ident'>traits</span>;
 
 <span class='kw'>mod</span> <span class='ident'>no_send</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>no_send</span>::<span class='ident'>BoxFnOnce</span>;
@@ -122,11 +154,11 @@
     
 
     <script>
-        window.rootPath = "../../../";
+        window.rootPath = "../../";
         window.currentCrate = "boxfnonce";
     </script>
-    <script src="../../../jquery.js"></script>
-    <script src="../../../main.js"></script>
-    <script defer src="../../../search-index.js"></script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>
