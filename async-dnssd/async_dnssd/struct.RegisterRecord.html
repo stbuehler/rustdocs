@@ -48,12 +48,42 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#44' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct RegisterRecord(_, _);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../async_dnssd/struct.RegisterRecord.html" title="struct async_dnssd::RegisterRecord">RegisterRecord</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#118-148' title='goto source code'>[src]</a></span></h3>
+               </span><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#75' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct RegisterRecord(_, _);</pre><div class='docblock'><p>Pending record registration</p>
+
+<p>Becomes invalid when the future completes; use the returned
+<a href="struct.Record.html"><code>Record</code></a> instead.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../async_dnssd/struct.RegisterRecord.html" title="struct async_dnssd::RegisterRecord">RegisterRecord</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#153-215' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.rr_type' class="method"><span id='rr_type.v' class='invisible'><code>fn <a href='#method.rr_type' class='fnname'>rr_type</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a></code></span></h4>
-<h4 id='method.update_raw_record' class="method"><span id='update_raw_record.v' class='invisible'><code>fn <a href='#method.update_raw_record' class='fnname'>update_raw_record</a>(&amp;self, rdata: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
-<h4 id='method.keep' class="method"><span id='keep.v' class='invisible'><code>fn <a href='#method.keep' class='fnname'>keep</a>(self, handle: &amp;<a class="struct" href="../tokio_core/reactor/struct.Handle.html" title="struct tokio_core::reactor::Handle">Handle</a>)</code></span></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a> for <a class="struct" href="../async_dnssd/struct.RegisterRecord.html" title="struct async_dnssd::RegisterRecord">RegisterRecord</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#46-59' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'><p>Type of the record</p>
+
+<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<p>Panics after the future completed.  Use the returned
+<a href="struct.Record.html"><code>Record</code></a> instead.</p>
+</div><h4 id='method.update_raw_record' class="method"><span id='update_raw_record.v' class='invisible'><code>fn <a href='#method.update_raw_record' class='fnname'>update_raw_record</a>(&amp;self, rdata: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Update record</p>
+
+<p>Cannot change type or class of record.</p>
+
+<h1 id='panics-1' class='section-header'><a href='#panics-1'>Panics</a></h1>
+<p>Panics after the future completed.  Use the returned
+<a href="struct.Record.html"><code>Record</code></a> instead.</p>
+
+<p>See <a href="https://developer.apple.com/documentation/dnssd/1804739-dnsserviceupdaterecord"><code>DNSServiceUpdateRecord</code></a>.</p>
+</div><h4 id='method.keep' class="method"><span id='keep.v' class='invisible'><code>fn <a href='#method.keep' class='fnname'>keep</a>(self, handle: &amp;<a class="struct" href="../tokio_core/reactor/struct.Handle.html" title="struct tokio_core::reactor::Handle">Handle</a>)</code></span></h4>
+<div class='docblock'><p>Keep record for as long as the underlying connection lives.</p>
+
+<p>Keep the a handle to the underlying connection (either the
+<a href="struct.Connection.html"><code>Connection</code></a> or some other record from
+the same <code>Connection</code>) alive.</p>
+
+<p>Due to some implementation detail the underlying connection
+might live until this future successfully completes.</p>
+
+<h1 id='panics-2' class='section-header'><a href='#panics-2'>Panics</a></h1>
+<p>Panics after the future completed.  Use the returned
+<a href="struct.Record.html"><code>Record</code></a> instead.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../futures/future/trait.Future.html" title="trait futures::future::Future">Future</a> for <a class="struct" href="../async_dnssd/struct.RegisterRecord.html" title="struct async_dnssd::RegisterRecord">RegisterRecord</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#77-90' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='associatedtype.Item' class="type"><span id='Item.t' class='invisible'><code>type <a href='../futures/future/trait.Future.html#associatedtype.Item' class="type">Item</a> = <a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a></code></span></h4>
 <div class='docblock'><p>The type of value that this future will resolved with if it is successful. <a href="../futures/future/trait.Future.html#associatedtype.Item">Read more</a></p>
 </div><h4 id='associatedtype.Error' class="type"><span id='Error.t' class='invisible'><code>type <a href='../futures/future/trait.Future.html#associatedtype.Error' class="type">Error</a> = <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a></code></span></h4>
@@ -100,6 +130,9 @@
 <div class='docblock'><p>Catches unwinding panics while polling the future. <a href="../futures/future/trait.Future.html#method.catch_unwind">Read more</a></p>
 </div><h4 id='method.shared' class="method"><span id='shared.v' class='invisible'><code>fn <a href='../futures/future/trait.Future.html#method.shared' class='fnname'>shared</a>(self) -&gt; <a class="struct" href="../futures/future/shared/struct.Shared.html" title="struct futures::future::shared::Shared">Shared</a>&lt;Self&gt;</code></span></h4>
 <div class='docblock'><p>Create a cloneable handle to this future where all handles will resolve to the same result. <a href="../futures/future/trait.Future.html#method.shared">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="../async_dnssd/trait.GetRemote.html" title="trait async_dnssd::GetRemote">GetRemote</a> for <a class="struct" href="../async_dnssd/struct.RegisterRecord.html" title="struct async_dnssd::RegisterRecord">RegisterRecord</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/connection.rs.html#92-96' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.remote' class="method"><span id='remote.v' class='invisible'><code>fn <a href='../async_dnssd/trait.GetRemote.html#tymethod.remote' class='fnname'>remote</a>(&amp;self) -&gt; &amp;<a class="struct" href="../tokio_core/reactor/struct.Remote.html" title="struct tokio_core::reactor::Remote">Remote</a></code></span></h4>
+<div class='docblock'><p>get <code>Remote</code> reference</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 

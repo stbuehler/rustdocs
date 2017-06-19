@@ -48,12 +48,29 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/async_dnssd/service/records.rs.html#5' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Record(_);</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/records.rs.html#7-29' title='goto source code'>[src]</a></span></h3>
+               </span><a class='srclink' href='../src/async_dnssd/service/records.rs.html#15' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Record(_);</pre><div class='docblock'><p>A successful record registration</p>
+
+<p>Releases the record when dropped (unless it is a
+<a href="struct.Registration.html#method.get_default_txt_record"><code>Registration::get_default_txt_record</code></a> or a 
+<a href="struct.Register.html#method.get_default_txt_record"><code>Register::get_default_txt_record</code></a>)</p>
+
+<p>Also keeps the underlying <a href="struct.Registration.html"><code>Registration</code></a>
+or <a href="struct.Connection.html"><code>Connection</code></a> alive.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/records.rs.html#17-47' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.rr_type' class="method"><span id='rr_type.v' class='invisible'><code>fn <a href='#method.rr_type' class='fnname'>rr_type</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a></code></span></h4>
-<h4 id='method.update_raw_record' class="method"><span id='update_raw_record.v' class='invisible'><code>fn <a href='#method.update_raw_record' class='fnname'>update_raw_record</a>(&amp;self, rdata: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
-<h4 id='method.keep' class="method"><span id='keep.v' class='invisible'><code>fn <a href='#method.keep' class='fnname'>keep</a>(self)</code></span></h4>
-</div></section>
+<div class='docblock'><p>Type of the record</p>
+</div><h4 id='method.update_raw_record' class="method"><span id='update_raw_record.v' class='invisible'><code>fn <a href='#method.update_raw_record' class='fnname'>update_raw_record</a>(&amp;self, rdata: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>&gt;</code></span></h4>
+<div class='docblock'><p>Update recor</p>
+
+<p>Cannot change type or class of record.</p>
+
+<p>See <a href="https://developer.apple.com/documentation/dnssd/1804739-dnsserviceupdaterecord"><code>DNSServiceUpdateRecord</code></a>.</p>
+</div><h4 id='method.keep' class="method"><span id='keep.v' class='invisible'><code>fn <a href='#method.keep' class='fnname'>keep</a>(self)</code></span></h4>
+<div class='docblock'><p>Keep record alive for as long as the underlying
+<a href="struct.Registration.html"><code>Registration</code></a> or
+<a href="struct.Connection.html"><code>Connection</code></a> lives</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

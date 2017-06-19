@@ -67,14 +67,52 @@
 <span id="22">22</span>
 <span id="23">23</span>
 <span id="24">24</span>
+<span id="25">25</span>
+<span id="26">26</span>
+<span id="27">27</span>
+<span id="28">28</span>
+<span id="29">29</span>
+<span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
 </pre><pre class="rust ">
+<span class="doccomment">//! # Asynchronous wrapper for DNS-SD C libraries</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Interesting entry points:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * [Browses for available services](method.browse.html)</span>
+<span class="doccomment">//! * [Create Connection to register records with](method.connect.html)</span>
+<span class="doccomment">//! * [Enumerates domains that are recommended for registration or browsing](method.enumerate_domains.html)</span>
+<span class="doccomment">//! * [Query for an arbitrary DNS record](method.query_record.html)</span>
+<span class="doccomment">//! * [Registers a service](method.register.html)</span>
+<span class="doccomment">//! * [Find hostname and port (and more) for a service](method.resolve.html)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Also the following things might be interesting:</span>
+<span class="doccomment">//! * [Purge record from cache](method.reconfirm_record.html)</span>
+<span class="doccomment">//! * [Construct full name](struct.FullName#method.construct)</span>
+<span class="doccomment">//! * [Stream timeouts](struct.TimeoutStream)</span>
+
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
+
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">futures</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">tokio_core</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">mio</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">error</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">ffi</span>::<span class="ident">MAX_DOMAIN_NAME</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">interface_index</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">interface</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">remote</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">service</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">timeout_stream</span>::<span class="kw-2">*</span>;
 
@@ -85,7 +123,7 @@
 <span class="kw">mod</span> <span class="ident">evented</span>;
 <span class="kw">mod</span> <span class="ident">ffi</span>;
 <span class="kw">mod</span> <span class="ident">future</span>;
-<span class="kw">mod</span> <span class="ident">interface_index</span>;
+<span class="kw">mod</span> <span class="ident">interface</span>;
 <span class="kw">mod</span> <span class="ident">raw</span>;
 <span class="kw">mod</span> <span class="ident">raw_box</span>;
 <span class="kw">mod</span> <span class="ident">remote</span>;

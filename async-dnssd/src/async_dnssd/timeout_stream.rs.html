@@ -146,6 +146,23 @@
 <span id="101">101</span>
 <span id="102">102</span>
 <span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="self">self</span>,<span class="ident">Async</span>,<span class="ident">Future</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
@@ -154,7 +171,10 @@
 
 <span class="kw">use</span> <span class="ident">remote</span>::<span class="ident">GetRemote</span>;
 
+<span class="doccomment">/// `futures::Stream` extension to simplify building</span>
+<span class="doccomment">/// [`TimeoutStream`](struct.TimeoutStream.html)</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TimeoutTrait</span>: <span class="ident">futures</span>::<span class="ident">Stream</span><span class="op">+</span><span class="ident">Sized</span> {
+	<span class="doccomment">/// Create new [`TimeoutStream`](struct.TimeoutStream.html)</span>
 	<span class="kw">fn</span> <span class="ident">timeout</span>(<span class="self">self</span>, <span class="ident">duration</span>: <span class="ident">Duration</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TimeoutStream</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;&gt;</span>;
 }
 
@@ -164,6 +184,10 @@
 	}
 }
 
+<span class="doccomment">/// Add a timeout to a stream; each time an item is received the timer</span>
+<span class="doccomment">/// is reset</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If the timeout triggers the stream ends (without an error).</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TimeoutStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
 	<span class="ident">stream</span>: <span class="ident">S</span>,
 	<span class="ident">duration</span>: <span class="ident">Duration</span>,
@@ -171,6 +195,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">futures</span>::<span class="ident">Stream</span><span class="op">+</span><span class="ident">GetRemote</span><span class="op">&gt;</span> <span class="ident">TimeoutStream</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
+	<span class="doccomment">/// Create new `TimeoutStream`.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Also see [`TimeoutTrait::timeout`](trait.TimeoutTrait.html#method.timeout).</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">stream</span>: <span class="ident">S</span>, <span class="ident">duration</span>: <span class="ident">Duration</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Ok</span>(<span class="ident">TimeoutStream</span>{
 			<span class="ident">stream</span>: <span class="ident">stream</span>,
@@ -182,12 +209,19 @@
 	}
 }
 
+<span class="doccomment">/// Error produces by [`TimeoutStream`](struct.TimeoutStream.html)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// A timeout itself doesn&#39;t produce an error, it will just end the</span>
+<span class="doccomment">/// stream.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">TimeoutStreamError</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
+	<span class="doccomment">/// An error occured in the underlying stream</span>
 	<span class="ident">StreamError</span>(<span class="ident">E</span>),
+	<span class="doccomment">/// Setting / checking the timeout failed</span>
 	<span class="ident">TimeoutError</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
 }
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;&gt;</span> <span class="ident">TimeoutStreamError</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
+	<span class="doccomment">/// Combine to an `std::io::Error`.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_io_error</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="ident">Error</span> {
 		<span class="kw">match</span> <span class="self">self</span> {
 			<span class="ident">TimeoutStreamError</span>::<span class="ident">StreamError</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">e</span>.<span class="ident">into</span>(),

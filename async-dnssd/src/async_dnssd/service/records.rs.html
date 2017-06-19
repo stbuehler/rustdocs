@@ -76,18 +76,52 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
 <span class="kw">use</span> <span class="ident">raw</span>;
 
+<span class="doccomment">/// A successful record registration</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Releases the record when dropped (unless it is a</span>
+<span class="doccomment">/// [`Registration::get_default_txt_record`]</span>
+<span class="doccomment">/// (struct.Registration.html#method.get_default_txt_record) or a </span>
+<span class="doccomment">/// [`Register::get_default_txt_record`]</span>
+<span class="doccomment">/// (struct.Register.html#method.get_default_txt_record))</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Also keeps the underlying [`Registration`](struct.Registration.html)</span>
+<span class="doccomment">/// or [`Connection`](struct.Connection.html) alive.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Record</span>(<span class="ident">raw</span>::<span class="ident">DNSRecord</span>);
 
 <span class="kw">impl</span> <span class="ident">Record</span> {
+	<span class="doccomment">/// Type of the record</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rr_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
 		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">rr_type</span>()
 	}
 
+	<span class="doccomment">/// Update recor</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Cannot change type or class of record.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// See [`DNSServiceUpdateRecord`](https://developer.apple.com/documentation/dnssd/1804739-dnsserviceupdaterecord).</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_raw_record</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
@@ -101,7 +135,9 @@
 		<span class="prelude-val">Ok</span>(())
 	}
 
-	<span class="comment">// keep &quot;forever&quot; (until service is dropped)</span>
+	<span class="doccomment">/// Keep record alive for as long as the underlying</span>
+	<span class="doccomment">/// [`Registration`](struct.Registration.html) or</span>
+	<span class="doccomment">/// [`Connection`](struct.Connection.html) lives</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keep</span>(<span class="self">self</span>) {
 		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">keep</span>()
 	}

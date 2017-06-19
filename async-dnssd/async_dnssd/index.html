@@ -48,168 +48,186 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/async_dnssd/lib.rs.html#1-24' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+               </span><a class='srclink' href='../src/async_dnssd/lib.rs.html#1-43' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'>
+<h1 id='asynchronous-wrapper-for-dns-sd-c-libraries' class='section-header'><a href='#asynchronous-wrapper-for-dns-sd-c-libraries'>Asynchronous wrapper for DNS-SD C libraries</a></h1>
+<p>Interesting entry points:</p>
+
+<ul>
+<li><a href="method.browse.html">Browses for available services</a></li>
+<li><a href="method.connect.html">Create Connection to register records with</a></li>
+<li><a href="method.enumerate_domains.html">Enumerates domains that are recommended for registration or browsing</a></li>
+<li><a href="method.query_record.html">Query for an arbitrary DNS record</a></li>
+<li><a href="method.register.html">Registers a service</a></li>
+<li><a href="method.resolve.html">Find hostname and port (and more) for a service</a></li>
+</ul>
+
+<p>Also the following things might be interesting:
+* <a href="method.reconfirm_record.html">Purge record from cache</a>
+* <a href="struct.FullName#method.construct">Construct full name</a>
+* <a href="struct.TimeoutStream">Stream timeouts</a></p>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Browse.html"
                                   title='struct async_dnssd::Browse'>Browse</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Pending browse request</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.BrowseData.html"
-                                  title='struct async_dnssd::BrowseData'>BrowseData</a></td>
+                           <td><a class="struct" href="struct.BrowseResult.html"
+                                  title='struct async_dnssd::BrowseResult'>BrowseResult</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Browse result</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.BrowsedFlags.html"
                                   title='struct async_dnssd::BrowsedFlags'>BrowsedFlags</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Set of <a href="enum.BrowsedFlag.html"><code>BrowsedFlag</code></a>s</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Connection.html"
                                   title='struct async_dnssd::Connection'>Connection</a></td>
                            <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.EnumerateData.html"
-                                  title='struct async_dnssd::EnumerateData'>EnumerateData</a></td>
-                           <td class='docblock-short'>
-                                
+                                <p>Connection to register records with</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.EnumerateDomains.html"
                                   title='struct async_dnssd::EnumerateDomains'>EnumerateDomains</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Pending domain enumeration</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.EnumerateResult.html"
+                                  title='struct async_dnssd::EnumerateResult'>EnumerateResult</a></td>
+                           <td class='docblock-short'>
+                                <p>Domain enumeration result</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.EnumeratedFlags.html"
                                   title='struct async_dnssd::EnumeratedFlags'>EnumeratedFlags</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Set of <a href="enum.EnumeratedFlag.html"><code>EnumeratedFlag</code></a>s</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.FullName.html"
                                   title='struct async_dnssd::FullName'>FullName</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Full name consiting of (up to) three parts</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.InterfaceIndex.html"
                                   title='struct async_dnssd::InterfaceIndex'>InterfaceIndex</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Network interface index</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.QueriedRecordFlags.html"
                                   title='struct async_dnssd::QueriedRecordFlags'>QueriedRecordFlags</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Set of <a href="enum.QueriedRecordFlag.html"><code>QueriedRecordFlag</code></a>s</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.QueryRecord.html"
                                   title='struct async_dnssd::QueryRecord'>QueryRecord</a></td>
                            <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.QueryRecordData.html"
-                                  title='struct async_dnssd::QueryRecordData'>QueryRecordData</a></td>
-                           <td class='docblock-short'>
-                                
+                                <p>Pending query</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.QueryRecordFlags.html"
                                   title='struct async_dnssd::QueryRecordFlags'>QueryRecordFlags</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Set of <a href="enum.QueryRecordFlag.html"><code>QueryRecordFlag</code></a>s</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.QueryRecordResult.html"
+                                  title='struct async_dnssd::QueryRecordResult'>QueryRecordResult</a></td>
+                           <td class='docblock-short'>
+                                <p>Query result</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Record.html"
                                   title='struct async_dnssd::Record'>Record</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>A successful record registration</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Register.html"
                                   title='struct async_dnssd::Register'>Register</a></td>
                            <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.RegisterData.html"
-                                  title='struct async_dnssd::RegisterData'>RegisterData</a></td>
-                           <td class='docblock-short'>
-                                
+                                <p>Pending registration</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.RegisterFlags.html"
                                   title='struct async_dnssd::RegisterFlags'>RegisterFlags</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Set of <a href="enum.RegisterFlag.html"><code>RegisterFlag</code></a>s</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.RegisterRecord.html"
                                   title='struct async_dnssd::RegisterRecord'>RegisterRecord</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Pending record registration</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.RegisterRecordFlags.html"
                                   title='struct async_dnssd::RegisterRecordFlags'>RegisterRecordFlags</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Set of <a href="enum.RegisterRecordFlag.html"><code>RegisterRecordFlag</code></a>s</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.RegisterResult.html"
+                                  title='struct async_dnssd::RegisterResult'>RegisterResult</a></td>
+                           <td class='docblock-short'>
+                                <p>Service registration result</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Registration.html"
                                   title='struct async_dnssd::Registration'>Registration</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Successful registration</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Resolve.html"
                                   title='struct async_dnssd::Resolve'>Resolve</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Pending resolve request</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class="struct" href="struct.ResolveData.html"
-                                  title='struct async_dnssd::ResolveData'>ResolveData</a></td>
+                           <td><a class="struct" href="struct.ResolveResult.html"
+                                  title='struct async_dnssd::ResolveResult'>ResolveResult</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Resolve result</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.TimeoutStream.html"
                                   title='struct async_dnssd::TimeoutStream'>TimeoutStream</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Add a timeout to a stream; each time an item is received the timer
+is reset</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -217,93 +235,95 @@
                            <td><a class="enum" href="enum.BrowsedFlag.html"
                                   title='enum async_dnssd::BrowsedFlag'>BrowsedFlag</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Flags for <a href="struct.BrowseResult.html"><code>BrowseResult</code></a></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.Enumerate.html"
                                   title='enum async_dnssd::Enumerate'>Enumerate</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Whether to enumerate domains which are browsed or domains for which
+registrations can be made.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.EnumeratedFlag.html"
                                   title='enum async_dnssd::EnumeratedFlag'>EnumeratedFlag</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Flags for <a href="struct.EnumerateDomains.html"><code>EnumerateDomains</code></a></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.Error.html"
                                   title='enum async_dnssd::Error'>Error</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>API Error</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Interface.html"
+                                  title='enum async_dnssd::Interface'>Interface</a></td>
+                           <td class='docblock-short'>
+                                <p>Network interface</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.QueriedRecordFlag.html"
                                   title='enum async_dnssd::QueriedRecordFlag'>QueriedRecordFlag</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Flags for <a href="struct.QueryRecordResult.html"><code>QueryRecordResult</code></a></p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.QueryRecordFlag.html"
                                   title='enum async_dnssd::QueryRecordFlag'>QueryRecordFlag</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Flags used to query for a record</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.RegisterFlag.html"
                                   title='enum async_dnssd::RegisterFlag'>RegisterFlag</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Flags used to register service</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.RegisterRecordFlag.html"
                                   title='enum async_dnssd::RegisterRecordFlag'>RegisterRecordFlag</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Flags used to register a record</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.TimeoutStreamError.html"
                                   title='enum async_dnssd::TimeoutStreamError'>TimeoutStreamError</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Error produces by <a href="struct.TimeoutStream.html"><code>TimeoutStream</code></a></p>
                            </td>
                        </tr></table><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class="constant" href="constant.INTERFACE_ANY.html"
-                                  title='constant async_dnssd::INTERFACE_ANY'>INTERFACE_ANY</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="constant" href="constant.INTERFACE_LOCAL_ONLY.html"
-                                  title='constant async_dnssd::INTERFACE_LOCAL_ONLY'>INTERFACE_LOCAL_ONLY</a></td>
-                           <td class='docblock-short'>
-                                
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class="constant" href="constant.MAX_DOMAIN_NAME.html"
                                   title='constant async_dnssd::MAX_DOMAIN_NAME'>MAX_DOMAIN_NAME</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Maximum length of full name including trailing dot and terminating NULL</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
+                           <td><a class="trait" href="trait.GetRemote.html"
+                                  title='trait async_dnssd::GetRemote'>GetRemote</a></td>
+                           <td class='docblock-short'>
+                                <p>Access <code>Remote</code> handle of <code>Future</code>s and <code>Stream</code>s supporting it</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="trait" href="trait.TimeoutTrait.html"
                                   title='trait async_dnssd::TimeoutTrait'>TimeoutTrait</a></td>
                            <td class='docblock-short'>
-                                
+                                <p><code>futures::Stream</code> extension to simplify building
+<a href="struct.TimeoutStream.html"><code>TimeoutStream</code></a></p>
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -311,49 +331,50 @@
                            <td><a class="fn" href="fn.browse.html"
                                   title='fn async_dnssd::browse'>browse</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Browses for available services</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.connect.html"
                                   title='fn async_dnssd::connect'>connect</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Create <a href="struct.Connection.html"><code>Connection</code></a> to register records
+with</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.enumerate_domains.html"
                                   title='fn async_dnssd::enumerate_domains'>enumerate_domains</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Enumerates domains that are recommended for registration or browsing</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.query_record.html"
                                   title='fn async_dnssd::query_record'>query_record</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Query for an arbitrary DNS record</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.reconfirm_record.html"
                                   title='fn async_dnssd::reconfirm_record'>reconfirm_record</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Purge record from cache</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.register.html"
                                   title='fn async_dnssd::register'>register</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Registers a service</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.resolve.html"
                                   title='fn async_dnssd::resolve'>resolve</a></td>
                            <td class='docblock-short'>
-                                
+                                <p>Find hostname and port (and more) for a service</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
