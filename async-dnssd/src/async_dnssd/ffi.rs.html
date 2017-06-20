@@ -354,6 +354,8 @@
 <span id="309">309</span>
 <span id="310">310</span>
 <span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
 </pre><pre class="rust ">
 <span class="comment">// #![allow(dead_code)]</span>
 
@@ -380,6 +382,8 @@
 <span class="comment">// unix only?</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FLAGS_LONG_LIVED_QUERY</span>     : <span class="ident">DNSServiceFlags</span> <span class="op">=</span> <span class="number">0x100</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">unix</span>))]</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">FLAGS_LONG_LIVED_QUERY</span>     : <span class="ident">DNSServiceFlags</span> <span class="op">=</span> <span class="number">0</span>;
 <span class="comment">// avahi only?</span>
 <span class="comment">//pub const FLAGS_ALLOW_REMOTE_QUERY   : DNSServiceFlags = 0x200;</span>
 <span class="comment">//pub const FLAGS_FORCE_MULTICAS       : DNSServiceFlags = 0x400;</span>
