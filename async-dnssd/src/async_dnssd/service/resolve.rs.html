@@ -229,7 +229,7 @@
 			<span class="ident">interface</span>: <span class="ident">Interface</span>::<span class="ident">from_raw</span>(<span class="ident">interface_index</span>),
 			<span class="ident">fullname</span>: <span class="ident">fullname</span>.<span class="ident">to_string</span>(),
 			<span class="ident">host_target</span>: <span class="ident">host_target</span>.<span class="ident">to_string</span>(),
-			<span class="ident">port</span>: <span class="ident">port</span>,
+			<span class="ident">port</span>: <span class="ident">u16</span>::<span class="ident">from_be</span>(<span class="ident">port</span>),
 			<span class="ident">txt</span>: <span class="ident">txt</span>.<span class="ident">into</span>(),
 		})
 	});
