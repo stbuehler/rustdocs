@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `BitString` trait in crate `bitstring`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, BitString">
+
+    <title>bitstring::bit_string::BitString - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait BitString</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>bitstring</a>::<wbr><a href='index.html'>bit_string</a></p><script>window.sidebarCurrent = {name: 'BitString', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>bitstring</a>::<wbr><a href='index.html'>bit_string</a>::<wbr><a class="trait" href=''>BitString</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/bitstring/bit_string/traits.rs.html#20-157' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait BitString {
+    fn <a href='#tymethod.get' class='fnname'>get</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set' class='fnname'>set</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.flip' class='fnname'>flip</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
+    fn <a href='#tymethod.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>;
+    fn <a href='#tymethod.clip' class='fnname'>clip</a>(&amp;mut self, len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
+    fn <a href='#tymethod.append' class='fnname'>append</a>(&amp;mut self, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self;
+
+    fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
+    fn <a href='#method.shared_prefix' class='fnname'>shared_prefix</a>(&amp;self, other: &amp;Self) -&gt; Self<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a></span>,
+    { ... }
+    fn <a href='#method.subset_cmp' class='fnname'>subset_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt; { ... }
+    fn <a href='#method.lexicographic_cmp' class='fnname'>lexicographic_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a> { ... }
+}</pre><div class='docblock'><p>A bit string with variable (but possibly limited) length.</p>
+
+<p>The length limit might depend on the current string; that is why
+writing a bit might truncate the string (but not the bit that was
+just modified).  &quot;Writing&quot; a bit also includes writing without
+actually changing it.</p>
+
+<p>This special case is needed to handle variants with different
+(maximum) lengths: a small prefix indicates the variant, then
+follows the actual data of the variant.</p>
+
+<p>As an example one might want to combine IPv4 and IPv6 cidr
+representations into one <code>BitString</code> type; the empty bit string
+would represent <code>0.0.0.0/0</code> + <code>::/0</code>.</p>
+
+<p>Apart from this special case writing a bit must not modify any other
+bits or change the length.</p>
+</div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.get' class='method'><span id='get.v' class='invisible'><code>fn <a href='#tymethod.get' class='fnname'>get</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Get the <code>ndx</code>th bit.</p>
+
+<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.set' class='method'><span id='set.v' class='invisible'><code>fn <a href='#tymethod.set' class='fnname'>set</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><div class='docblock'><p>Set the <code>ndx</code>th bit to <code>bit</code>.</p>
+
+<p>Might clip the length to <code>ndx+1</code>.</p>
+
+<h1 id='panics-1' class='section-header'><a href='#panics-1'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.flip' class='method'><span id='flip.v' class='invisible'><code>fn <a href='#tymethod.flip' class='fnname'>flip</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Flips the <code>ndx</code>th bit.</p>
+
+<h1 id='panics-2' class='section-header'><a href='#panics-2'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.len' class='method'><span id='len.v' class='invisible'><code>fn <a href='#tymethod.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Current length of the bit string in bits.</p>
+</div><h3 id='tymethod.clip' class='method'><span id='clip.v' class='invisible'><code>fn <a href='#tymethod.clip' class='fnname'>clip</a>(&amp;mut self, len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Set current length to <code>len</code>.</p>
+
+<p>Does nothing if <code>len &lt;= self.len()</code>.</p>
+
+<p>If necessary should also zero the underlying storage if <code>Eq</code>
+needs it to work properly.</p>
+</div><h3 id='tymethod.append' class='method'><span id='append.v' class='invisible'><code>fn <a href='#tymethod.append' class='fnname'>append</a>(&amp;mut self, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><div class='docblock'><p>Append a bit.</p>
+
+<h1 id='panics-3' class='section-header'><a href='#panics-3'>Panics</a></h1>
+<p>Might panic if underlying storage can only store a limited
+number of bits.</p>
+</div><h3 id='tymethod.null' class='method'><span id='null.v' class='invisible'><code>fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self</code></span></h3><div class='docblock'><p>Create a new zero-length bit string.</p>
+
+<p>Underlying storage should be zeroed if <code>Eq</code> needs it to work
+properly.</p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.shared_prefix_len' class='method'><span id='shared_prefix_len.v' class='invisible'><code>fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Length of the longest shared prefix of two bit strings.</p>
+</div><h3 id='method.shared_prefix' class='method'><span id='shared_prefix.v' class='invisible'><code>fn <a href='#method.shared_prefix' class='fnname'>shared_prefix</a>(&amp;self, other: &amp;Self) -&gt; Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Longest shared prefix of two bit strings.</p>
+</div><h3 id='method.subset_cmp' class='method'><span id='subset_cmp.v' class='invisible'><code>fn <a href='#method.subset_cmp' class='fnname'>subset_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt;</code></span></h3><div class='docblock'><p>Partial ordering on bit strings.</p>
+
+<p>Formal definition:</p>
+
+<pre><code class="language-text">    `a &lt; b` iff `a != b` and `b` is a prefix of `a`
+</code></pre>
+
+<p>If you view a bit string as a set including all bit strings
+starting with it, this is the subset relation.</p>
+</div><h3 id='method.lexicographic_cmp' class='method'><span id='lexicographic_cmp.v' class='invisible'><code>fn <a href='#method.lexicographic_cmp' class='fnname'>lexicographic_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a></code></span></h3><div class='docblock'><p>Lexicographic ordering on bit strings.</p>
+
+<p>Formal definition:</p>
+
+<pre><code class="language-text">    `a &lt; b` iff `a != b` and (
+        `b` is a prefix of `a`
+        or `a[s] &lt; b[s]`
+             where s is the smallest index with `a[s] != b[s]`)
+</code></pre>
+
+<p>Or, if you define <code>_|_ &lt; false &lt; true</code>:</p>
+
+<pre><code class="language-text">    `a &lt; b` iff `a[s] &lt; b[s]`
+        where s is the smallest index with `a[s] != b[s]`
+</code></pre>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;W:&nbsp;<a class="trait" href="../../bitstring/fixed_bit_string/trait.FixedBitString.html" title="trait bitstring::fixed_bit_string::FixedBitString">FixedBitString</a>&gt; BitString for <a class="struct" href="../../bitstring/struct.BitLengthString.html" title="struct bitstring::BitLengthString">BitLengthString</a>&lt;W&gt;</code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/bitstring/bit_string/trait.BitString.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "bitstring";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
