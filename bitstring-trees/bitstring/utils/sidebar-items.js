@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["BigEndianBitString","Generic helper methods to treat [u*]-slices as big endian bit strings."]]});
