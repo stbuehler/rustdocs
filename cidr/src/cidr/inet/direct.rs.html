@@ -9,6 +9,7 @@
 
     <title>direct.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -202,167 +203,167 @@
 <span id="158">158</span>
 <span id="159">159</span>
 <span id="160">160</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>min</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>Ipv4Addr</span>,<span class='ident'>Ipv6Addr</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">bitstring</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">min</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">Ipv4Addr</span>,<span class="ident">Ipv6Addr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>from_str</span>::<span class='ident'>inet_from_str</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>bitstring</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>cidr</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>errors</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>family</span>::<span class='ident'>Family</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>traits</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Ipv4Inet</span>,<span class='ident'>Ipv6Inet</span>};
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">from_str</span>::<span class="ident">inet_from_str</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">cidr</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">family</span>::<span class="ident">Family</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">traits</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Ipv4Inet</span>,<span class="ident">Ipv6Inet</span>};
 
-<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_inet_for</span> {
-	(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>:<span class='ident'>ident</span> : <span class='ident'>cidr</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cidr</span>:<span class='ident'>ident</span> : <span class='ident'>addr</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>addr</span>:<span class='ident'>ty</span> : <span class='ident'>family</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>family</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-		<span class='kw'>impl</span> <span class='ident'>BitString</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span> {
-			<span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>ndx</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>get</span>(<span class='ident'>ndx</span>)
+<span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_inet_for</span> {
+	(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ident</span> : <span class="ident">cidr</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">cidr</span>:<span class="ident">ident</span> : <span class="ident">addr</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">addr</span>:<span class="ident">ty</span> : <span class="ident">family</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">family</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
+		<span class="kw">impl</span> <span class="ident">BitString</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
+			<span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ndx</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">get</span>(<span class="ident">ndx</span>)
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>set</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ndx</span>: <span class='ident'>usize</span>, <span class='ident'>bit</span>: <span class='ident'>bool</span>) {
-				<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>ndx</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>);
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>set</span>(<span class='ident'>ndx</span>, <span class='ident'>bit</span>);
+			<span class="kw">fn</span> <span class="ident">set</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ndx</span>: <span class="ident">usize</span>, <span class="ident">bit</span>: <span class="ident">bool</span>) {
+				<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">ndx</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">set</span>(<span class="ident">ndx</span>, <span class="ident">bit</span>);
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>flip</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>ndx</span>: <span class='ident'>usize</span>) {
-				<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>ndx</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>);
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>flip</span>(<span class='ident'>ndx</span>);
+			<span class="kw">fn</span> <span class="ident">flip</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ndx</span>: <span class="ident">usize</span>) {
+				<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">ndx</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">flip</span>(<span class="ident">ndx</span>);
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-				<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>
+			<span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+				<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>clip</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>len</span>: <span class='ident'>usize</span>) {
-				<span class='kw'>if</span> <span class='ident'>len</span> <span class='op'>&gt;</span> <span class='number'>255</span> { <span class='kw'>return</span>; }
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>zeroesfrom</span>(<span class='ident'>len</span>);
-				<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>network_length</span>, <span class='ident'>len</span> <span class='kw'>as</span> <span class='ident'>u8</span>);
+			<span class="kw">fn</span> <span class="ident">clip</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
+				<span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">255</span> { <span class="kw">return</span>; }
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">set_false_from</span>(<span class="ident">len</span>);
+				<span class="self">self</span>.<span class="ident">network_length</span> <span class="op">=</span> <span class="ident">min</span>(<span class="self">self</span>.<span class="ident">network_length</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">u8</span>);
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>append</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bit</span>: <span class='ident'>bool</span>) {
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>bit</span>);
-				<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='op'>+=</span> <span class='number'>1</span>;
+			<span class="kw">fn</span> <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bit</span>: <span class="ident">bool</span>) {
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">set</span>(<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">bit</span>);
+				<span class="self">self</span>.<span class="ident">network_length</span> <span class="op">+=</span> <span class="number">1</span>;
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>null</span>() <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>{
-					<span class='ident'>address</span>: <span class='ident'>FixedBitString</span>::<span class='ident'>all_zeroes</span>(),
-					<span class='ident'>network_length</span>: <span class='number'>0</span>,
+			<span class="kw">fn</span> <span class="ident">null</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>{
+					<span class="ident">address</span>: <span class="ident">FixedBitString</span>::<span class="ident">new_all_false</span>(),
+					<span class="ident">network_length</span>: <span class="number">0</span>,
 				}
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>shared_prefix_len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-				<span class='kw'>let</span> <span class='ident'>max_len</span> <span class='op'>=</span> <span class='ident'>min</span>(<span class='self'>self</span>.<span class='ident'>network_length</span>, <span class='ident'>other</span>.<span class='ident'>network_length</span>) <span class='kw'>as</span> <span class='ident'>usize</span>;
-				<span class='ident'>FixedBitString</span>::<span class='ident'>shared_prefix_len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>address</span>, <span class='kw-2'>&amp;</span><span class='ident'>other</span>.<span class='ident'>address</span>, <span class='ident'>max_len</span>)
+			<span class="kw">fn</span> <span class="ident">shared_prefix_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+				<span class="kw">let</span> <span class="ident">max_len</span> <span class="op">=</span> <span class="ident">min</span>(<span class="self">self</span>.<span class="ident">network_length</span>, <span class="ident">other</span>.<span class="ident">network_length</span>) <span class="kw">as</span> <span class="ident">usize</span>;
+				<span class="ident">FixedBitString</span>::<span class="ident">shared_prefix_len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">address</span>, <span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">address</span>, <span class="ident">max_len</span>)
 			}
 		}
 
-		<span class='kw'>impl</span> <span class='ident'>Inet</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span> {
-			<span class='kw'>type</span> <span class='ident'>Address</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>addr</span>;
-			<span class='kw'>type</span> <span class='ident'>Cidr</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cidr</span>;
+		<span class="kw">impl</span> <span class="ident">Inet</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
+			<span class="kw">type</span> <span class="ident">Address</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">addr</span>;
+			<span class="kw">type</span> <span class="ident">Cidr</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">cidr</span>;
 
-			<span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='self'>Self</span>::<span class='ident'>Address</span>, <span class='ident'>len</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>NetworkLengthTooLongError</span><span class='op'>&gt;</span> {
-				<span class='kw'>if</span> <span class='ident'>len</span> <span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>family</span>.<span class='ident'>len</span>() {
-					<span class='prelude-val'>Err</span>(<span class='ident'>NetworkLengthTooLongError</span>::<span class='ident'>new</span>(<span class='ident'>len</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>family</span>).<span class='ident'>into</span>())
-				} <span class='kw'>else</span> {
-					<span class='prelude-val'>Ok</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>{
-						<span class='ident'>address</span>: <span class='ident'>addr</span>,
-						<span class='ident'>network_length</span>: <span class='ident'>len</span>,
+			<span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>, <span class="ident">len</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NetworkLengthTooLongError</span><span class="op">&gt;</span> {
+				<span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">family</span>.<span class="ident">len</span>() {
+					<span class="prelude-val">Err</span>(<span class="ident">NetworkLengthTooLongError</span>::<span class="ident">new</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">family</span>).<span class="ident">into</span>())
+				} <span class="kw">else</span> {
+					<span class="prelude-val">Ok</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>{
+						<span class="ident">address</span>: <span class="ident">addr</span>,
+						<span class="ident">network_length</span>: <span class="ident">len</span>,
 					})
 				}
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>new_host</span>(<span class='ident'>addr</span>: <span class='self'>Self</span>::<span class='ident'>Address</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>{
-					<span class='ident'>address</span>: <span class='ident'>addr</span>,
-					<span class='ident'>network_length</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>family</span>.<span class='ident'>len</span>(),
+			<span class="kw">fn</span> <span class="ident">new_host</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>{
+					<span class="ident">address</span>: <span class="ident">addr</span>,
+					<span class="ident">network_length</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">family</span>.<span class="ident">len</span>(),
 				}
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>inc</span>(<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>)
+			<span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">inc</span>(<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>)
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>network</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Cidr</span> {
-				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cidr</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>first_address</span>(), <span class='self'>self</span>.<span class='ident'>network_length</span>).<span class='ident'>unwrap</span>()
+			<span class="kw">fn</span> <span class="ident">network</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Cidr</span> {
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">cidr</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">first_address</span>(), <span class="self">self</span>.<span class="ident">network_length</span>).<span class="ident">unwrap</span>()
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span> {
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>()
+			<span class="kw">fn</span> <span class="ident">address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span> {
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">clone</span>()
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>first_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span> {
-				<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>();
-				<span class='ident'>a</span>.<span class='ident'>zeroesfrom</span>(<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>);
-				<span class='ident'>a</span>
+			<span class="kw">fn</span> <span class="ident">first_address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span> {
+				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">address</span>.<span class="ident">clone</span>();
+				<span class="ident">a</span>.<span class="ident">set_false_from</span>(<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+				<span class="ident">a</span>
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>first</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>{
-					<span class='ident'>address</span>: <span class='self'>self</span>.<span class='ident'>first_address</span>(),
-					<span class='ident'>network_length</span>: <span class='self'>self</span>.<span class='ident'>network_length</span>,
+			<span class="kw">fn</span> <span class="ident">first</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>{
+					<span class="ident">address</span>: <span class="self">self</span>.<span class="ident">first_address</span>(),
+					<span class="ident">network_length</span>: <span class="self">self</span>.<span class="ident">network_length</span>,
 				}
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>last_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span> {
-				<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>clone</span>();
-				<span class='ident'>a</span>.<span class='ident'>onesfrom</span>(<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>);
-				<span class='ident'>a</span>
+			<span class="kw">fn</span> <span class="ident">last_address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span> {
+				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">address</span>.<span class="ident">clone</span>();
+				<span class="ident">a</span>.<span class="ident">set_true_from</span>(<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+				<span class="ident">a</span>
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>last</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>{
-					<span class='ident'>address</span>: <span class='self'>self</span>.<span class='ident'>last_address</span>(),
-					<span class='ident'>network_length</span>: <span class='self'>self</span>.<span class='ident'>network_length</span>,
+			<span class="kw">fn</span> <span class="ident">last</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>{
+					<span class="ident">address</span>: <span class="self">self</span>.<span class="ident">last_address</span>(),
+					<span class="ident">network_length</span>: <span class="self">self</span>.<span class="ident">network_length</span>,
 				}
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>network_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> {
-				<span class='self'>self</span>.<span class='ident'>network_length</span>
+			<span class="kw">fn</span> <span class="ident">network_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u8</span> {
+				<span class="self">self</span>.<span class="ident">network_length</span>
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>family</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Family</span> {
-				<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>family</span>
+			<span class="kw">fn</span> <span class="ident">family</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Family</span> {
+				<span class="macro-nonterminal">$</span><span class="macro-nonterminal">family</span>
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>mask</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span> {
-				<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='self'>Self</span>::<span class='ident'>Address</span>::<span class='ident'>all_ones</span>();
-				<span class='ident'>a</span>.<span class='ident'>zeroesfrom</span>(<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>);
-				<span class='ident'>a</span>
+			<span class="kw">fn</span> <span class="ident">mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span> {
+				<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">a</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Address</span>::<span class="ident">new_all_true</span>();
+				<span class="ident">a</span>.<span class="ident">set_false_from</span>(<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>);
+				<span class="ident">a</span>
 			}
 
-			<span class='kw'>fn</span> <span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Address</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-				<span class='self'>self</span>.<span class='ident'>address</span>.<span class='ident'>contains</span>(<span class='self'>self</span>.<span class='ident'>network_length</span> <span class='kw'>as</span> <span class='ident'>usize</span>, <span class='ident'>addr</span>)
-			}
-		}
-
-		<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span> {
-			<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-				<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{:?}/{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>address</span>, <span class='self'>self</span>.<span class='ident'>network_length</span>)
+			<span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+				<span class="self">self</span>.<span class="ident">address</span>.<span class="ident">contains</span>(<span class="self">self</span>.<span class="ident">network_length</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">addr</span>)
 			}
 		}
 
-		<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span> {
-			<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-				<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;{}/{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>address</span>, <span class='self'>self</span>.<span class='ident'>network_length</span>)
+		<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
+			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{:?}/{}&quot;</span>, <span class="self">self</span>.<span class="ident">address</span>, <span class="self">self</span>.<span class="ident">network_length</span>)
 			}
 		}
 
-		<span class='kw'>impl</span> <span class='ident'>FromStr</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span> {
-			<span class='kw'>type</span> <span class='prelude-val'>Err</span> <span class='op'>=</span> <span class='ident'>NetworkParseError</span>;
-			<span class='kw'>fn</span> <span class='ident'>from_str</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>n</span>, <span class='ident'>NetworkParseError</span><span class='op'>&gt;</span> {
-				<span class='ident'>inet_from_str</span>(<span class='ident'>s</span>)
+		<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
+			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;{}/{}&quot;</span>, <span class="self">self</span>.<span class="ident">address</span>, <span class="self">self</span>.<span class="ident">network_length</span>)
+			}
+		}
+
+		<span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
+			<span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">NetworkParseError</span>;
+			<span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>, <span class="ident">NetworkParseError</span><span class="op">&gt;</span> {
+				<span class="ident">inet_from_str</span>(<span class="ident">s</span>)
 			}
 		}
 	)
 }
 
-<span class='macro'>impl_inet_for</span><span class='macro'>!</span>{<span class='ident'>Ipv4Inet</span> : <span class='ident'>cidr</span> <span class='ident'>Ipv4Cidr</span> : <span class='ident'>addr</span> <span class='ident'>Ipv4Addr</span> : <span class='ident'>family</span> <span class='ident'>Family</span>::<span class='ident'>Ipv4</span>}
-<span class='macro'>impl_inet_for</span><span class='macro'>!</span>{<span class='ident'>Ipv6Inet</span> : <span class='ident'>cidr</span> <span class='ident'>Ipv6Cidr</span> : <span class='ident'>addr</span> <span class='ident'>Ipv6Addr</span> : <span class='ident'>family</span> <span class='ident'>Family</span>::<span class='ident'>Ipv6</span>}
+<span class="macro">impl_inet_for</span><span class="macro">!</span>{<span class="ident">Ipv4Inet</span> : <span class="ident">cidr</span> <span class="ident">Ipv4Cidr</span> : <span class="ident">addr</span> <span class="ident">Ipv4Addr</span> : <span class="ident">family</span> <span class="ident">Family</span>::<span class="ident">Ipv4</span>}
+<span class="macro">impl_inet_for</span><span class="macro">!</span>{<span class="ident">Ipv6Inet</span> : <span class="ident">cidr</span> <span class="ident">Ipv6Cidr</span> : <span class="ident">addr</span> <span class="ident">Ipv6Addr</span> : <span class="ident">family</span> <span class="ident">Family</span>::<span class="ident">Ipv6</span>}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

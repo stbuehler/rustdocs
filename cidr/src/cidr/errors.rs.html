@@ -9,6 +9,7 @@
 
     <title>errors.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -153,116 +154,116 @@
 <span id="109">109</span>
 <span id="110">110</span>
 <span id="111">111</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>error</span>::<span class='ident'>Error</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>AddrParseError</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>num</span>::<span class='ident'>ParseIntError</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">AddrParseError</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">num</span>::<span class="ident">ParseIntError</span>;
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>Family</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Family</span>;
 
-<span class='doccomment'>/// Error returned when the network length was longer than the address</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>NetworkLengthTooLongError</span>(<span class='ident'>usize</span>, <span class='ident'>Family</span>);
+<span class="doccomment">/// Error returned when the network length was longer than the address</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NetworkLengthTooLongError</span>(<span class="ident">usize</span>, <span class="ident">Family</span>);
 
-<span class='kw'>impl</span> <span class='ident'>NetworkLengthTooLongError</span> {
-	<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>len</span>: <span class='ident'>usize</span>, <span class='ident'>family</span>: <span class='ident'>Family</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-		<span class='ident'>NetworkLengthTooLongError</span>(<span class='ident'>len</span>, <span class='ident'>family</span>)
+<span class="kw">impl</span> <span class="ident">NetworkLengthTooLongError</span> {
+	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">family</span>: <span class="ident">Family</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+		<span class="ident">NetworkLengthTooLongError</span>(<span class="ident">len</span>, <span class="ident">family</span>)
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>NetworkLengthTooLongError</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='macro'>write</span><span class='macro'>!</span>(
-			<span class='ident'>w</span>,
-			<span class='string'>&quot;Network length {} is too long for {:?} (maximum: {})&quot;</span>,
-			<span class='self'>self</span>.<span class='number'>0</span>,
-			<span class='self'>self</span>.<span class='number'>1</span>,
-			<span class='self'>self</span>.<span class='number'>1</span>.<span class='ident'>len</span>()
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">NetworkLengthTooLongError</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">w</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="macro">write</span><span class="macro">!</span>(
+			<span class="ident">w</span>,
+			<span class="string">&quot;Network length {} is too long for {:?} (maximum: {})&quot;</span>,
+			<span class="self">self</span>.<span class="number">0</span>,
+			<span class="self">self</span>.<span class="number">1</span>,
+			<span class="self">self</span>.<span class="number">1</span>.<span class="ident">len</span>()
 		)
 	}
 }
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>NetworkLengthTooLongError</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='ident'>fmt</span>::<span class='ident'>Debug</span>::<span class='ident'>fmt</span>(<span class='self'>self</span>, <span class='ident'>w</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">NetworkLengthTooLongError</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">w</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="self">self</span>, <span class="ident">w</span>)
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>NetworkLengthTooLongError</span> {
-	<span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-		<span class='string'>&quot;network length too long&quot;</span>
+<span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">NetworkLengthTooLongError</span> {
+	<span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+		<span class="string">&quot;network length too long&quot;</span>
 	}
 }
 
-<span class='doccomment'>/// Error type returned when parsing IP networks</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>NetworkParseError</span> {
-	<span class='doccomment'>/// The host part wasn&#39;t zero but should have been. The `Cidr` types</span>
-	<span class='doccomment'>/// require that you use the first address in the network (and the</span>
-	<span class='doccomment'>/// network length) to represent the address, but it wasn&#39;t the</span>
-	<span class='doccomment'>/// first address.</span>
-	<span class='ident'>InvalidHostPart</span>,
-	<span class='doccomment'>/// Failed to parse the address</span>
-	<span class='ident'>AddrParseError</span>(<span class='ident'>AddrParseError</span>),
-	<span class='doccomment'>/// Failed to parse the network length</span>
-	<span class='ident'>NetworkLengthParseError</span>(<span class='ident'>ParseIntError</span>),
-	<span class='doccomment'>/// The network length was not valid (but was successfully parsed)</span>
-	<span class='ident'>NetworkLengthTooLongError</span>(<span class='ident'>NetworkLengthTooLongError</span>),
+<span class="doccomment">/// Error type returned when parsing IP networks</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">PartialEq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">NetworkParseError</span> {
+	<span class="doccomment">/// The host part wasn&#39;t zero but should have been. The `Cidr` types</span>
+	<span class="doccomment">/// require that you use the first address in the network (and the</span>
+	<span class="doccomment">/// network length) to represent the address, but it wasn&#39;t the</span>
+	<span class="doccomment">/// first address.</span>
+	<span class="ident">InvalidHostPart</span>,
+	<span class="doccomment">/// Failed to parse the address</span>
+	<span class="ident">AddrParseError</span>(<span class="ident">AddrParseError</span>),
+	<span class="doccomment">/// Failed to parse the network length</span>
+	<span class="ident">NetworkLengthParseError</span>(<span class="ident">ParseIntError</span>),
+	<span class="doccomment">/// The network length was not valid (but was successfully parsed)</span>
+	<span class="ident">NetworkLengthTooLongError</span>(<span class="ident">NetworkLengthTooLongError</span>),
 }
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='kw'>for</span> <span class='ident'>NetworkParseError</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>InvalidHostPart</span> <span class='op'>=&gt;</span> {
-				<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;host part of address was not zero&quot;</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">NetworkParseError</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">w</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+			<span class="ident">NetworkParseError</span>::<span class="ident">InvalidHostPart</span> <span class="op">=&gt;</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">w</span>, <span class="string">&quot;host part of address was not zero&quot;</span>)
 			},
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>AddrParseError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-				<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;couldn&#39;t parse address in network: {}&quot;</span>, <span class='ident'>e</span>)
+			<span class="ident">NetworkParseError</span>::<span class="ident">AddrParseError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">w</span>, <span class="string">&quot;couldn&#39;t parse address in network: {}&quot;</span>, <span class="ident">e</span>)
 			},
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>NetworkLengthParseError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-				<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;couldn&#39;t parse length in network: {}&quot;</span>, <span class='ident'>e</span>)
+			<span class="ident">NetworkParseError</span>::<span class="ident">NetworkLengthParseError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">w</span>, <span class="string">&quot;couldn&#39;t parse length in network: {}&quot;</span>, <span class="ident">e</span>)
 			},
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>NetworkLengthTooLongError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-				<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;invalid length for network: {}&quot;</span>, <span class='ident'>e</span>)
+			<span class="ident">NetworkParseError</span>::<span class="ident">NetworkLengthTooLongError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">w</span>, <span class="string">&quot;invalid length for network: {}&quot;</span>, <span class="ident">e</span>)
 			},
 		}
 	}
 }
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>NetworkParseError</span> {
-	<span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-		<span class='ident'>fmt</span>::<span class='ident'>Debug</span>::<span class='ident'>fmt</span>(<span class='self'>self</span>, <span class='ident'>w</span>)
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">NetworkParseError</span> {
+	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">w</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+		<span class="ident">fmt</span>::<span class="ident">Debug</span>::<span class="ident">fmt</span>(<span class="self">self</span>, <span class="ident">w</span>)
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>NetworkParseError</span> {
-	<span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-		<span class='string'>&quot;network parse error&quot;</span>
+<span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">NetworkParseError</span> {
+	<span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+		<span class="string">&quot;network parse error&quot;</span>
 	}
-	<span class='kw'>fn</span> <span class='ident'>cause</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>Error</span><span class='op'>&gt;</span> {
-		<span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>InvalidHostPart</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>AddrParseError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>),
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>NetworkLengthParseError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>),
-			<span class='ident'>NetworkParseError</span>::<span class='ident'>NetworkLengthTooLongError</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>),
+	<span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Error</span><span class="op">&gt;</span> {
+		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+			<span class="ident">NetworkParseError</span>::<span class="ident">InvalidHostPart</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+			<span class="ident">NetworkParseError</span>::<span class="ident">AddrParseError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
+			<span class="ident">NetworkParseError</span>::<span class="ident">NetworkLengthParseError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
+			<span class="ident">NetworkParseError</span>::<span class="ident">NetworkLengthTooLongError</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
 		}
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>AddrParseError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NetworkParseError</span> {
-	<span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>AddrParseError</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-		<span class='ident'>NetworkParseError</span>::<span class='ident'>AddrParseError</span>(<span class='ident'>e</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">AddrParseError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NetworkParseError</span> {
+	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">AddrParseError</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+		<span class="ident">NetworkParseError</span>::<span class="ident">AddrParseError</span>(<span class="ident">e</span>)
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>ParseIntError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NetworkParseError</span> {
-	<span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>ParseIntError</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-		<span class='ident'>NetworkParseError</span>::<span class='ident'>NetworkLengthParseError</span>(<span class='ident'>e</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ParseIntError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NetworkParseError</span> {
+	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">ParseIntError</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+		<span class="ident">NetworkParseError</span>::<span class="ident">NetworkLengthParseError</span>(<span class="ident">e</span>)
 	}
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>NetworkLengthTooLongError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>NetworkParseError</span> {
-	<span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>NetworkLengthTooLongError</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-		<span class='ident'>NetworkParseError</span>::<span class='ident'>NetworkLengthTooLongError</span>(<span class='ident'>e</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">NetworkLengthTooLongError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">NetworkParseError</span> {
+	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident">NetworkLengthTooLongError</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+		<span class="ident">NetworkParseError</span>::<span class="ident">NetworkLengthTooLongError</span>(<span class="ident">e</span>)
 	}
 }
 </pre>

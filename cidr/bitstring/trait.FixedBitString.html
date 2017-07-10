@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `FixedBitString` trait in crate `bitstring`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, FixedBitString">
+
+    <title>bitstring::FixedBitString - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc trait">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Trait FixedBitString</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>bitstring</a></p><script>window.sidebarCurrent = {name: 'FixedBitString', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>bitstring</a>::<wbr><a class="trait" href=''>FixedBitString</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/bitstring/fixed_bit_string/traits.rs.html#9-122' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait FixedBitString {
+    fn <a href='#tymethod.inc' class='fnname'>inc</a>(&amp;mut self, prefix: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.len' class='fnname'>len</a>() -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>;
+    fn <a href='#tymethod.get' class='fnname'>get</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set' class='fnname'>set</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+    fn <a href='#tymethod.set_false_from' class='fnname'>set_false_from</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
+    fn <a href='#tymethod.is_false_from' class='fnname'>is_false_from</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.set_true_from' class='fnname'>set_true_from</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
+    fn <a href='#tymethod.is_true_from' class='fnname'>is_true_from</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.new_all_false' class='fnname'>new_all_false</a>() -&gt; Self;
+    fn <a href='#tymethod.new_all_true' class='fnname'>new_all_true</a>() -&gt; Self;
+    fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, prefix: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+
+    fn <a href='#method.iter' class='fnname'>iter</a>(&amp;self, prefix: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../bitstring/fixed_bit_string/struct.Iter.html" title="struct bitstring::fixed_bit_string::Iter">Iter</a>&lt;Self&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a></span>,
+    { ... }
+    fn <a href='#method.on' class='fnname'>on</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) { ... }
+    fn <a href='#method.off' class='fnname'>off</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) { ... }
+    fn <a href='#method.flip' class='fnname'>flip</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) { ... }
+    fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: &amp;Self, max_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
+}</pre><div class='docblock'><p>A bit string with fixed length.</p>
+
+<p>All bits must me mutable, and there must be no dependencies between
+bits (i.e. setting one bit must not change any other bit).</p>
+</div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.inc' class='method'><span id='inc.v' class='invisible'><code>fn <a href='#tymethod.inc' class='fnname'>inc</a>(&amp;mut self, prefix: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Treat bit string as integer, where bit 0 is the most significant
+bit.</p>
+
+<p>Increment by one, i.e. start by incrementing the bit with the
+highest index.</p>
+
+<p>Don&#39;t touch first <code>prefix</code> bits; return true on overflow.</p>
+
+<h1 id='panics' class='section-header'><a href='#panics'>Panics</a></h1>
+<p>Should panic if <code>prefix &gt; self.len()</code>.</p>
+</div><h3 id='tymethod.len' class='method'><span id='len.v' class='invisible'><code>fn <a href='#tymethod.len' class='fnname'>len</a>() -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Length of the bit string in bits.</p>
+</div><h3 id='tymethod.get' class='method'><span id='get.v' class='invisible'><code>fn <a href='#tymethod.get' class='fnname'>get</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Get the <code>ndx</code>th bit.</p>
+
+<h1 id='panics-1' class='section-header'><a href='#panics-1'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.set' class='method'><span id='set.v' class='invisible'><code>fn <a href='#tymethod.set' class='fnname'>set</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>)</code></span></h3><div class='docblock'><p>Set the <code>ndx</code>th bit to <code>bit</code>.</p>
+
+<h1 id='panics-2' class='section-header'><a href='#panics-2'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.set_false_from' class='method'><span id='set_false_from.v' class='invisible'><code>fn <a href='#tymethod.set_false_from' class='fnname'>set_false_from</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Set all bits in [ndx..] to <code>false</code>.</p>
+
+<p>Doesn&#39;t do anything if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.is_false_from' class='method'><span id='is_false_from.v' class='invisible'><code>fn <a href='#tymethod.is_false_from' class='fnname'>is_false_from</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Whether all bits in [ndx..] are <code>false</code>.</p>
+
+<p>Returns <code>true</code> if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.set_true_from' class='method'><span id='set_true_from.v' class='invisible'><code>fn <a href='#tymethod.set_true_from' class='fnname'>set_true_from</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Set all bits in [ndx..] to <code>true</code>.</p>
+
+<p>Doesn&#39;t do anything if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.is_true_from' class='method'><span id='is_true_from.v' class='invisible'><code>fn <a href='#tymethod.is_true_from' class='fnname'>is_true_from</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Whether all bits in [ndx..] are <code>true</code>.</p>
+
+<p>Returns <code>true</code> if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='tymethod.new_all_false' class='method'><span id='new_all_false.v' class='invisible'><code>fn <a href='#tymethod.new_all_false' class='fnname'>new_all_false</a>() -&gt; Self</code></span></h3><div class='docblock'><p>New bit string with all bits set to <code>false</code>.</p>
+</div><h3 id='tymethod.new_all_true' class='method'><span id='new_all_true.v' class='invisible'><code>fn <a href='#tymethod.new_all_true' class='fnname'>new_all_true</a>() -&gt; Self</code></span></h3><div class='docblock'><p>New bit string with all bits set to <code>true</code>.</p>
+</div><h3 id='tymethod.contains' class='method'><span id='contains.v' class='invisible'><code>fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, prefix: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>check whether another bit string <code>other</code> shares the first
+<code>prefix</code> bits with <code>self</code></p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.iter' class='method'><span id='iter.v' class='invisible'><code>fn <a href='#method.iter' class='fnname'>iter</a>(&amp;self, prefix: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="struct" href="../bitstring/fixed_bit_string/struct.Iter.html" title="struct bitstring::fixed_bit_string::Iter">Iter</a>&lt;Self&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Iterate through all bit strings until <code>inc</code> overflows.</p>
+
+<p>All generated values will share the first <code>prefix</code> bits.  If you
+want to iterate over all values make sure to call
+<code>self.set_false_from(prefix)</code> before.</p>
+
+<h1 id='panics-3' class='section-header'><a href='#panics-3'>Panics</a></h1>
+<p>Should panic if <code>prefix &gt; self.len()</code>.</p>
+</div><h3 id='method.on' class='method'><span id='on.v' class='invisible'><code>fn <a href='#method.on' class='fnname'>on</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Set the <code>ndx</code>th bit to <code>true</code>.</p>
+
+<h1 id='panics-4' class='section-header'><a href='#panics-4'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='method.off' class='method'><span id='off.v' class='invisible'><code>fn <a href='#method.off' class='fnname'>off</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Set the <code>ndx</code>th bit to <code>false</code>.</p>
+
+<h1 id='panics-5' class='section-header'><a href='#panics-5'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='method.flip' class='method'><span id='flip.v' class='invisible'><code>fn <a href='#method.flip' class='fnname'>flip</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>)</code></span></h3><div class='docblock'><p>Flips the <code>ndx</code>th bit.</p>
+
+<h1 id='panics-6' class='section-header'><a href='#panics-6'>Panics</a></h1>
+<p>Should panic if <code>ndx &gt;= self.len()</code>.</p>
+</div><h3 id='method.shared_prefix_len' class='method'><span id='shared_prefix_len.v' class='invisible'><code>fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: &amp;Self, max_len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Length of the longest shared prefix of two bit strings.</p>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl FixedBitString for <a class="struct" href="https://doc.rust-lang.org/nightly/std/net/ip/struct.Ipv4Addr.html" title="struct std::net::ip::Ipv4Addr">Ipv4Addr</a></code></li>
+<li><code>impl FixedBitString for <a class="struct" href="https://doc.rust-lang.org/nightly/std/net/ip/struct.Ipv6Addr.html" title="struct std::net::ip::Ipv6Addr">Ipv6Addr</a></code></li>
+</ul><script type="text/javascript" async
+                         src="../implementors/bitstring/trait.FixedBitString.js">
+                 </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "bitstring";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

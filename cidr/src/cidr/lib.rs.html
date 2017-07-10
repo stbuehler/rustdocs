@@ -9,6 +9,7 @@
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -68,39 +69,33 @@
 <span id="24">24</span>
 <span id="25">25</span>
 <span id="26">26</span>
-<span id="27">27</span>
-<span id="28">28</span>
-<span id="29">29</span>
-</pre><pre class='rust '>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
+</pre><pre class="rust ">
+<span class="attribute">#<span class="op">!</span>[<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/cidr/0.0.3&quot;</span>)]</span>
 
-<span class='doccomment'>//! This library provides types to represent an IP network (`Cidr`) or</span>
-<span class='doccomment'>//! an IP host withing a network (`Inet`)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//! Address parsing also accepts IPv4 address with less than four octets (but always parses those as decimal).</span>
+<span class="doccomment">//! This library provides types to represent an IP network (`Cidr`) or</span>
+<span class="doccomment">//! an IP host withing a network (`Inet`)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Address parsing also accepts IPv4 address with less than four octets (but always parses those as decimal).</span>
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>cidr</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>errors</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>family</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>inet</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>inet_iterator</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>traits</span>::<span class='op'>*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cidr</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">family</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">inet</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">inet_iterator</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">traits</span>::<span class="kw-2">*</span>;
 
-<span class='doccomment'>/// should perhaps be a separate crate</span>
-<span class='kw'>mod</span> <span class='ident'>bitstring</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">bitstring</span>;
 
-<span class='doccomment'>/// implementation helper for bitstrings</span>
-<span class='kw'>mod</span> <span class='ident'>bigendian</span>;
-
-<span class='kw'>mod</span> <span class='ident'>cidr</span>;
-<span class='kw'>mod</span> <span class='ident'>errors</span>;
-<span class='kw'>mod</span> <span class='ident'>family</span>;
-<span class='kw'>mod</span> <span class='ident'>inet</span>;
-<span class='kw'>mod</span> <span class='ident'>inet_iterator</span>;
-<span class='kw'>mod</span> <span class='ident'>local_addr_parser</span>;
-<span class='kw'>mod</span> <span class='ident'>traits</span>;
+<span class="kw">mod</span> <span class="ident">cidr</span>;
+<span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">mod</span> <span class="ident">family</span>;
+<span class="kw">mod</span> <span class="ident">inet</span>;
+<span class="kw">mod</span> <span class="ident">inet_iterator</span>;
+<span class="kw">mod</span> <span class="ident">local_addr_parser</span>;
+<span class="kw">mod</span> <span class="ident">traits</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

@@ -9,6 +9,7 @@
 
     <title>from_str.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -63,25 +64,25 @@
 <span id="19">19</span>
 <span id="20">20</span>
 <span id="21">21</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
-<span class='kw'>use</span> <span class='ident'>local_addr_parser</span>::<span class='ident'>ParseableAddress</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
+<span class="kw">use</span> <span class="ident">local_addr_parser</span>::<span class="ident">ParseableAddress</span>;
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>errors</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='ident'>traits</span>::<span class='op'>*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">traits</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>inet_from_str</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>I</span>, <span class='ident'>NetworkParseError</span><span class='op'>&gt;</span>
-<span class='kw'>where</span>
-	<span class='ident'>I</span>: <span class='ident'>Inet</span>,
-	<span class='ident'>I</span>::<span class='ident'>Address</span>: <span class='ident'>ParseableAddress</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inet_from_str</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">I</span>, <span class="ident">NetworkParseError</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+	<span class="ident">I</span>: <span class="ident">Inet</span>,
+	<span class="ident">I</span>::<span class="ident">Address</span>: <span class="ident">ParseableAddress</span>
 {
-	<span class='prelude-val'>Ok</span>(<span class='kw'>match</span> <span class='ident'>s</span>.<span class='ident'>rfind</span>(<span class='string'>&#39;/&#39;</span>) {
-		<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='ident'>I</span>::<span class='ident'>new_host</span>(<span class='ident'>I</span>::<span class='ident'>Address</span>::<span class='ident'>address_from_str</span>(<span class='ident'>s</span>)<span class='question-mark'>?</span>),
-		<span class='prelude-val'>Some</span>(<span class='ident'>pos</span>) <span class='op'>=&gt;</span> {
-			<span class='ident'>I</span>::<span class='ident'>new</span>(
-				<span class='ident'>I</span>::<span class='ident'>Address</span>::<span class='ident'>address_from_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>[<span class='number'>0</span>..<span class='ident'>pos</span>])<span class='question-mark'>?</span>,
-				<span class='ident'>u8</span>::<span class='ident'>from_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>[<span class='ident'>pos</span><span class='op'>+</span><span class='number'>1</span>..])<span class='question-mark'>?</span>,
-			)<span class='question-mark'>?</span>
+	<span class="prelude-val">Ok</span>(<span class="kw">match</span> <span class="ident">s</span>.<span class="ident">rfind</span>(<span class="string">&#39;/&#39;</span>) {
+		<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">I</span>::<span class="ident">new_host</span>(<span class="ident">I</span>::<span class="ident">Address</span>::<span class="ident">address_from_str</span>(<span class="ident">s</span>)<span class="question-mark">?</span>),
+		<span class="prelude-val">Some</span>(<span class="ident">pos</span>) <span class="op">=&gt;</span> {
+			<span class="ident">I</span>::<span class="ident">new</span>(
+				<span class="ident">I</span>::<span class="ident">Address</span>::<span class="ident">address_from_str</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>[<span class="number">0</span>..<span class="ident">pos</span>])<span class="question-mark">?</span>,
+				<span class="ident">u8</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>[<span class="ident">pos</span><span class="op">+</span><span class="number">1</span>..])<span class="question-mark">?</span>,
+			)<span class="question-mark">?</span>
 		}
 	})
 }

@@ -9,6 +9,7 @@
 
     <title>cidr::Inet - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>cidr</a></p><script>window.sidebarCurrent = {name: 'Inet', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Inet</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>cidr</a></p><script>window.sidebarCurrent = {name: 'Inet', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,28 +43,28 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>cidr</a>::<wbr><a class='trait' href=''>Inet</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>cidr</a>::<wbr><a class="trait" href=''>Inet</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../src/cidr/traits.rs.html#77-122' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Inet: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type <a href='#associatedtype.Address' class='type'>Address</a>;
-    type <a href='#associatedtype.Cidr' class='type'>Cidr</a>: <a class='trait' href='../cidr/trait.Cidr.html' title='cidr::Cidr'>Cidr</a>&lt;Address=Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>&gt;;
-    fn <a href='#tymethod.new' class='fnname'>new</a>(addr: Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; len: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;Self, <a class='struct' href='../cidr/struct.NetworkLengthTooLongError.html' title='cidr::NetworkLengthTooLongError'>NetworkLengthTooLongError</a>&gt;;
-    fn <a href='#tymethod.new_host' class='fnname'>new_host</a>(addr: Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>) -&gt; Self;
-    fn <a href='#tymethod.next' class='fnname'>next</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
-    fn <a href='#tymethod.network' class='fnname'>network</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Cidr</a>;
-    fn <a href='#tymethod.address' class='fnname'>address</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>;
-    fn <a href='#tymethod.first_address' class='fnname'>first_address</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>;
+<pre class='rust trait'>pub trait Inet: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
+    type <a href='#associatedtype.Address' class="type">Address</a>;
+    type <a href='#associatedtype.Cidr' class="type">Cidr</a>: <a class="trait" href="../cidr/trait.Cidr.html" title="trait cidr::Cidr">Cidr</a>&lt;Address = Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>&gt;;
+    fn <a href='#tymethod.new' class='fnname'>new</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addr: Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="struct" href="../cidr/struct.NetworkLengthTooLongError.html" title="struct cidr::NetworkLengthTooLongError">NetworkLengthTooLongError</a>&gt;;
+    fn <a href='#tymethod.new_host' class='fnname'>new_host</a>(addr: Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>) -&gt; Self;
+    fn <a href='#tymethod.next' class='fnname'>next</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
+    fn <a href='#tymethod.network' class='fnname'>network</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Cidr</a>;
+    fn <a href='#tymethod.address' class='fnname'>address</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>;
+    fn <a href='#tymethod.first_address' class='fnname'>first_address</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>;
     fn <a href='#tymethod.first' class='fnname'>first</a>(&amp;self) -&gt; Self;
-    fn <a href='#tymethod.last_address' class='fnname'>last_address</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>;
+    fn <a href='#tymethod.last_address' class='fnname'>last_address</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>;
     fn <a href='#tymethod.last' class='fnname'>last</a>(&amp;self) -&gt; Self;
-    fn <a href='#tymethod.network_length' class='fnname'>network_length</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>;
-    fn <a href='#tymethod.family' class='fnname'>family</a>(&amp;self) -&gt; <a class='enum' href='../cidr/enum.Family.html' title='cidr::Family'>Family</a>;
-    fn <a href='#tymethod.mask' class='fnname'>mask</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>;
-    fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, addr: &amp;Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.network_length' class='fnname'>network_length</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>;
+    fn <a href='#tymethod.family' class='fnname'>family</a>(&amp;self) -&gt; <a class="enum" href="../cidr/enum.Family.html" title="enum cidr::Family">Family</a>;
+    fn <a href='#tymethod.mask' class='fnname'>mask</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>;
+    fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, addr: &amp;Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
 }</pre><div class='docblock'><p>Types implementing Inet represent IP hosts within networks.</p>
 
 <p>In addition to a network represented by the corresponding <code>Cidr</code>
@@ -79,34 +80,34 @@ first address of the network.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Address' class='method stab '><span id='Address.t' class='invisible'><code>type <a href='#associatedtype.Address' class='type'>Address</a></code></span></h3><div class='docblock'><p>Type for the underlying address (<code>IpAddr</code>, <code>Ipv4Addr</code> or
+        <h3 id='associatedtype.Address' class='method'><span id='Address.t' class='invisible'><code>type <a href='#associatedtype.Address' class="type">Address</a></code></span></h3><div class='docblock'><p>Type for the underlying address (<code>IpAddr</code>, <code>Ipv4Addr</code> or
 <code>Ipv6Addr</code>).</p>
-</div><h3 id='associatedtype.Cidr' class='method stab '><span id='Cidr.t' class='invisible'><code>type <a href='#associatedtype.Cidr' class='type'>Cidr</a>: <a class='trait' href='../cidr/trait.Cidr.html' title='cidr::Cidr'>Cidr</a>&lt;Address=Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>&gt;</code></span></h3><div class='docblock'><p>Corresponding <code>Cidr</code> type (representing only the network)</p>
+</div><h3 id='associatedtype.Cidr' class='method'><span id='Cidr.t' class='invisible'><code>type <a href='#associatedtype.Cidr' class="type">Cidr</a>: <a class="trait" href="../cidr/trait.Cidr.html" title="trait cidr::Cidr">Cidr</a>&lt;Address = Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>&gt;</code></span></h3><div class='docblock'><p>Corresponding <code>Cidr</code> type (representing only the network)</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.new' class='method stab '><span id='new.v' class='invisible'><code>fn <a href='#tymethod.new' class='fnname'>new</a>(addr: Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>, len: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;Self, <a class='struct' href='../cidr/struct.NetworkLengthTooLongError.html' title='cidr::NetworkLengthTooLongError'>NetworkLengthTooLongError</a>&gt;</code></span></h3><div class='docblock'><p>Create new host within a network from address and prefix length.
+        <h3 id='tymethod.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#tymethod.new' class='fnname'>new</a>(addr: Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>, len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;Self, <a class="struct" href="../cidr/struct.NetworkLengthTooLongError.html" title="struct cidr::NetworkLengthTooLongError">NetworkLengthTooLongError</a>&gt;</code></span></h3><div class='docblock'><p>Create new host within a network from address and prefix length.
 If the network length exceeds the address length an error is
 returned.</p>
-</div><h3 id='tymethod.new_host' class='method stab '><span id='new_host.v' class='invisible'><code>fn <a href='#tymethod.new_host' class='fnname'>new_host</a>(addr: Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Create a network containing a single address as host and the
+</div><h3 id='tymethod.new_host' class='method'><span id='new_host.v' class='invisible'><code>fn <a href='#tymethod.new_host' class='fnname'>new_host</a>(addr: Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Create a network containing a single address as host and the
 network (network length = address length).</p>
-</div><h3 id='tymethod.next' class='method stab '><span id='next.v' class='invisible'><code>fn <a href='#tymethod.next' class='fnname'>next</a>(&amp;mut self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>increments host part (without changing the network part); returns true on wrap around</p>
-</div><h3 id='tymethod.network' class='method stab '><span id='network.v' class='invisible'><code>fn <a href='#tymethod.network' class='fnname'>network</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Cidr</a></code></span></h3><div class='docblock'><p>network (i.e. drops the host information)</p>
-</div><h3 id='tymethod.address' class='method stab '><span id='address.v' class='invisible'><code>fn <a href='#tymethod.address' class='fnname'>address</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a></code></span></h3><div class='docblock'><p>the host</p>
-</div><h3 id='tymethod.first_address' class='method stab '><span id='first_address.v' class='invisible'><code>fn <a href='#tymethod.first_address' class='fnname'>first_address</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a></code></span></h3><div class='docblock'><p>first address in the network as plain address</p>
-</div><h3 id='tymethod.first' class='method stab '><span id='first.v' class='invisible'><code>fn <a href='#tymethod.first' class='fnname'>first</a>(&amp;self) -&gt; Self</code></span></h3><div class='docblock'><p>first address in the network</p>
-</div><h3 id='tymethod.last_address' class='method stab '><span id='last_address.v' class='invisible'><code>fn <a href='#tymethod.last_address' class='fnname'>last_address</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a></code></span></h3><div class='docblock'><p>last address in the network as plain address</p>
-</div><h3 id='tymethod.last' class='method stab '><span id='last.v' class='invisible'><code>fn <a href='#tymethod.last' class='fnname'>last</a>(&amp;self) -&gt; Self</code></span></h3><div class='docblock'><p>last address in the network</p>
-</div><h3 id='tymethod.network_length' class='method stab '><span id='network_length.v' class='invisible'><code>fn <a href='#tymethod.network_length' class='fnname'>network_length</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a></code></span></h3><div class='docblock'><p>length in bits of the shared prefix of the contained addresses</p>
-</div><h3 id='tymethod.family' class='method stab '><span id='family.v' class='invisible'><code>fn <a href='#tymethod.family' class='fnname'>family</a>(&amp;self) -&gt; <a class='enum' href='../cidr/enum.Family.html' title='cidr::Family'>Family</a></code></span></h3><div class='docblock'><p>IP family of the contained address (<code>Ipv4</code> or <code>Ipv6</code>).</p>
-</div><h3 id='tymethod.mask' class='method stab '><span id='mask.v' class='invisible'><code>fn <a href='#tymethod.mask' class='fnname'>mask</a>(&amp;self) -&gt; Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a></code></span></h3><div class='docblock'><p>network mask: an pseudo address which has the first <code>network length</code> bits set to 1 and the remaining to 0.</p>
-</div><h3 id='tymethod.contains' class='method stab '><span id='contains.v' class='invisible'><code>fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, addr: &amp;Self::<a class='trait' href='../cidr/trait.Inet.html' title='cidr::Inet'>Address</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>check whether an address is contained in the network</p>
+</div><h3 id='tymethod.next' class='method'><span id='next.v' class='invisible'><code>fn <a href='#tymethod.next' class='fnname'>next</a>(&amp;mut self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>increments host part (without changing the network part); returns true on wrap around</p>
+</div><h3 id='tymethod.network' class='method'><span id='network.v' class='invisible'><code>fn <a href='#tymethod.network' class='fnname'>network</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Cidr</a></code></span></h3><div class='docblock'><p>network (i.e. drops the host information)</p>
+</div><h3 id='tymethod.address' class='method'><span id='address.v' class='invisible'><code>fn <a href='#tymethod.address' class='fnname'>address</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a></code></span></h3><div class='docblock'><p>the host</p>
+</div><h3 id='tymethod.first_address' class='method'><span id='first_address.v' class='invisible'><code>fn <a href='#tymethod.first_address' class='fnname'>first_address</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a></code></span></h3><div class='docblock'><p>first address in the network as plain address</p>
+</div><h3 id='tymethod.first' class='method'><span id='first.v' class='invisible'><code>fn <a href='#tymethod.first' class='fnname'>first</a>(&amp;self) -&gt; Self</code></span></h3><div class='docblock'><p>first address in the network</p>
+</div><h3 id='tymethod.last_address' class='method'><span id='last_address.v' class='invisible'><code>fn <a href='#tymethod.last_address' class='fnname'>last_address</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a></code></span></h3><div class='docblock'><p>last address in the network as plain address</p>
+</div><h3 id='tymethod.last' class='method'><span id='last.v' class='invisible'><code>fn <a href='#tymethod.last' class='fnname'>last</a>(&amp;self) -&gt; Self</code></span></h3><div class='docblock'><p>last address in the network</p>
+</div><h3 id='tymethod.network_length' class='method'><span id='network_length.v' class='invisible'><code>fn <a href='#tymethod.network_length' class='fnname'>network_length</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a></code></span></h3><div class='docblock'><p>length in bits of the shared prefix of the contained addresses</p>
+</div><h3 id='tymethod.family' class='method'><span id='family.v' class='invisible'><code>fn <a href='#tymethod.family' class='fnname'>family</a>(&amp;self) -&gt; <a class="enum" href="../cidr/enum.Family.html" title="enum cidr::Family">Family</a></code></span></h3><div class='docblock'><p>IP family of the contained address (<code>Ipv4</code> or <code>Ipv6</code>).</p>
+</div><h3 id='tymethod.mask' class='method'><span id='mask.v' class='invisible'><code>fn <a href='#tymethod.mask' class='fnname'>mask</a>(&amp;self) -&gt; Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a></code></span></h3><div class='docblock'><p>network mask: an pseudo address which has the first <code>network length</code> bits set to 1 and the remaining to 0.</p>
+</div><h3 id='tymethod.contains' class='method'><span id='contains.v' class='invisible'><code>fn <a href='#tymethod.contains' class='fnname'>contains</a>(&amp;self, addr: &amp;Self::<a class="trait" href="../cidr/trait.Inet.html" title="trait cidr::Inet">Address</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>check whether an address is contained in the network</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl Inet for <a class='enum' href='../cidr/enum.IpInet.html' title='cidr::IpInet'>IpInet</a></code></li>
-<li><code>impl Inet for <a class='struct' href='../cidr/struct.Ipv4Inet.html' title='cidr::Ipv4Inet'>Ipv4Inet</a></code></li>
-<li><code>impl Inet for <a class='struct' href='../cidr/struct.Ipv6Inet.html' title='cidr::Ipv6Inet'>Ipv6Inet</a></code></li>
+    <li><code>impl Inet for <a class="enum" href="../cidr/enum.IpInet.html" title="enum cidr::IpInet">IpInet</a></code></li>
+<li><code>impl Inet for <a class="struct" href="../cidr/struct.Ipv4Inet.html" title="struct cidr::Ipv4Inet">Ipv4Inet</a></code></li>
+<li><code>impl Inet for <a class="struct" href="../cidr/struct.Ipv6Inet.html" title="struct cidr::Ipv6Inet">Ipv6Inet</a></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/cidr/trait.Inet.js">
                  </script></section>

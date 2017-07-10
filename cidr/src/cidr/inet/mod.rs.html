@@ -9,6 +9,7 @@
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -83,47 +84,47 @@
 <span id="39">39</span>
 <span id="40">40</span>
 <span id="41">41</span>
-</pre><pre class='rust '>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>combined</span>::<span class='op'>*</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>direct</span>::<span class='op'>*</span>;
+</pre><pre class="rust ">
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">combined</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">direct</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>Ipv4Addr</span>,<span class='ident'>Ipv6Addr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">Ipv4Addr</span>,<span class="ident">Ipv6Addr</span>};
 
-<span class='kw'>mod</span> <span class='ident'>combined</span>;
-<span class='kw'>mod</span> <span class='ident'>direct</span>;
-<span class='kw'>mod</span> <span class='ident'>from_str</span>;
+<span class="kw">mod</span> <span class="ident">combined</span>;
+<span class="kw">mod</span> <span class="ident">direct</span>;
+<span class="kw">mod</span> <span class="ident">from_str</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span>;
 
-<span class='doccomment'>/// `Inet` type representing an IPv4 host within a network</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Derived ordering, i.e. first sort by address, then by network</span>
-<span class='doccomment'>/// length.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>PartialOrd</span>,<span class='ident'>Ord</span>,<span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Ipv4Inet</span> {
-	<span class='ident'>address</span>: <span class='ident'>Ipv4Addr</span>,
-	<span class='ident'>network_length</span>: <span class='ident'>u8</span>,
+<span class="doccomment">/// `Inet` type representing an IPv4 host within a network</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Derived ordering, i.e. first sort by address, then by network</span>
+<span class="doccomment">/// length.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">PartialOrd</span>,<span class="ident">Ord</span>,<span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Ipv4Inet</span> {
+	<span class="ident">address</span>: <span class="ident">Ipv4Addr</span>,
+	<span class="ident">network_length</span>: <span class="ident">u8</span>,
 }
 
-<span class='doccomment'>/// `Inet` type representing an IPv6 host within a network</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Derived ordering, i.e. first sort by address, then by network</span>
-<span class='doccomment'>/// length.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>PartialOrd</span>,<span class='ident'>Ord</span>,<span class='ident'>Hash</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Ipv6Inet</span> {
-	<span class='ident'>address</span>: <span class='ident'>Ipv6Addr</span>,
-	<span class='ident'>network_length</span>: <span class='ident'>u8</span>,
+<span class="doccomment">/// `Inet` type representing an IPv6 host within a network</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Derived ordering, i.e. first sort by address, then by network</span>
+<span class="doccomment">/// length.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">PartialOrd</span>,<span class="ident">Ord</span>,<span class="ident">Hash</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Ipv6Inet</span> {
+	<span class="ident">address</span>: <span class="ident">Ipv6Addr</span>,
+	<span class="ident">network_length</span>: <span class="ident">u8</span>,
 }
 
-<span class='doccomment'>/// `Inet` type representing either an IPv4 or an IPv6 host within a</span>
-<span class='doccomment'>/// network</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>,<span class='ident'>PartialEq</span>,<span class='ident'>Eq</span>,<span class='ident'>PartialOrd</span>,<span class='ident'>Ord</span>,<span class='ident'>Hash</span>,<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>IpInet</span> {
-	<span class='doccomment'>/// IPv4 host within network</span>
-	<span class='ident'>V4</span>(<span class='ident'>Ipv4Inet</span>),
-	<span class='doccomment'>/// IPv6 host within network</span>
-	<span class='ident'>V6</span>(<span class='ident'>Ipv6Inet</span>),
+<span class="doccomment">/// `Inet` type representing either an IPv4 or an IPv6 host within a</span>
+<span class="doccomment">/// network</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">PartialOrd</span>,<span class="ident">Ord</span>,<span class="ident">Hash</span>,<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">IpInet</span> {
+	<span class="doccomment">/// IPv4 host within network</span>
+	<span class="ident">V4</span>(<span class="ident">Ipv4Inet</span>),
+	<span class="doccomment">/// IPv6 host within network</span>
+	<span class="ident">V6</span>(<span class="ident">Ipv6Inet</span>),
 }
 </pre>
 </section>

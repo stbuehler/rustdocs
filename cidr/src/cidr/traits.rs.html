@@ -9,6 +9,7 @@
 
     <title>traits.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -164,128 +165,128 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>family</span>::<span class='ident'>Family</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>errors</span>::<span class='op'>*</span>;
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>inet_iterator</span>::<span class='op'>*</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">family</span>::<span class="ident">Family</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">inet_iterator</span>::<span class="kw-2">*</span>;
 
-<span class='doccomment'>/// Types implementing Cidr represent IP networks.  An IP network in</span>
-<span class='doccomment'>/// this case is a set of IP addresses which share a common prefix (when</span>
-<span class='doccomment'>/// viewed as a bitstring).  The length of this prefix is called</span>
-<span class='doccomment'>/// `network_length`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// In the standard representation the network is identified by the</span>
-<span class='doccomment'>/// first address and the network length, separated by a &#39;/&#39;.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The parsers will expect the input in the same format, i.e. only the</span>
-<span class='doccomment'>/// first address of the network is accepted.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The first network length bits in an address representing the network</span>
-<span class='doccomment'>/// are the network part, the remaining bits are the host part.</span>
-<span class='doccomment'>/// Requiring an address to be the first in a network is equivalent to</span>
-<span class='doccomment'>/// requiring the host part being zero.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Cidr</span>: <span class='ident'>Sized</span> {
-	<span class='doccomment'>/// Type for the underlying address (`IpAddr`, `Ipv4Addr` or</span>
-	<span class='doccomment'>/// `Ipv6Addr`).</span>
-	<span class='kw'>type</span> <span class='ident'>Address</span>;
+<span class="doccomment">/// Types implementing Cidr represent IP networks.  An IP network in</span>
+<span class="doccomment">/// this case is a set of IP addresses which share a common prefix (when</span>
+<span class="doccomment">/// viewed as a bitstring).  The length of this prefix is called</span>
+<span class="doccomment">/// `network_length`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// In the standard representation the network is identified by the</span>
+<span class="doccomment">/// first address and the network length, separated by a &#39;/&#39;.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The parsers will expect the input in the same format, i.e. only the</span>
+<span class="doccomment">/// first address of the network is accepted.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The first network length bits in an address representing the network</span>
+<span class="doccomment">/// are the network part, the remaining bits are the host part.</span>
+<span class="doccomment">/// Requiring an address to be the first in a network is equivalent to</span>
+<span class="doccomment">/// requiring the host part being zero.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cidr</span>: <span class="ident">Sized</span> {
+	<span class="doccomment">/// Type for the underlying address (`IpAddr`, `Ipv4Addr` or</span>
+	<span class="doccomment">/// `Ipv6Addr`).</span>
+	<span class="kw">type</span> <span class="ident">Address</span>;
 
-	<span class='doccomment'>/// Corresponding `Inet` type (representing an address + a network</span>
-	<span class='doccomment'>/// containing it)</span>
-	<span class='kw'>type</span> <span class='ident'>Inet</span>: <span class='ident'>Inet</span><span class='op'>&lt;</span><span class='ident'>Address</span><span class='op'>=</span><span class='self'>Self</span>::<span class='ident'>Address</span><span class='op'>&gt;</span>;
+	<span class="doccomment">/// Corresponding `Inet` type (representing an address + a network</span>
+	<span class="doccomment">/// containing it)</span>
+	<span class="kw">type</span> <span class="ident">Inet</span>: <span class="ident">Inet</span><span class="op">&lt;</span><span class="ident">Address</span><span class="op">=</span><span class="self">Self</span>::<span class="ident">Address</span><span class="op">&gt;</span>;
 
-	<span class='doccomment'>/// Create new network from address and prefix length.  If the</span>
-	<span class='doccomment'>/// network length exceeds the address length or the address is not</span>
-	<span class='doccomment'>/// the first address in the network (&quot;host part not zero&quot;) an</span>
-	<span class='doccomment'>/// error is returned.</span>
-	<span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='self'>Self</span>::<span class='ident'>Address</span>, <span class='ident'>len</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>NetworkParseError</span><span class='op'>&gt;</span>;
+	<span class="doccomment">/// Create new network from address and prefix length.  If the</span>
+	<span class="doccomment">/// network length exceeds the address length or the address is not</span>
+	<span class="doccomment">/// the first address in the network (&quot;host part not zero&quot;) an</span>
+	<span class="doccomment">/// error is returned.</span>
+	<span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>, <span class="ident">len</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NetworkParseError</span><span class="op">&gt;</span>;
 
-	<span class='doccomment'>/// Create a network containing a single address (network length = address length).</span>
-	<span class='kw'>fn</span> <span class='ident'>new_host</span>(<span class='ident'>addr</span>: <span class='self'>Self</span>::<span class='ident'>Address</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+	<span class="doccomment">/// Create a network containing a single address (network length = address length).</span>
+	<span class="kw">fn</span> <span class="ident">new_host</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
-	<span class='doccomment'>/// Iterate over all addresses in the range.  With IPv6 addresses</span>
-	<span class='doccomment'>/// this can produce really long iterations (up to 2^128 addresses).</span>
-	<span class='kw'>fn</span> <span class='ident'>iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>InetIterator</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Inet</span><span class='op'>&gt;</span> {
-		<span class='ident'>InetIterator</span>::<span class='ident'>new</span>(<span class='self'>self</span>.<span class='ident'>first</span>())
+	<span class="doccomment">/// Iterate over all addresses in the range.  With IPv6 addresses</span>
+	<span class="doccomment">/// this can produce really long iterations (up to 2^128 addresses).</span>
+	<span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">InetIterator</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Inet</span><span class="op">&gt;</span> {
+		<span class="ident">InetIterator</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">first</span>())
 	}
 
-	<span class='doccomment'>/// first address in the network as plain address</span>
-	<span class='kw'>fn</span> <span class='ident'>first_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
-	<span class='doccomment'>/// first address in the network</span>
-	<span class='kw'>fn</span> <span class='ident'>first</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Inet</span>;
-	<span class='doccomment'>/// last address in the network as plain address</span>
-	<span class='kw'>fn</span> <span class='ident'>last_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
-	<span class='doccomment'>/// last address in the network</span>
-	<span class='kw'>fn</span> <span class='ident'>last</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Inet</span>;
-	<span class='doccomment'>/// length in bits of the shared prefix of the contained addresses</span>
-	<span class='kw'>fn</span> <span class='ident'>network_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span>;
-	<span class='doccomment'>/// IP family of the contained address (`Ipv4` or `Ipv6`).</span>
-	<span class='kw'>fn</span> <span class='ident'>family</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Family</span>;
+	<span class="doccomment">/// first address in the network as plain address</span>
+	<span class="kw">fn</span> <span class="ident">first_address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
+	<span class="doccomment">/// first address in the network</span>
+	<span class="kw">fn</span> <span class="ident">first</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Inet</span>;
+	<span class="doccomment">/// last address in the network as plain address</span>
+	<span class="kw">fn</span> <span class="ident">last_address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
+	<span class="doccomment">/// last address in the network</span>
+	<span class="kw">fn</span> <span class="ident">last</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Inet</span>;
+	<span class="doccomment">/// length in bits of the shared prefix of the contained addresses</span>
+	<span class="kw">fn</span> <span class="ident">network_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u8</span>;
+	<span class="doccomment">/// IP family of the contained address (`Ipv4` or `Ipv6`).</span>
+	<span class="kw">fn</span> <span class="ident">family</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Family</span>;
 
-	<span class='doccomment'>/// network mask: an pseudo address which has the first `network</span>
-	<span class='doccomment'>/// length` bits set to 1 and the remaining to 0.</span>
-	<span class='kw'>fn</span> <span class='ident'>mask</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
+	<span class="doccomment">/// network mask: an pseudo address which has the first `network</span>
+	<span class="doccomment">/// length` bits set to 1 and the remaining to 0.</span>
+	<span class="kw">fn</span> <span class="ident">mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
 
-	<span class='doccomment'>/// check whether an address is contained in the network</span>
-	<span class='kw'>fn</span> <span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Address</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+	<span class="doccomment">/// check whether an address is contained in the network</span>
+	<span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 }
 
-<span class='doccomment'>/// Types implementing Inet represent IP hosts within networks.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// In addition to a network represented by the corresponding `Cidr`</span>
-<span class='doccomment'>/// type, a `Inet` type also stores a single host address which is part</span>
-<span class='doccomment'>/// of the network.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The host address is not really stored as separate data, but is</span>
-<span class='doccomment'>/// stored together with the network address.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// The representation of a `Inet` type is similar to that of the</span>
-<span class='doccomment'>/// corresponding `Cidr` type, but shows the host address instead of the</span>
-<span class='doccomment'>/// first address of the network.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Inet</span>: <span class='ident'>Sized</span> {
-	<span class='doccomment'>/// Type for the underlying address (`IpAddr`, `Ipv4Addr` or</span>
-	<span class='doccomment'>/// `Ipv6Addr`).</span>
-	<span class='kw'>type</span> <span class='ident'>Address</span>;
+<span class="doccomment">/// Types implementing Inet represent IP hosts within networks.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// In addition to a network represented by the corresponding `Cidr`</span>
+<span class="doccomment">/// type, a `Inet` type also stores a single host address which is part</span>
+<span class="doccomment">/// of the network.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The host address is not really stored as separate data, but is</span>
+<span class="doccomment">/// stored together with the network address.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// The representation of a `Inet` type is similar to that of the</span>
+<span class="doccomment">/// corresponding `Cidr` type, but shows the host address instead of the</span>
+<span class="doccomment">/// first address of the network.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Inet</span>: <span class="ident">Sized</span> {
+	<span class="doccomment">/// Type for the underlying address (`IpAddr`, `Ipv4Addr` or</span>
+	<span class="doccomment">/// `Ipv6Addr`).</span>
+	<span class="kw">type</span> <span class="ident">Address</span>;
 
-	<span class='doccomment'>/// Corresponding `Cidr` type (representing only the network)</span>
-	<span class='kw'>type</span> <span class='ident'>Cidr</span>: <span class='ident'>Cidr</span><span class='op'>&lt;</span><span class='ident'>Address</span><span class='op'>=</span><span class='self'>Self</span>::<span class='ident'>Address</span><span class='op'>&gt;</span>;
+	<span class="doccomment">/// Corresponding `Cidr` type (representing only the network)</span>
+	<span class="kw">type</span> <span class="ident">Cidr</span>: <span class="ident">Cidr</span><span class="op">&lt;</span><span class="ident">Address</span><span class="op">=</span><span class="self">Self</span>::<span class="ident">Address</span><span class="op">&gt;</span>;
 
-	<span class='doccomment'>/// Create new host within a network from address and prefix length.</span>
-	<span class='doccomment'>/// If the network length exceeds the address length an error is</span>
-	<span class='doccomment'>/// returned.</span>
-	<span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>addr</span>: <span class='self'>Self</span>::<span class='ident'>Address</span>, <span class='ident'>len</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>NetworkLengthTooLongError</span><span class='op'>&gt;</span>;
+	<span class="doccomment">/// Create new host within a network from address and prefix length.</span>
+	<span class="doccomment">/// If the network length exceeds the address length an error is</span>
+	<span class="doccomment">/// returned.</span>
+	<span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>, <span class="ident">len</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NetworkLengthTooLongError</span><span class="op">&gt;</span>;
 
-	<span class='doccomment'>/// Create a network containing a single address as host and the</span>
-	<span class='doccomment'>/// network (network length = address length).</span>
-	<span class='kw'>fn</span> <span class='ident'>new_host</span>(<span class='ident'>addr</span>: <span class='self'>Self</span>::<span class='ident'>Address</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+	<span class="doccomment">/// Create a network containing a single address as host and the</span>
+	<span class="doccomment">/// network (network length = address length).</span>
+	<span class="kw">fn</span> <span class="ident">new_host</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
-	<span class='doccomment'>/// increments host part (without changing the network part); returns true on wrap around</span>
-	<span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+	<span class="doccomment">/// increments host part (without changing the network part); returns true on wrap around</span>
+	<span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 
-	<span class='doccomment'>/// network (i.e. drops the host information)</span>
-	<span class='kw'>fn</span> <span class='ident'>network</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Cidr</span>;
+	<span class="doccomment">/// network (i.e. drops the host information)</span>
+	<span class="kw">fn</span> <span class="ident">network</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Cidr</span>;
 
-	<span class='doccomment'>/// the host</span>
-	<span class='kw'>fn</span> <span class='ident'>address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
+	<span class="doccomment">/// the host</span>
+	<span class="kw">fn</span> <span class="ident">address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
 
-	<span class='doccomment'>/// first address in the network as plain address</span>
-	<span class='kw'>fn</span> <span class='ident'>first_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
-	<span class='doccomment'>/// first address in the network</span>
-	<span class='kw'>fn</span> <span class='ident'>first</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-	<span class='doccomment'>/// last address in the network as plain address</span>
-	<span class='kw'>fn</span> <span class='ident'>last_address</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
-	<span class='doccomment'>/// last address in the network</span>
-	<span class='kw'>fn</span> <span class='ident'>last</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
-	<span class='doccomment'>/// length in bits of the shared prefix of the contained addresses</span>
-	<span class='kw'>fn</span> <span class='ident'>network_length</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span>;
-	<span class='doccomment'>/// IP family of the contained address (`Ipv4` or `Ipv6`).</span>
-	<span class='kw'>fn</span> <span class='ident'>family</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Family</span>;
+	<span class="doccomment">/// first address in the network as plain address</span>
+	<span class="kw">fn</span> <span class="ident">first_address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
+	<span class="doccomment">/// first address in the network</span>
+	<span class="kw">fn</span> <span class="ident">first</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+	<span class="doccomment">/// last address in the network as plain address</span>
+	<span class="kw">fn</span> <span class="ident">last_address</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
+	<span class="doccomment">/// last address in the network</span>
+	<span class="kw">fn</span> <span class="ident">last</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+	<span class="doccomment">/// length in bits of the shared prefix of the contained addresses</span>
+	<span class="kw">fn</span> <span class="ident">network_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u8</span>;
+	<span class="doccomment">/// IP family of the contained address (`Ipv4` or `Ipv6`).</span>
+	<span class="kw">fn</span> <span class="ident">family</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Family</span>;
 
-	<span class='doccomment'>/// network mask: an pseudo address which has the first `network</span>
-	<span class='doccomment'>/// length` bits set to 1 and the remaining to 0.</span>
-	<span class='kw'>fn</span> <span class='ident'>mask</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Address</span>;
+	<span class="doccomment">/// network mask: an pseudo address which has the first `network</span>
+	<span class="doccomment">/// length` bits set to 1 and the remaining to 0.</span>
+	<span class="kw">fn</span> <span class="ident">mask</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Address</span>;
 
-	<span class='doccomment'>/// check whether an address is contained in the network</span>
-	<span class='kw'>fn</span> <span class='ident'>contains</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>addr</span>: <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Address</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+	<span class="doccomment">/// check whether an address is contained in the network</span>
+	<span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 }
 </pre>
 </section>

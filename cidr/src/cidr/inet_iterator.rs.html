@@ -9,6 +9,7 @@
 
     <title>inet_iterator.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -157,118 +158,118 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>traits</span>::<span class='ident'>Inet</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">traits</span>::<span class="ident">Inet</span>;
 
-<span class='doccomment'>/// Iterator type to iterate over a list of IP addresses in a network</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>InetIterator</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>Inet</span><span class='op'>&gt;</span> {
-	<span class='ident'>next</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// Iterator type to iterate over a list of IP addresses in a network</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InetIterator</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Inet</span><span class="op">&gt;</span> {
+	<span class="ident">next</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>Inet</span><span class='op'>&gt;</span> <span class='ident'>InetIterator</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span> {
-	<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>start</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-		<span class='ident'>InetIterator</span>{
-			<span class='ident'>next</span>: <span class='prelude-val'>Some</span>(<span class='ident'>start</span>),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Inet</span><span class="op">&gt;</span> <span class="ident">InetIterator</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> {
+	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">start</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+		<span class="ident">InetIterator</span>{
+			<span class="ident">next</span>: <span class="prelude-val">Some</span>(<span class="ident">start</span>),
 		}
 	}
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>I</span>: <span class='ident'>Inet</span><span class='op'>+</span><span class='ident'>Clone</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>InetIterator</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span> {
-	<span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>I</span>::<span class='ident'>Address</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Inet</span><span class="op">+</span><span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">InetIterator</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span> {
+	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">I</span>::<span class="ident">Address</span>;
 
-	<span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Item</span><span class='op'>&gt;</span> {
-		<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>overflow</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
-		<span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>next</span> {
-			<span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-			<span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>next</span>) <span class='op'>=&gt;</span> {
-				<span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>next</span>.<span class='ident'>address</span>());
-				<span class='ident'>overflow</span> <span class='op'>=</span> <span class='ident'>next</span>.<span class='ident'>next</span>();
-				<span class='ident'>result</span>
+	<span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">overflow</span> <span class="op">=</span> <span class="bool-val">false</span>;
+		<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">next</span> {
+			<span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+			<span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">next</span>) <span class="op">=&gt;</span> {
+				<span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">next</span>.<span class="ident">address</span>());
+				<span class="ident">overflow</span> <span class="op">=</span> <span class="ident">next</span>.<span class="ident">next</span>();
+				<span class="ident">result</span>
 			}
 		};
-		<span class='kw'>if</span> <span class='ident'>overflow</span> {
-			<span class='self'>self</span>.<span class='ident'>next</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
+		<span class="kw">if</span> <span class="ident">overflow</span> {
+			<span class="self">self</span>.<span class="ident">next</span> <span class="op">=</span> <span class="prelude-val">None</span>;
 		}
-		<span class='ident'>result</span>
+		<span class="ident">result</span>
 	}
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>tests</span> {
-	<span class='kw'>use</span> <span class='kw'>super</span>::<span class='kw'>super</span>::<span class='op'>*</span>;
-	<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>IpAddr</span>,<span class='ident'>Ipv4Addr</span>,<span class='ident'>Ipv6Addr</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+	<span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="kw-2">*</span>;
+	<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">IpAddr</span>,<span class="ident">Ipv4Addr</span>,<span class="ident">Ipv6Addr</span>};
 
-	<span class='kw'>fn</span> <span class='ident'>test_v4</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>l</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Ipv4Addr</span>]) {
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(
-			<span class='ident'>s</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Ipv4Cidr</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>().<span class='ident'>iter</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>(),
-			<span class='ident'>l</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>e</span>.<span class='ident'>clone</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
+	<span class="kw">fn</span> <span class="ident">test_v4</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">l</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ipv4Addr</span>]) {
+		<span class="macro">assert_eq</span><span class="macro">!</span>(
+			<span class="ident">s</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Ipv4Cidr</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>(),
+			<span class="ident">l</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">clone</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
 		);
 
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(
-			<span class='ident'>s</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>IpCidr</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>().<span class='ident'>iter</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>(),
-			<span class='ident'>l</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>IpAddr</span>::<span class='ident'>V4</span>(<span class='ident'>e</span>.<span class='ident'>clone</span>())).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
-		);
-	}
-
-	<span class='kw'>fn</span> <span class='ident'>test_v6</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>l</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Ipv6Addr</span>]) {
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(
-			<span class='ident'>s</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>Ipv6Cidr</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>().<span class='ident'>iter</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>(),
-			<span class='ident'>l</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>e</span>.<span class='ident'>clone</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
-		);
-
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(
-			<span class='ident'>s</span>.<span class='ident'>parse</span>::<span class='op'>&lt;</span><span class='ident'>IpCidr</span><span class='op'>&gt;</span>().<span class='ident'>unwrap</span>().<span class='ident'>iter</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>(),
-			<span class='ident'>l</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>IpAddr</span>::<span class='ident'>V6</span>(<span class='ident'>e</span>.<span class='ident'>clone</span>())).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>()
+		<span class="macro">assert_eq</span><span class="macro">!</span>(
+			<span class="ident">s</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">IpCidr</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>(),
+			<span class="ident">l</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">IpAddr</span>::<span class="ident">V4</span>(<span class="ident">e</span>.<span class="ident">clone</span>())).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
 		);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>range_v4_28bit</span>() {
-		<span class='ident'>test_v4</span>(
-			<span class='string'>&quot;192.168.4.48/28&quot;</span>,
-			<span class='kw-2'>&amp;</span>[
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>48</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>49</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>50</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>51</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>52</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>53</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>54</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>55</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>56</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>57</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>58</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>59</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>60</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>61</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>62</span>),
-				<span class='ident'>Ipv4Addr</span>::<span class='ident'>new</span>(<span class='number'>192</span>, <span class='number'>168</span>, <span class='number'>4</span>, <span class='number'>63</span>),
+	<span class="kw">fn</span> <span class="ident">test_v6</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>, <span class="ident">l</span>: <span class="kw-2">&amp;</span>[<span class="ident">Ipv6Addr</span>]) {
+		<span class="macro">assert_eq</span><span class="macro">!</span>(
+			<span class="ident">s</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">Ipv6Cidr</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>(),
+			<span class="ident">l</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span>.<span class="ident">clone</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
+		);
+
+		<span class="macro">assert_eq</span><span class="macro">!</span>(
+			<span class="ident">s</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">IpCidr</span><span class="op">&gt;</span>().<span class="ident">unwrap</span>().<span class="ident">iter</span>().<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>(),
+			<span class="ident">l</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">IpAddr</span>::<span class="ident">V6</span>(<span class="ident">e</span>.<span class="ident">clone</span>())).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>()
+		);
+	}
+
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">range_v4_28bit</span>() {
+		<span class="ident">test_v4</span>(
+			<span class="string">&quot;192.168.4.48/28&quot;</span>,
+			<span class="kw-2">&amp;</span>[
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">48</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">49</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">50</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">51</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">52</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">53</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">54</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">55</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">56</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">57</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">58</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">59</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">60</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">61</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">62</span>),
+				<span class="ident">Ipv4Addr</span>::<span class="ident">new</span>(<span class="number">192</span>, <span class="number">168</span>, <span class="number">4</span>, <span class="number">63</span>),
 			]
 		);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>range_v6_28bit</span>() {
-		<span class='ident'>test_v6</span>(
-			<span class='string'>&quot;::192.168.4.48/124&quot;</span>,
-			<span class='kw-2'>&amp;</span>[
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>48</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>49</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>50</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>51</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>52</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>53</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>54</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>55</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>56</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>57</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>58</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>59</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>60</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>61</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>62</span>),
-				<span class='ident'>Ipv6Addr</span>::<span class='ident'>new</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>192</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>168</span>, <span class='number'>4</span><span class='op'>*</span><span class='number'>256</span><span class='op'>+</span><span class='number'>63</span>),
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">range_v6_28bit</span>() {
+		<span class="ident">test_v6</span>(
+			<span class="string">&quot;::192.168.4.48/124&quot;</span>,
+			<span class="kw-2">&amp;</span>[
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">48</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">49</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">50</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">51</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">52</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">53</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">54</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">55</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">56</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">57</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">58</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">59</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">60</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">61</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">62</span>),
+				<span class="ident">Ipv6Addr</span>::<span class="ident">new</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">192</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">168</span>, <span class="number">4</span><span class="kw-2">*</span><span class="number">256</span><span class="op">+</span><span class="number">63</span>),
 			]
 		);
 	}

@@ -9,6 +9,7 @@
 
     <title>cidr - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'></p><script>window.sidebarCurrent = {name: 'cidr', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate cidr</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'cidr', ty: 'mod', relpath: '../'};</script>
     </nav>
 
     <nav class="sub">
@@ -42,12 +43,12 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>cidr</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>cidr</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/cidr/lib.rs.html#1-29' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/cidr/lib.rs.html#1-26' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This library provides types to represent an IP network (<code>Cidr</code>) or
 an IP host withing a network (<code>Inet</code>)</p>
 
@@ -57,81 +58,88 @@ an IP host withing a network (<code>Inet</code>)</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.InetIterator.html'
-                                  title='cidr::InetIterator'>InetIterator</a></td>
+                           <td><a class="struct" href="struct.InetIterator.html"
+                                  title='struct cidr::InetIterator'>InetIterator</a></td>
                            <td class='docblock-short'>
                                 <p>Iterator type to iterate over a list of IP addresses in a network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Ipv4Cidr.html'
-                                  title='cidr::Ipv4Cidr'>Ipv4Cidr</a></td>
+                           <td><a class="struct" href="struct.Ipv4Cidr.html"
+                                  title='struct cidr::Ipv4Cidr'>Ipv4Cidr</a></td>
                            <td class='docblock-short'>
                                 <p><code>Cidr</code> type representing an IPv4 network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Ipv4Inet.html'
-                                  title='cidr::Ipv4Inet'>Ipv4Inet</a></td>
+                           <td><a class="struct" href="struct.Ipv4Inet.html"
+                                  title='struct cidr::Ipv4Inet'>Ipv4Inet</a></td>
                            <td class='docblock-short'>
                                 <p><code>Inet</code> type representing an IPv4 host within a network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Ipv6Cidr.html'
-                                  title='cidr::Ipv6Cidr'>Ipv6Cidr</a></td>
+                           <td><a class="struct" href="struct.Ipv6Cidr.html"
+                                  title='struct cidr::Ipv6Cidr'>Ipv6Cidr</a></td>
                            <td class='docblock-short'>
                                 <p><code>Cidr</code> type representing an IPv6 network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Ipv6Inet.html'
-                                  title='cidr::Ipv6Inet'>Ipv6Inet</a></td>
+                           <td><a class="struct" href="struct.Ipv6Inet.html"
+                                  title='struct cidr::Ipv6Inet'>Ipv6Inet</a></td>
                            <td class='docblock-short'>
                                 <p><code>Inet</code> type representing an IPv6 host within a network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.NetworkLengthTooLongError.html'
-                                  title='cidr::NetworkLengthTooLongError'>NetworkLengthTooLongError</a></td>
+                           <td><a class="struct" href="struct.NetworkLengthTooLongError.html"
+                                  title='struct cidr::NetworkLengthTooLongError'>NetworkLengthTooLongError</a></td>
                            <td class='docblock-short'>
                                 <p>Error returned when the network length was longer than the address</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.Family.html'
-                                  title='cidr::Family'>Family</a></td>
+                           <td><a class="enum" href="enum.AnyIpCidr.html"
+                                  title='enum cidr::AnyIpCidr'>AnyIpCidr</a></td>
+                           <td class='docblock-short'>
+                                <p>Represents either an IPv4 or an IPv6 network or &quot;any&quot;.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="enum" href="enum.Family.html"
+                                  title='enum cidr::Family'>Family</a></td>
                            <td class='docblock-short'>
                                 <p>Represents the type of an IP address</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.IpCidr.html'
-                                  title='cidr::IpCidr'>IpCidr</a></td>
+                           <td><a class="enum" href="enum.IpCidr.html"
+                                  title='enum cidr::IpCidr'>IpCidr</a></td>
                            <td class='docblock-short'>
                                 <p><code>Cidr</code> type representing either an IPv4 or an IPv6 network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.IpInet.html'
-                                  title='cidr::IpInet'>IpInet</a></td>
+                           <td><a class="enum" href="enum.IpInet.html"
+                                  title='enum cidr::IpInet'>IpInet</a></td>
                            <td class='docblock-short'>
                                 <p><code>Inet</code> type representing either an IPv4 or an IPv6 host within a
 network</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='enum' href='enum.NetworkParseError.html'
-                                  title='cidr::NetworkParseError'>NetworkParseError</a></td>
+                           <td><a class="enum" href="enum.NetworkParseError.html"
+                                  title='enum cidr::NetworkParseError'>NetworkParseError</a></td>
                            <td class='docblock-short'>
                                 <p>Error type returned when parsing IP networks</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Cidr.html'
-                                  title='cidr::Cidr'>Cidr</a></td>
+                           <td><a class="trait" href="trait.Cidr.html"
+                                  title='trait cidr::Cidr'>Cidr</a></td>
                            <td class='docblock-short'>
                                 <p>Types implementing Cidr represent IP networks.  An IP network in
 this case is a set of IP addresses which share a common prefix (when
@@ -140,8 +148,8 @@ viewed as a bitstring).  The length of this prefix is called
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Inet.html'
-                                  title='cidr::Inet'>Inet</a></td>
+                           <td><a class="trait" href="trait.Inet.html"
+                                  title='trait cidr::Inet'>Inet</a></td>
                            <td class='docblock-short'>
                                 <p>Types implementing Inet represent IP hosts within networks.</p>
                            </td>
