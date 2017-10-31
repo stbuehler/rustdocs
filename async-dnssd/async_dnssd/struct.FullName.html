@@ -54,7 +54,8 @@
     pub reg_type: &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
     pub domain: &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>,
 }</pre><div class='docblock'><p>Full name consiting of (up to) three parts</p>
-</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.service' class="structfield">
+</div><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.service' class="structfield">
                            <span id='service.v' class='invisible'>
                            <code>service: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;</code>
                            </span></span><div class='docblock'><p>(unescaped) service name (becomes single label in full name)</p>
@@ -66,8 +67,12 @@
                            <span id='domain.v' class='invisible'>
                            <code>domain: &amp;'a <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code>
                            </span></span><div class='docblock'><p>(escaped) domain name (most names don&#39;t need escaping)</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../async_dnssd/struct.FullName.html" title="struct async_dnssd::FullName">FullName</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/mod.rs.html#50-79' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.construct' class="method"><span id='construct.v' class='invisible'><code>fn <a href='#method.construct' class='fnname'>construct</a>(&amp;self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../async_dnssd/struct.FullName.html" title="struct async_dnssd::FullName">FullName</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/mod.rs.html#50-79' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.construct' class="method"><span id='construct.v' class='invisible'><code>fn <a href='#method.construct' class='fnname'>construct</a>(&amp;self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/mod.rs.html#54-78' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Escape and concatenate all three parts to a full name</p>
 
 <p>See <a href="https://developer.apple.com/documentation/dnssd/1804753-dnsserviceconstructfullname"><code>DNSServiceConstructFullName</code></a></p>
@@ -128,7 +133,6 @@
         window.rootPath = "../";
         window.currentCrate = "async_dnssd";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

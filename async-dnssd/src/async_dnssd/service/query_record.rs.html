@@ -363,7 +363,7 @@
 		})
 	});
 
-	<span class="ident">sender</span>.<span class="ident">send</span>(<span class="ident">data</span>).<span class="ident">unwrap</span>();
+	<span class="ident">sender</span>.<span class="ident">unbounded_send</span>(<span class="ident">data</span>).<span class="ident">unwrap</span>();
 }
 
 <span class="doccomment">/// Query for an arbitrary DNS record</span>
@@ -452,7 +452,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "async_dnssd";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

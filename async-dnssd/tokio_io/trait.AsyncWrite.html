@@ -48,19 +48,20 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/tokio_io/lib.rs.html#230-306' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/tokio_io/lib.rs.html#232-308' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait AsyncWrite: <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> {
     fn <a href='#tymethod.shutdown' class='fnname'>shutdown</a>(&amp;mut self) -&gt; <a class="type" href="../futures/poll/type.Poll.html" title="type futures::poll::Poll">Poll</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;;
 
-    fn <a href='#method.write_buf' class='fnname'>write_buf</a>&lt;B:&nbsp;<a class="trait" href="../bytes/buf/buf/trait.Buf.html" title="trait bytes::buf::buf::Buf">Buf</a>&gt;(&amp;mut self, buf: &amp;mut B) -&gt; <a class="type" href="../futures/poll/type.Poll.html" title="type futures::poll::Poll">Poll</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
+    fn <a href='#method.write_buf' class='fnname'>write_buf</a>&lt;B:&nbsp;<a class="trait" href="../bytes/buf/buf/trait.Buf.html" title="trait bytes::buf::buf::Buf">Buf</a>&gt;(&amp;mut self, buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>B) -&gt; <a class="type" href="../futures/poll/type.Poll.html" title="type futures::poll::Poll">Poll</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a></span>,
     { ... }
 }</pre><div class='docblock'><p>A trait for writable objects which operated in an asynchronous and
 futures-aware fashion.</p>
 
 <p>This trait inherits from <code>io::Write</code> and indicates that an I/O object is
 <strong>nonblocking</strong>, meaning that it will return an error instead of blocking
-when bytes are written. Specifically this means that the <code>write</code> function
-for traits that implement this type can have a few return values:</p>
+when bytes cannot currently be written, but hasn&#39;t closed. Specifically
+this means that the <code>write</code> function for types that implement this trait
+can have a few return values:</p>
 
 <ul>
 <li><code>Ok(n)</code> means that <code>n</code> bytes of data was immediately written .</li>
@@ -77,7 +78,9 @@ underlying object.</li>
 <p>This trait importantly means that the <code>write</code> method only works in the
 context of a future&#39;s task. The object may panic if used outside of a task.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.shutdown' class='method'><span id='shutdown.v' class='invisible'><code>fn <a href='#tymethod.shutdown' class='fnname'>shutdown</a>(&amp;mut self) -&gt; <a class="type" href="../futures/poll/type.Poll.html" title="type futures::poll::Poll">Poll</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;</code></span></h3><div class='docblock'><p>Initiates or attempts to shut down this writer, returning success when
 the I/O connection has completely shut down.</p>
@@ -135,23 +138,27 @@ future). It&#39;s recommended that once <code>shutdown</code> is called the
 <p>This function will panic if not called within the context of a future&#39;s
 task.</p>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='method.write_buf' class='method'><span id='write_buf.v' class='invisible'><code>fn <a href='#method.write_buf' class='fnname'>write_buf</a>&lt;B:&nbsp;<a class="trait" href="../bytes/buf/buf/trait.Buf.html" title="trait bytes::buf::buf::Buf">Buf</a>&gt;(&amp;mut self, buf: &amp;mut B) -&gt; <a class="type" href="../futures/poll/type.Poll.html" title="type futures::poll::Poll">Poll</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Write a <code>Buf</code> into this value, returning how many bytes were written.</p>
+        <h3 id='method.write_buf' class='method'><span id='write_buf.v' class='invisible'><code>fn <a href='#method.write_buf' class='fnname'>write_buf</a>&lt;B:&nbsp;<a class="trait" href="../bytes/buf/buf/trait.Buf.html" title="trait bytes::buf::buf::Buf">Buf</a>&gt;(&amp;mut self, buf: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;mut </a>B) -&gt; <a class="type" href="../futures/poll/type.Poll.html" title="type futures::poll::Poll">Poll</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Write a <code>Buf</code> into this value, returning how many bytes were written.</p>
 
 <p>Note that this method will advance the <code>buf</code> provided automatically by
 the number of bytes written.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;T:&nbsp;<a class="trait" href="../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>&gt; AsyncWrite for <a class="struct" href="../tokio_io/codec/length_delimited/struct.FramedRead.html" title="struct tokio_io::codec::length_delimited::FramedRead">FramedRead</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;T:&nbsp;<a class="trait" href="../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>&gt; AsyncWrite for <a class="struct" href="../tokio_io/io/struct.WriteHalf.html" title="struct tokio_io::io::WriteHalf">WriteHalf</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>&gt; AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>&gt; AsyncWrite for &amp;'a mut T</code></li>
+<li><code>impl&lt;'a, T:&nbsp;?<a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> + <a class="trait" href="../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>&gt; AsyncWrite for <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;'a mut </a>T</code></li>
 <li><code>impl AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/util/struct.Sink.html" title="struct std::io::util::Sink">Sink</a></code></li>
 <li><code>impl&lt;T:&nbsp;<a class="trait" href="../tokio_io/trait.AsyncWrite.html" title="trait tokio_io::AsyncWrite">AsyncWrite</a>&gt; AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/buffered/struct.BufWriter.html" title="struct std::io::buffered::BufWriter">BufWriter</a>&lt;T&gt;</code></li>
 <li><code>impl&lt;'a&gt; AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html" title="struct std::io::cursor::Cursor">Cursor</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'a mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;</code></li>
-<li><code>impl AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html" title="struct std::io::cursor::Cursor">Cursor</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;</code></li>
+<li><code>impl AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html" title="struct std::io::cursor::Cursor">Cursor</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;&gt;</code></li>
 <li><code>impl AsyncWrite for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/cursor/struct.Cursor.html" title="struct std::io::cursor::Cursor">Cursor</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html" title="struct alloc::boxed::Box">Box</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>&gt;&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/tokio_io/trait.AsyncWrite.js">
@@ -212,7 +219,6 @@ the number of bytes written.</p>
         window.rootPath = "../";
         window.currentCrate = "tokio_io";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

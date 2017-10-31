@@ -55,10 +55,14 @@
 Registered <a href="struct.Record.html"><code>Record</code></a>s from this <code>Registration</code>
 or the originating <a href="struct.Register.html"><code>Register</code></a> future will
 keep the <code>Registration</code> alive.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../async_dnssd/struct.Registration.html" title="struct async_dnssd::Registration">Registration</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/register.rs.html#197-221' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.add_raw_record' class="method"><span id='add_raw_record.v' class='invisible'><code>fn <a href='#method.add_raw_record' class='fnname'>add_raw_record</a>(&amp;self, rr_type: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, rdata: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a>&gt;</code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl <a class="struct" href="../async_dnssd/struct.Registration.html" title="struct async_dnssd::Registration">Registration</a></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/register.rs.html#197-221' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.add_raw_record' class="method"><span id='add_raw_record.v' class='invisible'><code>fn <a href='#method.add_raw_record' class='fnname'>add_raw_record</a>(&amp;self, rr_type: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>, rdata: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>, ttl: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/register.rs.html#199-211' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>See <a href="https://developer.apple.com/documentation/dnssd/1804730-dnsserviceaddrecord"><code>DNSServiceAddRecord</code></a></p>
-</div><h4 id='method.get_default_txt_record' class="method"><span id='get_default_txt_record.v' class='invisible'><code>fn <a href='#method.get_default_txt_record' class='fnname'>get_default_txt_record</a>(&amp;self) -&gt; <a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a></code></span></h4>
+</div><h4 id='method.get_default_txt_record' class="method"><span id='get_default_txt_record.v' class='invisible'><code>fn <a href='#method.get_default_txt_record' class='fnname'>get_default_txt_record</a>(&amp;self) -&gt; <a class="struct" href="../async_dnssd/struct.Record.html" title="struct async_dnssd::Record">Record</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/async_dnssd/service/register.rs.html#218-220' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Get <a href="struct.Record.html"><code>Record</code></a> handle for default TXT record
 associated with the service registration (e.g. to update it).</p>
 
@@ -121,7 +125,6 @@ anything useful on that handle.</p>
         window.rootPath = "../";
         window.currentCrate = "async_dnssd";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>
