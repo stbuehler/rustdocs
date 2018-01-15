@@ -378,19 +378,18 @@
 <span id="333">333</span>
 <span id="334">334</span>
 <span id="335">335</span>
-<span id="336">336</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bitstring</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">IpAddr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">IpAddr</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">IpCidr</span>, <span class="ident">Ipv4Cidr</span>, <span class="ident">Ipv6Cidr</span>};
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">from_str</span>::<span class="ident">cidr_from_str</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">family</span>::<span class="ident">Family</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">inet</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">traits</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">IpCidr</span>,<span class="ident">Ipv4Cidr</span>,<span class="ident">Ipv6Cidr</span>};
 
 <span class="doccomment">/// Represents either an IPv4 or an IPv6 network or &quot;any&quot;.</span>
 <span class="doccomment">///</span>
@@ -404,7 +403,7 @@
 <span class="doccomment">/// The `Cidr` trait itself cannot be implemented because `Any` has no</span>
 <span class="doccomment">/// address family, but there is a very similar interface implemented</span>
 <span class="doccomment">/// directly.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">PartialOrd</span>,<span class="ident">Ord</span>,<span class="ident">Hash</span>,<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">AnyIpCidr</span> {
 	<span class="doccomment">/// &quot;any&quot; network containing all IPv4 and IPv6 addresses</span>
 	<span class="ident">Any</span>,
@@ -676,7 +675,9 @@
 
 	<span class="kw">fn</span> <span class="ident">clip</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) {
 		<span class="comment">// max length is 129 (len(IPv6) + 1)</span>
-		<span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">128</span> { <span class="kw">return</span>; }
+		<span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">128</span> {
+			<span class="kw">return</span>;
+		}
 		<span class="kw">if</span> <span class="number">0</span> <span class="op">==</span> <span class="ident">len</span> {
 			<span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">AnyIpCidr</span>::<span class="ident">Any</span>;
 		} <span class="kw">else</span> {
@@ -690,12 +691,10 @@
 
 	<span class="kw">fn</span> <span class="ident">append</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bit</span>: <span class="ident">bool</span>) {
 		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-			<span class="ident">AnyIpCidr</span>::<span class="ident">Any</span> <span class="op">=&gt;</span> {
-				<span class="kw">if</span> <span class="ident">bit</span> {
-					<span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">AnyIpCidr</span>::<span class="ident">V6</span>(<span class="ident">Ipv6Cidr</span>::<span class="ident">null</span>());
-				} <span class="kw">else</span> {
-					<span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">AnyIpCidr</span>::<span class="ident">V4</span>(<span class="ident">Ipv4Cidr</span>::<span class="ident">null</span>());
-				}
+			<span class="ident">AnyIpCidr</span>::<span class="ident">Any</span> <span class="op">=&gt;</span> <span class="kw">if</span> <span class="ident">bit</span> {
+				<span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">AnyIpCidr</span>::<span class="ident">V6</span>(<span class="ident">Ipv6Cidr</span>::<span class="ident">null</span>());
+			} <span class="kw">else</span> {
+				<span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">AnyIpCidr</span>::<span class="ident">V4</span>(<span class="ident">Ipv4Cidr</span>::<span class="ident">null</span>());
 			},
 			<span class="ident">AnyIpCidr</span>::<span class="ident">V4</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="ident">c</span>.<span class="ident">append</span>(<span class="ident">bit</span>),
 			<span class="ident">AnyIpCidr</span>::<span class="ident">V6</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">c</span>) <span class="op">=&gt;</span> <span class="ident">c</span>.<span class="ident">append</span>(<span class="ident">bit</span>),
@@ -715,7 +714,6 @@
 		}
 	}
 }
-
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -734,13 +732,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -774,7 +774,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cidr";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

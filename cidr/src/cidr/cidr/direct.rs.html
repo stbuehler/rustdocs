@@ -199,17 +199,17 @@
 <span id="154">154</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">bitstring</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::{<span class="ident">min</span>,<span class="ident">Ordering</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::{<span class="ident">min</span>, <span class="ident">Ordering</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">Ipv4Addr</span>,<span class="ident">Ipv6Addr</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::{<span class="ident">Ipv4Addr</span>, <span class="ident">Ipv6Addr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
 
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Ipv4Cidr</span>, <span class="ident">Ipv6Cidr</span>};
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">from_str</span>::<span class="ident">cidr_from_str</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">family</span>::<span class="ident">Family</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">inet</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw">super</span>::<span class="ident">traits</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Ipv4Cidr</span>,<span class="ident">Ipv6Cidr</span>};
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_cidr_for</span> {
 	(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span>:<span class="ident">ident</span> : <span class="ident">inet</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">inet</span>:<span class="ident">ident</span> : <span class="ident">addr</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">addr</span>:<span class="ident">ty</span> : <span class="ident">family</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">family</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
@@ -370,13 +370,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -410,7 +412,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "cidr";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

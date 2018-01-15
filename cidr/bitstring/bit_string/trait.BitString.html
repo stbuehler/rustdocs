@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'>Trait BitString</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>bitstring</a>::<wbr><a href='index.html'>bit_string</a></p><script>window.sidebarCurrent = {name: 'BitString', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait BitString</p><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.get">get</a><a href="#tymethod.set">set</a><a href="#tymethod.flip">flip</a><a href="#tymethod.len">len</a><a href="#tymethod.clip">clip</a><a href="#tymethod.append">append</a><a href="#tymethod.null">null</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.shared_prefix_len">shared_prefix_len</a><a href="#method.shared_prefix">shared_prefix</a><a href="#method.subset_cmp">subset_cmp</a><a href="#method.lexicographic_cmp">lexicographic_cmp</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>bitstring</a>::<wbr><a href='index.html'>bit_string</a></p><script>window.sidebarCurrent = {name: 'BitString', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -51,18 +51,18 @@
                </span><a class='srclink' href='../../src/bitstring/bit_string/traits.rs.html#20-157' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait BitString {
     fn <a href='#tymethod.get' class='fnname'>get</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
-    fn <a href='#tymethod.set' class='fnname'>set</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
-    fn <a href='#tymethod.flip' class='fnname'>flip</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
-    fn <a href='#tymethod.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>;
-    fn <a href='#tymethod.clip' class='fnname'>clip</a>(&amp;mut self, len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
-    fn <a href='#tymethod.append' class='fnname'>append</a>(&amp;mut self, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
-    fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self;
+<div class='item-spacer'></div>    fn <a href='#tymethod.set' class='fnname'>set</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+<div class='item-spacer'></div>    fn <a href='#tymethod.flip' class='fnname'>flip</a>(&amp;mut self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
+<div class='item-spacer'></div>    fn <a href='#tymethod.len' class='fnname'>len</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>;
+<div class='item-spacer'></div>    fn <a href='#tymethod.clip' class='fnname'>clip</a>(&amp;mut self, len: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>);
+<div class='item-spacer'></div>    fn <a href='#tymethod.append' class='fnname'>append</a>(&amp;mut self, bit: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>);
+<div class='item-spacer'></div>    fn <a href='#tymethod.null' class='fnname'>null</a>() -&gt; Self;
 
-    fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
-    fn <a href='#method.shared_prefix' class='fnname'>shared_prefix</a>(&amp;self, other: &amp;Self) -&gt; Self<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a></span>,
+    fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.shared_prefix' class='fnname'>shared_prefix</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; Self<br>&nbsp;&nbsp;&nbsp; <span class="where">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a></span>,
     { ... }
-    fn <a href='#method.subset_cmp' class='fnname'>subset_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt; { ... }
-    fn <a href='#method.lexicographic_cmp' class='fnname'>lexicographic_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a> { ... }
+<div class='item-spacer'></div>    fn <a href='#method.subset_cmp' class='fnname'>subset_cmp</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt; { ... }
+<div class='item-spacer'></div>    fn <a href='#method.lexicographic_cmp' class='fnname'>lexicographic_cmp</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a> { ... }
 }</pre><div class='docblock'><p>A bit string with variable (but possibly limited) length.</p>
 
 <p>The length limit might depend on the current string; that is why
@@ -81,7 +81,9 @@ would represent <code>0.0.0.0/0</code> + <code>::/0</code>.</p>
 <p>Apart from this special case writing a bit must not modify any other
 bits or change the length.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='tymethod.get' class='method'><span id='get.v' class='invisible'><code>fn <a href='#tymethod.get' class='fnname'>get</a>(&amp;self, ndx: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Get the <code>ndx</code>th bit.</p>
 
@@ -114,11 +116,13 @@ number of bits.</p>
 <p>Underlying storage should be zeroed if <code>Eq</code> needs it to work
 properly.</p>
 </div></div>
-            <h2 id='provided-methods'>Provided Methods</h2>
+            <h2 id='provided-methods' class='small-section-header'>
+              Provided Methods<a href='#provided-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='method.shared_prefix_len' class='method'><span id='shared_prefix_len.v' class='invisible'><code>fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: &amp;Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Length of the longest shared prefix of two bit strings.</p>
-</div><h3 id='method.shared_prefix' class='method'><span id='shared_prefix.v' class='invisible'><code>fn <a href='#method.shared_prefix' class='fnname'>shared_prefix</a>(&amp;self, other: &amp;Self) -&gt; Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Longest shared prefix of two bit strings.</p>
-</div><h3 id='method.subset_cmp' class='method'><span id='subset_cmp.v' class='invisible'><code>fn <a href='#method.subset_cmp' class='fnname'>subset_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt;</code></span></h3><div class='docblock'><p>Partial ordering on bit strings.</p>
+        <h3 id='method.shared_prefix_len' class='method'><span id='shared_prefix_len.v' class='invisible'><code>fn <a href='#method.shared_prefix_len' class='fnname'>shared_prefix_len</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h3><div class='docblock'><p>Length of the longest shared prefix of two bit strings.</p>
+</div><h3 id='method.shared_prefix' class='method'><span id='shared_prefix.v' class='invisible'><code>fn <a href='#method.shared_prefix' class='fnname'>shared_prefix</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; Self <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Self: <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a>,&nbsp;</span></code></span></h3><div class='docblock'><p>Longest shared prefix of two bit strings.</p>
+</div><h3 id='method.subset_cmp' class='method'><span id='subset_cmp.v' class='invisible'><code>fn <a href='#method.subset_cmp' class='fnname'>subset_cmp</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a>&gt;</code></span></h3><div class='docblock'><p>Partial ordering on bit strings.</p>
 
 <p>Formal definition:</p>
 
@@ -127,7 +131,7 @@ properly.</p>
 
 <p>If you view a bit string as a set including all bit strings
 starting with it, this is the subset relation.</p>
-</div><h3 id='method.lexicographic_cmp' class='method'><span id='lexicographic_cmp.v' class='invisible'><code>fn <a href='#method.lexicographic_cmp' class='fnname'>lexicographic_cmp</a>(&amp;self, other: &amp;Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a></code></span></h3><div class='docblock'><p>Lexicographic ordering on bit strings.</p>
+</div><h3 id='method.lexicographic_cmp' class='method'><span id='lexicographic_cmp.v' class='invisible'><code>fn <a href='#method.lexicographic_cmp' class='fnname'>lexicographic_cmp</a>(&amp;self, other: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html" title="enum core::cmp::Ordering">Ordering</a></code></span></h3><div class='docblock'><p>Lexicographic ordering on bit strings.</p>
 
 <p>Formal definition:</p>
 
@@ -143,9 +147,11 @@ starting with it, this is the subset relation.</p>
         where s is the smallest index with `a[s] != b[s]`
 </code></pre>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;W:&nbsp;<a class="trait" href="../../bitstring/fixed_bit_string/trait.FixedBitString.html" title="trait bitstring::fixed_bit_string::FixedBitString">FixedBitString</a>&gt; BitString for <a class="struct" href="../../bitstring/struct.BitLengthString.html" title="struct bitstring::BitLengthString">BitLengthString</a>&lt;W&gt;</code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../../src/bitstring/bit_length_string.rs.html#54-96' title='goto source code'>[src]</a></div><code>impl&lt;W:&nbsp;<a class="trait" href="../../bitstring/fixed_bit_string/trait.FixedBitString.html" title="trait bitstring::fixed_bit_string::FixedBitString">FixedBitString</a>&gt; BitString for <a class="struct" href="../../bitstring/struct.BitLengthString.html" title="struct bitstring::BitLengthString">BitLengthString</a>&lt;W&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/bitstring/bit_string/trait.BitString.js">
                  </script></section>
@@ -165,13 +171,15 @@ starting with it, this is the subset relation.</p>
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -205,7 +213,6 @@ starting with it, this is the subset relation.</p>
         window.rootPath = "../../";
         window.currentCrate = "bitstring";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

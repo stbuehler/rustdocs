@@ -165,9 +165,15 @@
 <span id="120">120</span>
 <span id="121">121</span>
 <span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">family</span>::<span class="ident">Family</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">family</span>::<span class="ident">Family</span>;
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">inet_iterator</span>::<span class="kw-2">*</span>;
 
 <span class="doccomment">/// Types implementing Cidr represent IP networks.  An IP network in</span>
@@ -192,7 +198,7 @@
 
 	<span class="doccomment">/// Corresponding `Inet` type (representing an address + a network</span>
 	<span class="doccomment">/// containing it)</span>
-	<span class="kw">type</span> <span class="ident">Inet</span>: <span class="ident">Inet</span><span class="op">&lt;</span><span class="ident">Address</span><span class="op">=</span><span class="self">Self</span>::<span class="ident">Address</span><span class="op">&gt;</span>;
+	<span class="kw">type</span> <span class="ident">Inet</span>: <span class="ident">Inet</span><span class="op">&lt;</span><span class="ident">Address</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Address</span><span class="op">&gt;</span>;
 
 	<span class="doccomment">/// Create new network from address and prefix length.  If the</span>
 	<span class="doccomment">/// network length exceeds the address length or the address is not</span>
@@ -200,11 +206,13 @@
 	<span class="doccomment">/// error is returned.</span>
 	<span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>, <span class="ident">len</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NetworkParseError</span><span class="op">&gt;</span>;
 
-	<span class="doccomment">/// Create a network containing a single address (network length = address length).</span>
+	<span class="doccomment">/// Create a network containing a single address (network length =</span>
+	<span class="doccomment">/// address length).</span>
 	<span class="kw">fn</span> <span class="ident">new_host</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
 	<span class="doccomment">/// Iterate over all addresses in the range.  With IPv6 addresses</span>
-	<span class="doccomment">/// this can produce really long iterations (up to 2^128 addresses).</span>
+	<span class="doccomment">/// this can produce really long iterations (up to 2&lt;sup&gt;128&lt;/sup&gt;</span>
+	<span class="doccomment">/// addresses).</span>
 	<span class="kw">fn</span> <span class="ident">iter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">InetIterator</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Inet</span><span class="op">&gt;</span> {
 		<span class="ident">InetIterator</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">first</span>())
 	}
@@ -248,18 +256,22 @@
 	<span class="kw">type</span> <span class="ident">Address</span>;
 
 	<span class="doccomment">/// Corresponding `Cidr` type (representing only the network)</span>
-	<span class="kw">type</span> <span class="ident">Cidr</span>: <span class="ident">Cidr</span><span class="op">&lt;</span><span class="ident">Address</span><span class="op">=</span><span class="self">Self</span>::<span class="ident">Address</span><span class="op">&gt;</span>;
+	<span class="kw">type</span> <span class="ident">Cidr</span>: <span class="ident">Cidr</span><span class="op">&lt;</span><span class="ident">Address</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">Address</span><span class="op">&gt;</span>;
 
 	<span class="doccomment">/// Create new host within a network from address and prefix length.</span>
 	<span class="doccomment">/// If the network length exceeds the address length an error is</span>
 	<span class="doccomment">/// returned.</span>
-	<span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>, <span class="ident">len</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NetworkLengthTooLongError</span><span class="op">&gt;</span>;
+	<span class="kw">fn</span> <span class="ident">new</span>(
+		<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>,
+		<span class="ident">len</span>: <span class="ident">u8</span>,
+	) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NetworkLengthTooLongError</span><span class="op">&gt;</span>;
 
 	<span class="doccomment">/// Create a network containing a single address as host and the</span>
 	<span class="doccomment">/// network (network length = address length).</span>
 	<span class="kw">fn</span> <span class="ident">new_host</span>(<span class="ident">addr</span>: <span class="self">Self</span>::<span class="ident">Address</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 
-	<span class="doccomment">/// increments host part (without changing the network part); returns true on wrap around</span>
+	<span class="doccomment">/// increments host part (without changing the network part);</span>
+	<span class="doccomment">/// returns true on wrap around</span>
 	<span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>;
 
 	<span class="doccomment">/// network (i.e. drops the host information)</span>
@@ -306,13 +318,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -346,7 +360,6 @@
         window.rootPath = "../../";
         window.currentCrate = "cidr";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>
