@@ -76,6 +76,23 @@
 <span id="31">31</span>
 <span id="32">32</span>
 <span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
+<span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/cidr/0.0.3&quot;</span>)]</span>
@@ -85,7 +102,24 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Address parsing also accepts IPv4 address with less than four octets (but always parses those as decimal).</span>
+<span class="doccomment">//! Address parsing also accepts IPv4 address with less than four octets</span>
+<span class="doccomment">//! (but always parses those as decimal).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # Feature `serde`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! This feature is enabled by default (not using `serde-derive`, only</span>
+<span class="doccomment">//! `serde`).</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! In human readable formats the `Display` and `FromStr` interfaces are</span>
+<span class="doccomment">//! used.  Otherwise all values are serialized in the same format (apart</span>
+<span class="doccomment">//! from the newtype wrapping) as a tuple of two values:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! - `tag: u8`:</span>
+<span class="doccomment">//!   - `0x00...0x20`: IPv4 with network length `tag`</span>
+<span class="doccomment">//!   - `0x40...0xc0`: IPv6 with network length `tag - 0x40`</span>
+<span class="doccomment">//!   - `0xff`: `any`</span>
+<span class="doccomment">//! - address according to `tag`: `Ipv4Addr` (`[u8; 4]`), `Ipv6Addr`</span>
+<span class="doccomment">//!   (`[u8; 16]`) or `()`</span>
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">cidr</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">errors</span>::<span class="kw-2">*</span>;

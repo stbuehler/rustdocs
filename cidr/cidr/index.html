@@ -48,13 +48,34 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/cidr/lib.rs.html#1-33' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/cidr/lib.rs.html#1-50' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>This library provides types to represent an IP network (<code>Cidr</code>) or
 an IP host withing a network (<code>Inet</code>)</p>
 
 <p>The naming follows the names of the <a href="https://www.postgresql.org/docs/current/static/datatype-net-types.html">PostgreSQL data types</a></p>
 
-<p>Address parsing also accepts IPv4 address with less than four octets (but always parses those as decimal).</p>
+<p>Address parsing also accepts IPv4 address with less than four octets
+(but always parses those as decimal).</p>
+
+<h1 id='feature-serde' class='section-header'><a href='#feature-serde'>Feature <code>serde</code></a></h1>
+<p>This feature is enabled by default (not using <code>serde-derive</code>, only
+<code>serde</code>).</p>
+
+<p>In human readable formats the <code>Display</code> and <code>FromStr</code> interfaces are
+used.  Otherwise all values are serialized in the same format (apart
+from the newtype wrapping) as a tuple of two values:</p>
+
+<ul>
+<li><code>tag: u8</code>:
+
+<ul>
+<li><code>0x00...0x20</code>: IPv4 with network length <code>tag</code></li>
+<li><code>0x40...0xc0</code>: IPv6 with network length <code>tag - 0x40</code></li>
+<li><code>0xff</code>: <code>any</code></li>
+</ul></li>
+<li>address according to <code>tag</code>: <code>Ipv4Addr</code> (<code>[u8; 4]</code>), <code>Ipv6Addr</code>
+(<code>[u8; 16]</code>) or <code>()</code></li>
+</ul>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub use <a class="enum" href="../cidr/enum.Family.html" title="enum cidr::Family">Family</a>::*;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
