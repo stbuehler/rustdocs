@@ -9,6 +9,7 @@
 
     <title>no_send.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -42,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -221,184 +222,184 @@
 <span id="177">177</span>
 <span id="178">178</span>
 <span id="179">179</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>traits</span>::<span class='ident'>FnBox</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">traits</span>::<span class="ident">FnBox</span>;
 
-<span class='doccomment'>/// `BoxFnOnce` boxes any `FnOnce` function up to a certain number of</span>
-<span class='doccomment'>/// arguments (10 as of now).</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// As `Box&lt;FnOnce()&gt;` doesn&#39;t work yet, and `Box&lt;FnBox()&gt;` will not be</span>
-<span class='doccomment'>/// available in stable rust, `BoxFnOnce` tries to provide a safe</span>
-<span class='doccomment'>/// implementation.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Instead of `Box&lt;FnOnce(Args...) -&gt; Result&gt;` (or `Box&lt;FnBox(Args...)</span>
-<span class='doccomment'>/// -&gt; Result&gt;`) the box type is `BoxFnOnce&lt;(Args...,), Result&gt;`  (the</span>
-<span class='doccomment'>/// arguments are always given as tuple type).  If the function doesn&#39;t</span>
-<span class='doccomment'>/// return a value (i.e. the empty tuple) `Result` can be ommitted:</span>
-<span class='doccomment'>/// `BoxFnOnce&lt;(Args...,)&gt;`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Internally it is implemented similar to `Box&lt;FnBox()&gt;`, but there is</span>
-<span class='doccomment'>/// no `FnOnce` implementation for `BoxFnOnce`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// You can build boxes for diverging functions too, but specifying the</span>
-<span class='doccomment'>/// type (like `BoxFnOnce&lt;(), !&gt;`) is not possible as the `!` type is</span>
-<span class='doccomment'>/// experimental.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// If you need to send the FnOnce use `SendBoxFnOnce` instead.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// # Examples</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Move value into closure and box it:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// use boxfnonce::BoxFnOnce;</span>
-<span class='doccomment'>/// let s = String::from(&quot;foo&quot;);</span>
-<span class='doccomment'>/// let f : BoxFnOnce&lt;()&gt; = BoxFnOnce::from(|| {</span>
-<span class='doccomment'>///     println!(&quot;Got called: {}&quot;, s);</span>
-<span class='doccomment'>///     drop(s);</span>
-<span class='doccomment'>/// });</span>
-<span class='doccomment'>/// f.call();</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Move value into closure to return it, and box the closure:</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// ```</span>
-<span class='doccomment'>/// use boxfnonce::BoxFnOnce;</span>
-<span class='doccomment'>/// let s = String::from(&quot;foo&quot;);</span>
-<span class='doccomment'>/// let f : BoxFnOnce&lt;(), String&gt; = BoxFnOnce::from(|| {</span>
-<span class='doccomment'>///     println!(&quot;Got called: {}&quot;, s);</span>
-<span class='doccomment'>///     s</span>
-<span class='doccomment'>/// });</span>
-<span class='doccomment'>/// assert_eq!(f.call(), &quot;foo&quot;.to_string());</span>
-<span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BoxFnOnce</span><span class='op'>&lt;</span><span class='ident'>Arguments</span>, <span class='prelude-ty'>Result</span> <span class='op'>=</span> ()<span class='op'>&gt;</span> (<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>FnBox</span><span class='op'>&lt;</span><span class='ident'>Arguments</span>, <span class='prelude-ty'>Result</span><span class='op'>&gt;&gt;</span>);
+<span class="doccomment">/// `BoxFnOnce` boxes any `FnOnce` function up to a certain number of</span>
+<span class="doccomment">/// arguments (10 as of now).</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// As `Box&lt;FnOnce()&gt;` doesn&#39;t work yet, and `Box&lt;FnBox()&gt;` will not be</span>
+<span class="doccomment">/// available in stable rust, `BoxFnOnce` tries to provide a safe</span>
+<span class="doccomment">/// implementation.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Instead of `Box&lt;FnOnce(Args...) -&gt; Result + &#39;a&gt;` (or</span>
+<span class="doccomment">/// `Box&lt;FnBox(Args...) -&gt; Result&gt; + &#39;a`) the box type is `BoxFnOnce&lt;&#39;a,</span>
+<span class="doccomment">/// (Args...,), Result&gt;`  (the arguments are always given as tuple</span>
+<span class="doccomment">/// type).  If the function doesn&#39;t return a value (i.e. the empty</span>
+<span class="doccomment">/// tuple) `Result` can be omitted: `BoxFnOnce&lt;&#39;a, (Args...,)&gt;`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Internally it is implemented similar to `Box&lt;FnBox()&gt;`, but there</span>
+<span class="doccomment">/// is no `FnOnce` implementation for `BoxFnOnce`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// You can build boxes for diverging functions too, but specifying the</span>
+<span class="doccomment">/// type (like `BoxFnOnce&lt;&#39;a, (), !&gt;`) is not possible as the `!` type</span>
+<span class="doccomment">/// is experimental.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If you need to send the FnOnce use `SendBoxFnOnce` instead.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// # Examples</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Move value into closure and box it:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use boxfnonce::BoxFnOnce;</span>
+<span class="doccomment">/// let s = String::from(&quot;foo&quot;);</span>
+<span class="doccomment">/// let f : BoxFnOnce&lt;()&gt; = BoxFnOnce::from(|| {</span>
+<span class="doccomment">///     println!(&quot;Got called: {}&quot;, s);</span>
+<span class="doccomment">///     drop(s);</span>
+<span class="doccomment">/// });</span>
+<span class="doccomment">/// f.call();</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Move value into closure to return it, and box the closure:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use boxfnonce::BoxFnOnce;</span>
+<span class="doccomment">/// let s = String::from(&quot;foo&quot;);</span>
+<span class="doccomment">/// let f : BoxFnOnce&lt;(), String&gt; = BoxFnOnce::from(|| {</span>
+<span class="doccomment">///     println!(&quot;Got called: {}&quot;, s);</span>
+<span class="doccomment">///     s</span>
+<span class="doccomment">/// });</span>
+<span class="doccomment">/// assert_eq!(f.call(), &quot;foo&quot;.to_string());</span>
+<span class="doccomment">/// ```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BoxFnOnce</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Arguments</span>, <span class="prelude-ty">Result</span> <span class="op">=</span> ()<span class="op">&gt;</span> (<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">FnBox</span><span class="op">&lt;</span><span class="ident">Arguments</span>, <span class="prelude-ty">Result</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;</span>);
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Args</span>, <span class='prelude-ty'>Result</span><span class='op'>&gt;</span> <span class='ident'>BoxFnOnce</span><span class='op'>&lt;</span><span class='ident'>Args</span>, <span class='prelude-ty'>Result</span><span class='op'>&gt;</span> {
-	<span class='doccomment'>/// call inner function, consumes the box.</span>
-	<span class='doccomment'>///</span>
-	<span class='doccomment'>/// `call_tuple` can be used if the arguments are available as</span>
-	<span class='doccomment'>/// tuple. Each usable instance of BoxFnOnce&lt;(...), Result&gt; has a</span>
-	<span class='doccomment'>/// separate `call` method for passing arguments &quot;untupled&quot;.</span>
-	<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>call_tuple</span>(<span class='self'>self</span>, <span class='ident'>args</span>: <span class='ident'>Args</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span> {
-		<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>call</span>(<span class='ident'>args</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Args</span>, <span class="prelude-ty">Result</span><span class="op">&gt;</span> <span class="ident">BoxFnOnce</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Args</span>, <span class="prelude-ty">Result</span><span class="op">&gt;</span> {
+	<span class="doccomment">/// call inner function, consumes the box.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// `call_tuple` can be used if the arguments are available as</span>
+	<span class="doccomment">/// tuple. Each usable instance of BoxFnOnce&lt;(...), Result&gt; has a</span>
+	<span class="doccomment">/// separate `call` method for passing arguments &quot;untupled&quot;.</span>
+	<span class="attribute">#[<span class="ident">inline</span>]</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">call_tuple</span>(<span class="self">self</span>, <span class="ident">args</span>: <span class="ident">Args</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span> {
+		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">call</span>(<span class="ident">args</span>)
 	}
 
-	<span class='doccomment'>/// `BoxFnOnce::new` is an alias for `BoxFnOnce::from`.</span>
-	<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-	<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>(<span class='ident'>func</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>
-	<span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>
+	<span class="doccomment">/// `BoxFnOnce::new` is an alias for `BoxFnOnce::from`.</span>
+	<span class="attribute">#[<span class="ident">inline</span>]</span>
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">func</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+	<span class="kw">where</span> <span class="self">Self</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>
 	{
-		<span class='self'>Self</span>::<span class='ident'>from</span>(<span class='ident'>func</span>)
+		<span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">func</span>)
 	}
 }
 
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: );
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>, <span class='ident'>a5</span>: <span class='ident'>A5</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>, <span class='ident'>a5</span>: <span class='ident'>A5</span>, <span class='ident'>a6</span>: <span class='ident'>A6</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>, <span class='ident'>a5</span>: <span class='ident'>A5</span>, <span class='ident'>a6</span>: <span class='ident'>A6</span>, <span class='ident'>a7</span>: <span class='ident'>A7</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>, <span class='ident'>a5</span>: <span class='ident'>A5</span>, <span class='ident'>a6</span>: <span class='ident'>A6</span>, <span class='ident'>a7</span>: <span class='ident'>A7</span>, <span class='ident'>a8</span>: <span class='ident'>A8</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>, <span class='ident'>a5</span>: <span class='ident'>A5</span>, <span class='ident'>a6</span>: <span class='ident'>A6</span>, <span class='ident'>a7</span>: <span class='ident'>A7</span>, <span class='ident'>a8</span>: <span class='ident'>A8</span>, <span class='ident'>a9</span>: <span class='ident'>A9</span>);
-<span class='macro'>build_n_args</span><span class='macro'>!</span>(<span class='ident'>BoxFnOnce</span>[]: <span class='ident'>a1</span>: <span class='ident'>A1</span>, <span class='ident'>a2</span>: <span class='ident'>A2</span>, <span class='ident'>a3</span>: <span class='ident'>A3</span>, <span class='ident'>a4</span>: <span class='ident'>A4</span>, <span class='ident'>a5</span>: <span class='ident'>A5</span>, <span class='ident'>a6</span>: <span class='ident'>A6</span>, <span class='ident'>a7</span>: <span class='ident'>A7</span>, <span class='ident'>a8</span>: <span class='ident'>A8</span>, <span class='ident'>a9</span>: <span class='ident'>A9</span>, <span class='ident'>a10</span>: <span class='ident'>A10</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: );
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>, <span class="ident">a5</span>: <span class="ident">A5</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>, <span class="ident">a5</span>: <span class="ident">A5</span>, <span class="ident">a6</span>: <span class="ident">A6</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>, <span class="ident">a5</span>: <span class="ident">A5</span>, <span class="ident">a6</span>: <span class="ident">A6</span>, <span class="ident">a7</span>: <span class="ident">A7</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>, <span class="ident">a5</span>: <span class="ident">A5</span>, <span class="ident">a6</span>: <span class="ident">A6</span>, <span class="ident">a7</span>: <span class="ident">A7</span>, <span class="ident">a8</span>: <span class="ident">A8</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>, <span class="ident">a5</span>: <span class="ident">A5</span>, <span class="ident">a6</span>: <span class="ident">A6</span>, <span class="ident">a7</span>: <span class="ident">A7</span>, <span class="ident">a8</span>: <span class="ident">A8</span>, <span class="ident">a9</span>: <span class="ident">A9</span>);
+<span class="macro">build_n_args</span><span class="macro">!</span>(<span class="ident">BoxFnOnce</span>[]: <span class="ident">a1</span>: <span class="ident">A1</span>, <span class="ident">a2</span>: <span class="ident">A2</span>, <span class="ident">a3</span>: <span class="ident">A3</span>, <span class="ident">a4</span>: <span class="ident">A4</span>, <span class="ident">a5</span>: <span class="ident">A5</span>, <span class="ident">a6</span>: <span class="ident">A6</span>, <span class="ident">a7</span>: <span class="ident">A7</span>, <span class="ident">a8</span>: <span class="ident">A8</span>, <span class="ident">a9</span>: <span class="ident">A9</span>, <span class="ident">a10</span>: <span class="ident">A10</span>);
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='kw'>mod</span> <span class='ident'>test</span> {
-	<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>BoxFnOnce</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">test</span> {
+	<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">BoxFnOnce</span>;
 
-	<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+	<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
 
-	<span class='kw'>struct</span> <span class='ident'>NoSendString</span>(<span class='ident'>String</span>, <span class='ident'>Rc</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>);
-	<span class='kw'>impl</span> <span class='ident'>NoSendString</span> {
-		<span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-			<span class='self'>self</span>.<span class='number'>0</span>
+	<span class="kw">struct</span> <span class="ident">NoSendString</span>(<span class="ident">String</span>, <span class="ident">Rc</span><span class="op">&lt;</span>()<span class="op">&gt;</span>);
+	<span class="kw">impl</span> <span class="ident">NoSendString</span> {
+		<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+			<span class="self">self</span>.<span class="number">0</span>
 		}
 	}
 
-	<span class='kw'>fn</span> <span class='ident'>closure_string</span>() <span class='op'>-&gt;</span> <span class='ident'>NoSendString</span> {
-		<span class='ident'>NoSendString</span>(<span class='ident'>String</span>::<span class='ident'>from</span>(<span class='string'>&quot;abc&quot;</span>), <span class='ident'>Rc</span>::<span class='ident'>new</span>(()))
+	<span class="kw">fn</span> <span class="ident">closure_string</span>() <span class="op">-&gt;</span> <span class="ident">NoSendString</span> {
+		<span class="ident">NoSendString</span>(<span class="ident">String</span>::<span class="ident">from</span>(<span class="string">&quot;abc&quot;</span>), <span class="ident">Rc</span>::<span class="ident">new</span>(()))
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg0</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>||</span> <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-				<span class='ident'>s</span>.<span class='ident'>into</span>()
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg0</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">||</span> <span class="op">-&gt;</span> <span class="ident">String</span> {
+				<span class="ident">s</span>.<span class="ident">into</span>()
 			}
 		});
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>call</span>(), <span class='string'>&quot;abc&quot;</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">f</span>.<span class="ident">call</span>(), <span class="string">&quot;abc&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg1</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>|</span>_<span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-				<span class='ident'>s</span>.<span class='ident'>into</span>()
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg1</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">|</span>_<span class="op">|</span> <span class="op">-&gt;</span> <span class="ident">String</span> {
+				<span class="ident">s</span>.<span class="ident">into</span>()
 			}
 		});
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>call</span>(<span class='number'>0</span>), <span class='string'>&quot;abc&quot;</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">f</span>.<span class="ident">call</span>(<span class="number">0</span>), <span class="string">&quot;abc&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg1_fixed_argument_type</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> : <span class='ident'>BoxFnOnce</span><span class='op'>&lt;</span>(<span class='ident'>i32</span>,), <span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>|</span>_<span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-				<span class='ident'>s</span>.<span class='ident'>into</span>()
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg1_fixed_argument_type</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> : <span class="ident">BoxFnOnce</span><span class="op">&lt;</span>(<span class="ident">i32</span>,), <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">|</span>_<span class="op">|</span> <span class="op">-&gt;</span> <span class="ident">String</span> {
+				<span class="ident">s</span>.<span class="ident">into</span>()
 			}
 		});
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>call</span>(<span class='number'>0</span>), <span class='string'>&quot;abc&quot;</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">f</span>.<span class="ident">call</span>(<span class="number">0</span>), <span class="string">&quot;abc&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg2</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>|</span>_, _<span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-				<span class='ident'>s</span>.<span class='ident'>into</span>()
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg2</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">|</span>_, _<span class="op">|</span> <span class="op">-&gt;</span> <span class="ident">String</span> {
+				<span class="ident">s</span>.<span class="ident">into</span>()
 			}
 		});
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>call</span>(<span class='number'>0</span>, <span class='number'>0</span>), <span class='string'>&quot;abc&quot;</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">f</span>.<span class="ident">call</span>(<span class="number">0</span>, <span class="number">0</span>), <span class="string">&quot;abc&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg3</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>|</span>_, _, _<span class='op'>|</span> <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-				<span class='ident'>s</span>.<span class='ident'>into</span>()
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg3</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">|</span>_, _, _<span class="op">|</span> <span class="op">-&gt;</span> <span class="ident">String</span> {
+				<span class="ident">s</span>.<span class="ident">into</span>()
 			}
 		});
-		<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>call</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>), <span class='string'>&quot;abc&quot;</span>);
+		<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">f</span>.<span class="ident">call</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>), <span class="string">&quot;abc&quot;</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg4_void</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>|</span>_, _, _, _<span class='op'>|</span> {
-				<span class='ident'>drop</span>(<span class='ident'>s</span>);
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg4_void</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">|</span>_, _, _, _<span class="op">|</span> {
+				<span class="ident">drop</span>(<span class="ident">s</span>);
 			}
 		});
-		<span class='ident'>f</span>.<span class='ident'>call</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>);
+		<span class="ident">f</span>.<span class="ident">call</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
 	}
 
-	<span class='attribute'>#[<span class='ident'>test</span>]</span>
-	<span class='attribute'>#[<span class='ident'>should_panic</span>(<span class='ident'>expected</span> <span class='op'>=</span> <span class='string'>&quot;inner diverging&quot;</span>)]</span>
-	<span class='kw'>fn</span> <span class='ident'>test_arg4_diverging</span>() {
-		<span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>BoxFnOnce</span>::<span class='ident'>from</span>({
-			<span class='kw'>let</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>closure_string</span>();
-			<span class='kw'>move</span> <span class='op'>|</span>_, _, _, _<span class='op'>|</span> <span class='op'>-&gt;</span> <span class='op'>!</span> {
-				<span class='ident'>drop</span>(<span class='ident'>s</span>);
-				<span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;inner diverging&quot;</span>);
+	<span class="attribute">#[<span class="ident">test</span>]</span>
+	<span class="attribute">#[<span class="ident">should_panic</span>(<span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;inner diverging&quot;</span>)]</span>
+	<span class="kw">fn</span> <span class="ident">test_arg4_diverging</span>() {
+		<span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">BoxFnOnce</span>::<span class="ident">from</span>({
+			<span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">closure_string</span>();
+			<span class="kw">move</span> <span class="op">|</span>_, _, _, _<span class="op">|</span> <span class="op">-&gt;</span> <span class="op">!</span> {
+				<span class="ident">drop</span>(<span class="ident">s</span>);
+				<span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;inner diverging&quot;</span>);
 			}
 		});
-		<span class='ident'>f</span>.<span class='ident'>call</span>(<span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>, <span class='number'>0</span>);
+		<span class="ident">f</span>.<span class="ident">call</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);
 	}
 }
 </pre>
@@ -419,13 +420,15 @@
                     <dd>Show this help dialog</dd>
                     <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
+                    <dt style="width:31px;">+ / -</dt>
                     <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
@@ -459,7 +462,6 @@
         window.rootPath = "../../";
         window.currentCrate = "boxfnonce";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>
