@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["decrypt","Decrypt value with given key."],["encrypt","Encrypt value with given key."]],"struct":[["State","The inner state permutations are build on.  Input and Output types are converted to an from this type."]],"type":[["Key","Alias for the key type (16 bytes)"]]});
