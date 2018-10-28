@@ -1,6 +1,7 @@
 var ALIASES = {};
 ALIASES['arrayvec'] = {};
 ALIASES['async_dnssd'] = {};
+ALIASES['bitflags'] = {};
 ALIASES['byteorder'] = {};
 ALIASES['bytes'] = {};
 ALIASES['cfg_if'] = {};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `async_dnssd` crate."><meta name="keywords" content="rust, rustlang, rust-lang, async_dnssd"><title>async_dnssd - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate async_dnssd</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'async_dnssd', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/async_dnssd/lib.rs.html#1-133' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>async_dnssd</a></span></h1><div class='docblock'><h1 id="asynchronous-wrapper-for-dns-sd-c-libraries" class="section-header"><a href="#asynchronous-wrapper-for-dns-sd-c-libraries">Asynchronous wrapper for DNS-SD C libraries</a></h1>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `async_dnssd` crate."><meta name="keywords" content="rust, rustlang, rust-lang, async_dnssd"><title>async_dnssd - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate async_dnssd</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'async_dnssd', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/async_dnssd/lib.rs.html#1-134' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>async_dnssd</a></span></h1><div class='docblock'><h1 id="asynchronous-wrapper-for-dns-sd-c-libraries" class="section-header"><a href="#asynchronous-wrapper-for-dns-sd-c-libraries">Asynchronous wrapper for DNS-SD C libraries</a></h1>
 <p>Interesting entry points:</p>
 <ul>
 <li><a href="fn.browse.html">Browse for available services</a></li>
@@ -22,7 +22,7 @@
 <tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804753-dnsserviceconstructfullname"><code>DNSServiceConstructFullName</code></a> </td><td> <a href="struct.FullName.html#method.construct"><code>FullName::construct</code></a>                                      </td></tr>
 <tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804724-dnsservicecreateconnection"><code>DNSServiceCreateConnection</code></a>  </td><td> <a href="fn.connect.html"><code>connect</code></a>                                                  </td></tr>
 <tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804754-dnsserviceenumeratedomains"><code>DNSServiceEnumerateDomains</code></a>  </td><td> <a href="fn.enumerate_domains.html"><code>enumerate_domains</code></a>                                        </td></tr>
-<tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804747-dnsservicequeryrecordc"><code>DNSServiceQueryRecord</code></a>       </td><td> <a href="fn.query_record.html"><code>query_record</code></a>                                             </td></tr>
+<tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804747-dnsservicequeryrecord"><code>DNSServiceQueryRecord</code></a>       </td><td> <a href="fn.query_record.html"><code>query_record</code></a>                                             </td></tr>
 <tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804726-dnsservicereconfirmrecord"><code>DNSServiceReconfirmRecord</code></a>   </td><td> <a href="fn.reconfirm_record.html"><code>reconfirm_record</code></a>                                         </td></tr>
 <tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804733-dnsserviceregister"><code>DNSServiceRegister</code></a>          </td><td> <a href="fn.register.html"><code>register</code></a>                                                 </td></tr>
 <tr><td> <a href="https://developer.apple.com/documentation/dnssd/1804727-dnsserviceregisterrecord"><code>DNSServiceRegisterRecord</code></a>    </td><td> <a href="struct.Connection.html#method.register_record"><code>Connection::register_record</code></a>                              </td></tr>
@@ -50,6 +50,15 @@ similar functionality.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.BrowseData.html"
+                                  title='struct async_dnssd::BrowseData'>BrowseData</a></td>
+                           <td class='docblock-short'>
+                                <p>Optional data when browsing for a service; either use its default
+value or customize it like:</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.BrowseResult.html"
                                   title='struct async_dnssd::BrowseResult'>BrowseResult</a></td>
                            <td class='docblock-short'>
@@ -61,7 +70,15 @@ similar functionality.</p>
                            <td><a class="struct" href="struct.BrowsedFlags.html"
                                   title='struct async_dnssd::BrowsedFlags'>BrowsedFlags</a></td>
                            <td class='docblock-short'>
-                                <p>Set of <a href="enum.BrowsedFlag.html"><code>BrowsedFlag</code></a>s</p>
+                                <p>Flags for <a href="struct.BrowseResult.html"><code>BrowseResult</code></a></p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.Class.html"
+                                  title='struct async_dnssd::Class'>Class</a></td>
+                           <td class='docblock-short'>
+                                <p>DNS CLASS</p>
 
                            </td>
                        </tr>
@@ -93,7 +110,7 @@ similar functionality.</p>
                            <td><a class="struct" href="struct.EnumeratedFlags.html"
                                   title='struct async_dnssd::EnumeratedFlags'>EnumeratedFlags</a></td>
                            <td class='docblock-short'>
-                                <p>Set of <a href="enum.EnumeratedFlag.html"><code>EnumeratedFlag</code></a>s</p>
+                                <p>Flags for <a href="struct.EnumerateDomains.html"><code>EnumerateDomains</code></a></p>
 
                            </td>
                        </tr>
@@ -117,7 +134,7 @@ similar functionality.</p>
                            <td><a class="struct" href="struct.QueriedRecordFlags.html"
                                   title='struct async_dnssd::QueriedRecordFlags'>QueriedRecordFlags</a></td>
                            <td class='docblock-short'>
-                                <p>Set of <a href="enum.QueriedRecordFlag.html"><code>QueriedRecordFlag</code></a>s</p>
+                                <p>Flags for <a href="struct.QueryRecordResult.html"><code>QueryRecordResult</code></a></p>
 
                            </td>
                        </tr>
@@ -130,10 +147,19 @@ similar functionality.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="struct" href="struct.QueryRecordData.html"
+                                  title='struct async_dnssd::QueryRecordData'>QueryRecordData</a></td>
+                           <td class='docblock-short'>
+                                <p>Optional data when querying for a record; either use its default
+value or customize it like:</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="struct" href="struct.QueryRecordFlags.html"
                                   title='struct async_dnssd::QueryRecordFlags'>QueryRecordFlags</a></td>
                            <td class='docblock-short'>
-                                <p>Set of <a href="enum.QueryRecordFlag.html"><code>QueryRecordFlag</code></a>s</p>
+                                <p>Flags used to query for a record</p>
 
                            </td>
                        </tr>
@@ -174,7 +200,7 @@ value or customize it like:</p>
                            <td><a class="struct" href="struct.RegisterFlags.html"
                                   title='struct async_dnssd::RegisterFlags'>RegisterFlags</a></td>
                            <td class='docblock-short'>
-                                <p>Set of <a href="enum.RegisterFlag.html"><code>RegisterFlag</code></a>s</p>
+                                <p>Flags used to register service</p>
 
                            </td>
                        </tr>
@@ -199,7 +225,7 @@ value or customize it like:</p>
                            <td><a class="struct" href="struct.RegisterRecordFlags.html"
                                   title='struct async_dnssd::RegisterRecordFlags'>RegisterRecordFlags</a></td>
                            <td class='docblock-short'>
-                                <p>Set of <a href="enum.RegisterRecordFlag.html"><code>RegisterRecordFlag</code></a>s</p>
+                                <p>Flags used to register a record</p>
 
                            </td>
                        </tr>
@@ -259,30 +285,22 @@ is reset</p>
                                 <p>Iterator for entries in <code>TxtRecord</code></p>
 
                            </td>
-                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table>
+                       </tr>
                        <tr class=' module-item'>
-                           <td><a class="enum" href="enum.BrowsedFlag.html"
-                                  title='enum async_dnssd::BrowsedFlag'>BrowsedFlag</a></td>
+                           <td><a class="struct" href="struct.Type.html"
+                                  title='struct async_dnssd::Type'>Type</a></td>
                            <td class='docblock-short'>
-                                <p>Flags for <a href="struct.BrowseResult.html"><code>BrowseResult</code></a></p>
+                                <p>DNS (RR)TYPE</p>
 
                            </td>
-                       </tr>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.Enumerate.html"
                                   title='enum async_dnssd::Enumerate'>Enumerate</a></td>
                            <td class='docblock-short'>
                                 <p>Whether to enumerate domains which are browsed or domains for which
 registrations can be made.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.EnumeratedFlag.html"
-                                  title='enum async_dnssd::EnumeratedFlag'>EnumeratedFlag</a></td>
-                           <td class='docblock-short'>
-                                <p>Flags for <a href="struct.EnumerateDomains.html"><code>EnumerateDomains</code></a></p>
 
                            </td>
                        </tr>
@@ -299,38 +317,6 @@ registrations can be made.</p>
                                   title='enum async_dnssd::Interface'>Interface</a></td>
                            <td class='docblock-short'>
                                 <p>Network interface</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.QueriedRecordFlag.html"
-                                  title='enum async_dnssd::QueriedRecordFlag'>QueriedRecordFlag</a></td>
-                           <td class='docblock-short'>
-                                <p>Flags for <a href="struct.QueryRecordResult.html"><code>QueryRecordResult</code></a></p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.QueryRecordFlag.html"
-                                  title='enum async_dnssd::QueryRecordFlag'>QueryRecordFlag</a></td>
-                           <td class='docblock-short'>
-                                <p>Flags used to query for a record</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.RegisterFlag.html"
-                                  title='enum async_dnssd::RegisterFlag'>RegisterFlag</a></td>
-                           <td class='docblock-short'>
-                                <p>Flags used to register service</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.RegisterRecordFlag.html"
-                                  title='enum async_dnssd::RegisterRecordFlag'>RegisterRecordFlag</a></td>
-                           <td class='docblock-short'>
-                                <p>Flags used to register a record</p>
 
                            </td>
                        </tr>
@@ -387,6 +373,14 @@ registrations can be made.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="fn" href="fn.browse_extended.html"
+                                  title='fn async_dnssd::browse_extended'>browse_extended</a></td>
+                           <td class='docblock-short'>
+                                <p>Browse for available services</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.connect.html"
                                   title='fn async_dnssd::connect'>connect</a></td>
                            <td class='docblock-short'>
@@ -412,6 +406,14 @@ with</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class="fn" href="fn.query_record_extended.html"
+                                  title='fn async_dnssd::query_record_extended'>query_record_extended</a></td>
+                           <td class='docblock-short'>
+                                <p>Query for an arbitrary DNS record</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class="fn" href="fn.reconfirm_record.html"
                                   title='fn async_dnssd::reconfirm_record'>reconfirm_record</a></td>
                            <td class='docblock-short'>
@@ -422,6 +424,14 @@ with</p>
                        <tr class=' module-item'>
                            <td><a class="fn" href="fn.register.html"
                                   title='fn async_dnssd::register'>register</a></td>
+                           <td class='docblock-short'>
+                                <p>Register a service</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.register_extended.html"
+                                  title='fn async_dnssd::register_extended'>register_extended</a></td>
                            <td class='docblock-short'>
                                 <p>Register a service</p>
 

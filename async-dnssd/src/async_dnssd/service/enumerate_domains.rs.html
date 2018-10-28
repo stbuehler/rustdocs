@@ -137,24 +137,6 @@
 <span id="137">137</span>
 <span id="138">138</span>
 <span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
-<span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">futures</span>::{
 	<span class="self">self</span>,
@@ -199,45 +181,27 @@
 	}
 }
 
-<span class="doccomment">/// Set of [`EnumeratedFlag`](enum.EnumeratedFlag.html)s</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Flags and sets can be combined with bitor (`|`), and bitand (`&amp;`)</span>
-<span class="doccomment">/// can be used to test whether a flag is part of a set.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EnumeratedFlags</span>(<span class="ident">u8</span>);
+<span class="macro">bitflags</span><span class="macro">!</span> {
+	<span class="doccomment">/// Flags for [`EnumerateDomains`](struct.EnumerateDomains.html)</span>
+	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
+	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EnumeratedFlags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
+		<span class="doccomment">/// Indicates at least one more result is pending in the queue.  If</span>
+		<span class="doccomment">/// not set there still might be more results coming in the future.</span>
+		<span class="doccomment">///</span>
+		<span class="doccomment">/// See [`kDNSServiceFlagsMoreComing`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsmorecoming).</span>
+		<span class="kw">const</span> <span class="ident">MORE_COMING</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_MORE_COMING</span>;
 
-<span class="doccomment">/// Flags for [`EnumerateDomains`](struct.EnumerateDomains.html)</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">EnumeratedFlag</span> {
-	<span class="doccomment">/// Indicates at least one more result is pending in the queue.  If</span>
-	<span class="doccomment">/// not set there still might be more results coming in the future.</span>
-	<span class="doccomment">///</span>
-	<span class="doccomment">/// See [`kDNSServiceFlagsMoreComing`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsmorecoming).</span>
-	<span class="ident">MoreComing</span> <span class="op">=</span> <span class="number">0</span>,
+		<span class="doccomment">/// Indicates the result is new.  If not set indicates the result</span>
+		<span class="doccomment">/// was removed.</span>
+		<span class="doccomment">///</span>
+		<span class="doccomment">/// See [`kDNSServiceFlagsAdd`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsadd).</span>
+		<span class="kw">const</span> <span class="ident">ADD</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_ADD</span>;
 
-	<span class="doccomment">/// Indicates the result is new.  If not set indicates the result</span>
-	<span class="doccomment">/// was removed.</span>
-	<span class="doccomment">///</span>
-	<span class="doccomment">/// See [`kDNSServiceFlagsAdd`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsadd).</span>
-	<span class="ident">Add</span>,
-
-	<span class="doccomment">/// Indicates this is the default domain to search (always combined with `Add`).</span>
-	<span class="doccomment">///</span>
-	<span class="doccomment">/// See [`kDNSServiceFlagsDefault`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsdefault).</span>
-	<span class="ident">Default</span>,
-}
-
-<span class="macro">flags_ops</span><span class="macro">!</span>{<span class="ident">EnumeratedFlags</span>: <span class="ident">u8</span>: <span class="ident">EnumeratedFlag</span>:
-	<span class="ident">MoreComing</span>,
-	<span class="ident">Add</span>,
-	<span class="ident">Default</span>,
-}
-
-<span class="macro">flag_mapping</span><span class="macro">!</span>{<span class="ident">EnumeratedFlags</span>: <span class="ident">EnumeratedFlag</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>:
-	<span class="ident">MoreComing</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_MORE_COMING</span>,
-	<span class="ident">Add</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_ADD</span>,
-	<span class="ident">Default</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_DEFAULT</span>,
+		<span class="doccomment">/// Indicates this is the default domain to search (always combined with `Add`).</span>
+		<span class="doccomment">///</span>
+		<span class="doccomment">/// See [`kDNSServiceFlagsDefault`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsdefault).</span>
+		<span class="kw">const</span> <span class="ident">DEFAULT</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_DEFAULT</span>;
+	}
 }
 
 <span class="doccomment">/// Pending domain enumeration</span>
@@ -264,11 +228,11 @@
 <span class="doccomment">/// See [DNSServiceDomainEnumReply](https://developer.apple.com/documentation/dnssd/dnsservicedomainenumreply).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">EnumerateResult</span> {
-	<span class="doccomment">///</span>
+	<span class="doccomment">/// flags</span>
 	<span class="kw">pub</span> <span class="ident">flags</span>: <span class="ident">EnumeratedFlags</span>,
-	<span class="doccomment">///</span>
+	<span class="doccomment">/// interface domain was found on</span>
 	<span class="kw">pub</span> <span class="ident">interface</span>: <span class="ident">Interface</span>,
-	<span class="doccomment">///</span>
+	<span class="doccomment">/// domain name</span>
 	<span class="kw">pub</span> <span class="ident">domain</span>: <span class="ident">String</span>,
 }
 
@@ -284,7 +248,7 @@
 		<span class="kw">let</span> <span class="ident">reply_domain</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">cstr</span>::<span class="ident">from_cstr</span>(<span class="ident">reply_domain</span>) }<span class="question-mark">?</span>;
 
 		<span class="prelude-val">Ok</span>(<span class="ident">EnumerateResult</span> {
-			<span class="ident">flags</span>: <span class="ident">EnumeratedFlags</span>::<span class="ident">from</span>(<span class="ident">flags</span>),
+			<span class="ident">flags</span>: <span class="ident">EnumeratedFlags</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">flags</span>),
 			<span class="ident">interface</span>: <span class="ident">Interface</span>::<span class="ident">from_raw</span>(<span class="ident">interface_index</span>),
 			<span class="ident">domain</span>: <span class="ident">reply_domain</span>.<span class="ident">to_string</span>(),
 		})
