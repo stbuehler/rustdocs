@@ -79,15 +79,28 @@
 <span id="79">79</span>
 <span id="80">80</span>
 <span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
+<span id="90">90</span>
+<span id="91">91</span>
+<span id="92">92</span>
 </pre><pre class="rust ">
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">browse</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">connection</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">enumerate_domains</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">query_record</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">records</span>::<span class="ident">Record</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">register</span>::<span class="kw-2">*</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">resolve</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">records</span>::<span class="ident">new_record</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{
+	<span class="ident">browse</span>::<span class="kw-2">*</span>,
+	<span class="ident">connection</span>::<span class="kw-2">*</span>,
+	<span class="ident">enumerate_domains</span>::<span class="kw-2">*</span>,
+	<span class="ident">query_record</span>::<span class="kw-2">*</span>,
+	<span class="ident">records</span>::<span class="ident">Record</span>,
+	<span class="ident">register</span>::<span class="kw-2">*</span>,
+	<span class="ident">resolve</span>::<span class="kw-2">*</span>,
+};
 
 <span class="kw">mod</span> <span class="ident">browse</span>;
 <span class="kw">mod</span> <span class="ident">connection</span>;
@@ -105,18 +118,19 @@
 	<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
 	<span class="ident">rr_type</span>: <span class="ident">u16</span>,
 	<span class="ident">rr_class</span>: <span class="ident">u16</span>,
-	<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]
+	<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 ) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 	::<span class="ident">init</span>();
 
 	<span class="kw">let</span> <span class="ident">fullname</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">fullname</span>)<span class="question-mark">?</span>;
 	::<span class="ident">raw</span>::<span class="ident">reconfirm_record</span>(
-		<span class="number">0</span>, <span class="comment">/* no flags */</span>
+		<span class="number">0</span>, <span class="comment">// no flags</span>
 		<span class="ident">interface</span>.<span class="ident">into_raw</span>(),
 		<span class="kw-2">&amp;</span><span class="ident">fullname</span>,
 		<span class="ident">rr_type</span>,
 		<span class="ident">rr_class</span>,
-		<span class="ident">rdata</span>);
+		<span class="ident">rdata</span>,
+	);
 
 	<span class="prelude-val">Ok</span>(())
 }
@@ -142,23 +156,31 @@
 		<span class="kw">let</span> <span class="ident">reg_type</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">reg_type</span>)<span class="question-mark">?</span>;
 		<span class="kw">let</span> <span class="ident">domain</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">domain</span>)<span class="question-mark">?</span>;
 
-		<span class="kw">const</span> <span class="ident">SIZE</span> : <span class="ident">usize</span> <span class="op">=</span> ::<span class="ident">ffi</span>::<span class="ident">MAX_DOMAIN_NAME</span> <span class="op">+</span> <span class="number">200</span>;
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> : <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
+		<span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> ::<span class="ident">ffi</span>::<span class="ident">MAX_DOMAIN_NAME</span> <span class="op">+</span> <span class="number">200</span>;
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 		<span class="ident">buf</span>.<span class="ident">reserve</span>(<span class="ident">SIZE</span>);
-		<span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> { ::<span class="ident">ffi</span>::<span class="ident">DNSServiceConstructFullName</span>(
-			<span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">i8</span>,
-			<span class="ident">service</span>.<span class="ident">as_ptr</span>(),
-			<span class="ident">reg_type</span>.<span class="ident">as_ptr</span>(),
-			<span class="ident">domain</span>.<span class="ident">as_ptr</span>()
-		)};
+		<span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> {
+			::<span class="ident">ffi</span>::<span class="ident">DNSServiceConstructFullName</span>(
+				<span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">i8</span>,
+				<span class="ident">service</span>.<span class="ident">as_ptr</span>(),
+				<span class="ident">reg_type</span>.<span class="ident">as_ptr</span>(),
+				<span class="ident">domain</span>.<span class="ident">as_ptr</span>(),
+			)
+		};
 
 		<span class="kw">if</span> <span class="ident">len</span> <span class="op">&lt;</span> <span class="number">0</span> {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidInput</span>, <span class="string">&quot;invalid input&quot;</span>))
+			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(
+				<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidInput</span>,
+				<span class="string">&quot;invalid input&quot;</span>,
+			));
 		}
 
-		<span class="kw">unsafe</span> { <span class="ident">buf</span>.<span class="ident">set_len</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>); }
+		<span class="kw">unsafe</span> {
+			<span class="ident">buf</span>.<span class="ident">set_len</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>);
+		}
 
-		<span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">buf</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidInput</span>, <span class="ident">e</span>))
+		<span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">buf</span>)
+			.<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidInput</span>, <span class="ident">e</span>))
 	}
 }
 </pre>

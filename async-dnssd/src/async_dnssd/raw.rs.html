@@ -473,13 +473,49 @@
 <span id="473">473</span>
 <span id="474">474</span>
 <span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">too_many_arguments</span>))]</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_int</span>,<span class="ident">c_void</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cell</span>::<span class="ident">UnsafeCell</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>::<span class="ident">null_mut</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">rc</span>::<span class="ident">Rc</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{
+	<span class="ident">cell</span>::<span class="ident">UnsafeCell</span>,
+	<span class="ident">os</span>::<span class="ident">raw</span>::{
+		<span class="ident">c_int</span>,
+		<span class="ident">c_void</span>,
+	},
+	<span class="ident">ptr</span>::<span class="ident">null_mut</span>,
+	<span class="ident">rc</span>::<span class="ident">Rc</span>,
+};
 
 <span class="kw">use</span> <span class="ident">cstr</span>;
 <span class="kw">use</span> <span class="ident">error</span>::<span class="ident">Error</span>;
@@ -503,20 +539,24 @@
 	}
 
 	<span class="kw">fn</span> <span class="ident">process_result</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
-			<span class="ident">ffi</span>::<span class="ident">DNSServiceProcessResult</span>(<span class="self">self</span>.<span class="number">0</span>)
-		})
+		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">DNSServiceProcessResult</span>(<span class="self">self</span>.<span class="number">0</span>) })
 	}
 
 	<span class="kw">fn</span> <span class="ident">enumerate_domains</span>(
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceDomainEnumReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSService</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span> : <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
 		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
-			<span class="ident">ffi</span>::<span class="ident">DNSServiceEnumerateDomains</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>, <span class="ident">flags</span>, <span class="ident">interface_index</span>, <span class="ident">callback</span>, <span class="ident">context</span>)
+			<span class="ident">ffi</span>::<span class="ident">DNSServiceEnumerateDomains</span>(
+				<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>,
+				<span class="ident">flags</span>,
+				<span class="ident">interface_index</span>,
+				<span class="ident">callback</span>,
+				<span class="ident">context</span>,
+			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSService</span>(<span class="ident">sd_ref</span>))
 	}
@@ -531,14 +571,14 @@
 		<span class="ident">port</span>: <span class="ident">u16</span>,
 		<span class="ident">txt</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRegisterReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSService</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">txt_len</span> <span class="op">=</span> <span class="ident">txt</span>.<span class="ident">len</span>();
 		<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">txt_len</span> <span class="op">&lt;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>));
 		<span class="kw">let</span> <span class="ident">txt_len</span> <span class="op">=</span> <span class="ident">txt_len</span> <span class="kw">as</span> <span class="ident">u16</span>;
 		<span class="kw">let</span> <span class="ident">txt_record</span> <span class="op">=</span> <span class="ident">txt</span>.<span class="ident">as_ptr</span>();
 
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span> : <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
 		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
 			<span class="ident">ffi</span>::<span class="ident">DNSServiceRegister</span>(
 				<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>,
@@ -552,7 +592,7 @@
 				<span class="ident">txt_len</span>,
 				<span class="ident">txt_record</span>,
 				<span class="ident">callback</span>,
-				<span class="ident">context</span>
+				<span class="ident">context</span>,
 			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSService</span>(<span class="ident">sd_ref</span>))
@@ -564,9 +604,9 @@
 		<span class="ident">reg_type</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 		<span class="ident">domain</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">NullableCStr</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceBrowseReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSService</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span> : <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
 		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
 			<span class="ident">ffi</span>::<span class="ident">DNSServiceBrowse</span>(
 				<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>,
@@ -575,7 +615,7 @@
 				<span class="ident">reg_type</span>.<span class="ident">as_ptr</span>(),
 				<span class="ident">domain</span>.<span class="ident">as_ptr</span>(),
 				<span class="ident">callback</span>,
-				<span class="ident">context</span>
+				<span class="ident">context</span>,
 			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSService</span>(<span class="ident">sd_ref</span>))
@@ -588,9 +628,9 @@
 		<span class="ident">reg_type</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 		<span class="ident">domain</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceResolveReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSService</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span> : <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
 		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
 			<span class="ident">ffi</span>::<span class="ident">DNSServiceResolve</span>(
 				<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>,
@@ -600,17 +640,15 @@
 				<span class="ident">reg_type</span>.<span class="ident">as_ptr</span>(),
 				<span class="ident">domain</span>.<span class="ident">as_ptr</span>(),
 				<span class="ident">callback</span>,
-				<span class="ident">context</span>
+				<span class="ident">context</span>,
 			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSService</span>(<span class="ident">sd_ref</span>))
 	}
 
 	<span class="kw">fn</span> <span class="ident">create_connection</span>() <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSService</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span> : <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
-		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
-			<span class="ident">ffi</span>::<span class="ident">DNSServiceCreateConnection</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>)
-		})<span class="question-mark">?</span>;
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
+		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">DNSServiceCreateConnection</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>) })<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSService</span>(<span class="ident">sd_ref</span>))
 	}
 
@@ -621,9 +659,9 @@
 		<span class="ident">rr_type</span>: <span class="ident">u16</span>,
 		<span class="ident">rr_class</span>: <span class="ident">u16</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceQueryRecordReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSService</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span> : <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
+		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span> <span class="op">=</span> <span class="ident">null_mut</span>();
 		<span class="ident">Error</span>::<span class="ident">from</span>(<span class="kw">unsafe</span> {
 			<span class="ident">ffi</span>::<span class="ident">DNSServiceQueryRecord</span>(
 				<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">sd_ref</span>,
@@ -633,7 +671,7 @@
 				<span class="ident">rr_type</span>,
 				<span class="ident">rr_class</span>,
 				<span class="ident">callback</span>,
-				<span class="ident">context</span>
+				<span class="ident">context</span>,
 			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSService</span>(<span class="ident">sd_ref</span>))
@@ -665,11 +703,14 @@
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceDomainEnumReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSService</span><span class="op">&gt;</span> {
-		<span class="self">Self</span>::<span class="ident">new</span>(
-			<span class="ident">InnerDNSService</span>::<span class="ident">enumerate_domains</span>(<span class="ident">flags</span>, <span class="ident">interface_index</span>, <span class="ident">callback</span>, <span class="ident">context</span>)
-		)
+		<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">InnerDNSService</span>::<span class="ident">enumerate_domains</span>(
+			<span class="ident">flags</span>,
+			<span class="ident">interface_index</span>,
+			<span class="ident">callback</span>,
+			<span class="ident">context</span>,
+		))
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register</span>(
@@ -682,11 +723,20 @@
 		<span class="ident">port</span>: <span class="ident">u16</span>,
 		<span class="ident">txt</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRegisterReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSService</span><span class="op">&gt;</span> {
-		<span class="self">Self</span>::<span class="ident">new</span>(
-			<span class="ident">InnerDNSService</span>::<span class="ident">register</span>(<span class="ident">flags</span>, <span class="ident">interface_index</span>, <span class="ident">name</span>, <span class="ident">reg_type</span>, <span class="ident">domain</span>, <span class="ident">host</span>, <span class="ident">port</span>, <span class="ident">txt</span>, <span class="ident">callback</span>, <span class="ident">context</span>)
-		)
+		<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">InnerDNSService</span>::<span class="ident">register</span>(
+			<span class="ident">flags</span>,
+			<span class="ident">interface_index</span>,
+			<span class="ident">name</span>,
+			<span class="ident">reg_type</span>,
+			<span class="ident">domain</span>,
+			<span class="ident">host</span>,
+			<span class="ident">port</span>,
+			<span class="ident">txt</span>,
+			<span class="ident">callback</span>,
+			<span class="ident">context</span>,
+		))
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_record</span>(
@@ -694,18 +744,16 @@
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">rr_type</span>: <span class="ident">u16</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-		<span class="ident">ttl</span>: <span class="ident">u32</span>
+		<span class="ident">ttl</span>: <span class="ident">u32</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSRecord</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="ident">DNSRecord</span>(
-			<span class="ident">InnerDNSRecord</span>::<span class="ident">add_record</span>(<span class="self">self</span>, <span class="ident">flags</span>, <span class="ident">rr_type</span>, <span class="ident">rdata</span>, <span class="ident">ttl</span>)<span class="question-mark">?</span>
-		))
+		<span class="prelude-val">Ok</span>(<span class="ident">DNSRecord</span>(<span class="ident">InnerDNSRecord</span>::<span class="ident">add_record</span>(
+			<span class="self">self</span>, <span class="ident">flags</span>, <span class="ident">rr_type</span>, <span class="ident">rdata</span>, <span class="ident">ttl</span>,
+		)<span class="question-mark">?</span>))
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_default_txt_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DNSRecord</span> {
-		<span class="kw">const</span> <span class="ident">RR_TYPE_TXT</span> : <span class="ident">u16</span> <span class="op">=</span> <span class="number">16</span>;
-		<span class="ident">DNSRecord</span>(
-			<span class="ident">InnerDNSRecord</span>(<span class="self">self</span>.<span class="ident">clone</span>(), <span class="ident">null_mut</span>(), <span class="ident">RR_TYPE_TXT</span>)
-		)
+		<span class="kw">const</span> <span class="ident">RR_TYPE_TXT</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="number">16</span>;
+		<span class="ident">DNSRecord</span>(<span class="ident">InnerDNSRecord</span>(<span class="self">self</span>.<span class="ident">clone</span>(), <span class="ident">null_mut</span>(), <span class="ident">RR_TYPE_TXT</span>))
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">browse</span>(
@@ -714,11 +762,16 @@
 		<span class="ident">reg_type</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 		<span class="ident">domain</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">NullableCStr</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceBrowseReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSService</span><span class="op">&gt;</span> {
-		<span class="self">Self</span>::<span class="ident">new</span>(
-			<span class="ident">InnerDNSService</span>::<span class="ident">browse</span>(<span class="ident">flags</span>, <span class="ident">interface_index</span>, <span class="ident">reg_type</span>, <span class="ident">domain</span>, <span class="ident">callback</span>, <span class="ident">context</span>)
-		)
+		<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">InnerDNSService</span>::<span class="ident">browse</span>(
+			<span class="ident">flags</span>,
+			<span class="ident">interface_index</span>,
+			<span class="ident">reg_type</span>,
+			<span class="ident">domain</span>,
+			<span class="ident">callback</span>,
+			<span class="ident">context</span>,
+		))
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolve</span>(
@@ -728,14 +781,21 @@
 		<span class="ident">reg_type</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 		<span class="ident">domain</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceResolveReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSService</span><span class="op">&gt;</span> {
-		<span class="self">Self</span>::<span class="ident">new</span>(
-			<span class="ident">InnerDNSService</span>::<span class="ident">resolve</span>(<span class="ident">flags</span>, <span class="ident">interface_index</span>, <span class="ident">name</span>, <span class="ident">reg_type</span>, <span class="ident">domain</span>, <span class="ident">callback</span>, <span class="ident">context</span>)
-		)
+		<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">InnerDNSService</span>::<span class="ident">resolve</span>(
+			<span class="ident">flags</span>,
+			<span class="ident">interface_index</span>,
+			<span class="ident">name</span>,
+			<span class="ident">reg_type</span>,
+			<span class="ident">domain</span>,
+			<span class="ident">callback</span>,
+			<span class="ident">context</span>,
+		))
 	}
 
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>,
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_record</span>(
+		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,
 		<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
@@ -744,28 +804,24 @@
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 		<span class="ident">ttl</span>: <span class="ident">u32</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRegisterRecordReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSRecord</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Ok</span>(<span class="ident">DNSRecord</span>(
-			<span class="ident">InnerDNSRecord</span>::<span class="ident">register_record</span>(
-				<span class="self">self</span>,
-				<span class="ident">flags</span>,
-				<span class="ident">interface_index</span>,
-				<span class="ident">fullname</span>,
-				<span class="ident">rr_type</span>,
-				<span class="ident">rr_class</span>,
-				<span class="ident">rdata</span>,
-				<span class="ident">ttl</span>,
-				<span class="ident">callback</span>,
-				<span class="ident">context</span>
-			)<span class="question-mark">?</span>
-		))
+		<span class="prelude-val">Ok</span>(<span class="ident">DNSRecord</span>(<span class="ident">InnerDNSRecord</span>::<span class="ident">register_record</span>(
+			<span class="self">self</span>,
+			<span class="ident">flags</span>,
+			<span class="ident">interface_index</span>,
+			<span class="ident">fullname</span>,
+			<span class="ident">rr_type</span>,
+			<span class="ident">rr_class</span>,
+			<span class="ident">rdata</span>,
+			<span class="ident">ttl</span>,
+			<span class="ident">callback</span>,
+			<span class="ident">context</span>,
+		)<span class="question-mark">?</span>))
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_connection</span>() <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSService</span><span class="op">&gt;</span> {
-		<span class="self">Self</span>::<span class="ident">new</span>(
-			<span class="ident">InnerDNSService</span>::<span class="ident">create_connection</span>()
-		)
+		<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">InnerDNSService</span>::<span class="ident">create_connection</span>())
 	}
 
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">query_record</span>(
@@ -775,11 +831,17 @@
 		<span class="ident">rr_type</span>: <span class="ident">u16</span>,
 		<span class="ident">rr_class</span>: <span class="ident">u16</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceQueryRecordReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">DNSService</span><span class="op">&gt;</span> {
-		<span class="self">Self</span>::<span class="ident">new</span>(
-			<span class="ident">InnerDNSService</span>::<span class="ident">query_record</span>(<span class="ident">flags</span>, <span class="ident">interface_index</span>, <span class="ident">fullname</span>, <span class="ident">rr_type</span>, <span class="ident">rr_class</span>, <span class="ident">callback</span>, <span class="ident">context</span>)
-		)
+		<span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">InnerDNSService</span>::<span class="ident">query_record</span>(
+			<span class="ident">flags</span>,
+			<span class="ident">interface_index</span>,
+			<span class="ident">fullname</span>,
+			<span class="ident">rr_type</span>,
+			<span class="ident">rr_class</span>,
+			<span class="ident">callback</span>,
+			<span class="ident">context</span>,
+		))
 	}
 }
 
@@ -792,7 +854,7 @@
 				<span class="ident">ffi</span>::<span class="ident">DNSServiceRemoveRecord</span>(
 					<span class="self">self</span>.<span class="ident">get_service</span>().<span class="number">0</span>,
 					<span class="self">self</span>.<span class="number">1</span>,
-					<span class="number">0</span> <span class="comment">/* no flags */</span>
+					<span class="number">0</span>, <span class="comment">// no flags</span>
 				);
 			}
 		}
@@ -814,7 +876,7 @@
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">rr_type</span>: <span class="ident">u16</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-		<span class="ident">ttl</span>: <span class="ident">u32</span>
+		<span class="ident">ttl</span>: <span class="ident">u32</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSRecord</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">rd_len</span> <span class="op">=</span> <span class="ident">rdata</span>.<span class="ident">len</span>();
 		<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rd_len</span> <span class="op">&lt;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>));
@@ -830,7 +892,7 @@
 				<span class="ident">rr_type</span>,
 				<span class="ident">rd_len</span>,
 				<span class="ident">rdata</span>,
-				<span class="ident">ttl</span>
+				<span class="ident">ttl</span>,
 			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSRecord</span>(<span class="ident">service</span>.<span class="ident">clone</span>(), <span class="ident">record_ref</span>, <span class="ident">rr_type</span>))
@@ -847,7 +909,7 @@
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 		<span class="ident">ttl</span>: <span class="ident">u32</span>,
 		<span class="ident">callback</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRegisterRecordReply</span>,
-		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span><span class="ident">InnerDNSRecord</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">rd_len</span> <span class="op">=</span> <span class="ident">rdata</span>.<span class="ident">len</span>();
 		<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rd_len</span> <span class="op">&lt;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>));
@@ -868,7 +930,7 @@
 				<span class="ident">rdata</span>,
 				<span class="ident">ttl</span>,
 				<span class="ident">callback</span>,
-				<span class="ident">context</span>
+				<span class="ident">context</span>,
 			)
 		})<span class="question-mark">?</span>;
 		<span class="prelude-val">Ok</span>(<span class="ident">InnerDNSRecord</span>(<span class="ident">service</span>.<span class="ident">clone</span>(), <span class="ident">record_ref</span>, <span class="ident">rr_type</span>))
@@ -878,7 +940,7 @@
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-		<span class="ident">ttl</span>: <span class="ident">u32</span>
+		<span class="ident">ttl</span>: <span class="ident">u32</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">rd_len</span> <span class="op">=</span> <span class="ident">rdata</span>.<span class="ident">len</span>();
 		<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rd_len</span> <span class="op">&lt;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>));
@@ -892,7 +954,7 @@
 				<span class="ident">flags</span>,
 				<span class="ident">rd_len</span>,
 				<span class="ident">rdata</span>,
-				<span class="ident">ttl</span>
+				<span class="ident">ttl</span>,
 			)
 		})
 	}
@@ -913,7 +975,7 @@
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-		<span class="ident">ttl</span>: <span class="ident">u32</span>
+		<span class="ident">ttl</span>: <span class="ident">u32</span>,
 	) <span class="op">-&gt;</span> <span class="ident">FFIResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">update_record</span>(<span class="ident">flags</span>, <span class="ident">rdata</span>, <span class="ident">ttl</span>)
 	}
@@ -930,7 +992,7 @@
 	<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">cstr</span>::<span class="ident">CStr</span>,
 	<span class="ident">rr_type</span>: <span class="ident">u16</span>,
 	<span class="ident">rr_class</span>: <span class="ident">u16</span>,
-	<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]
+	<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 ) {
 	<span class="kw">let</span> <span class="ident">rd_len</span> <span class="op">=</span> <span class="ident">rdata</span>.<span class="ident">len</span>();
 	<span class="macro">assert</span><span class="macro">!</span>(<span class="ident">rd_len</span> <span class="op">&lt;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">16</span>));
@@ -945,7 +1007,7 @@
 			<span class="ident">rr_type</span>,
 			<span class="ident">rr_class</span>,
 			<span class="ident">rd_len</span>,
-			<span class="ident">rdata</span>
+			<span class="ident">rdata</span>,
 		);
 	}
 }

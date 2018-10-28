@@ -89,15 +89,21 @@
 <span id="89">89</span>
 <span id="90">90</span>
 <span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
+<span class="kw">use</span> <span class="ident">std</span>::{
+	<span class="ident">error</span>,
+	<span class="ident">fmt</span>,
+	<span class="ident">io</span>,
+};
 
 <span class="kw">use</span> <span class="ident">ffi</span>;
 
 <span class="doccomment">/// API Error</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">Eq</span>,<span class="ident">PartialEq</span>,<span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
 	<span class="doccomment">/// If error code used some recognized name</span>
 	<span class="ident">KnownError</span>(<span class="ident">ffi</span>::<span class="ident">DNSServiceError</span>),
@@ -129,7 +135,9 @@
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Error</span> {
 	<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
 		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-			<span class="ident">Error</span>::<span class="ident">KnownError</span>(<span class="ident">ffi_err</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;known error {:?}: {}&quot;</span>, <span class="ident">ffi_err</span>, <span class="ident">ffi_err</span>),
+			<span class="ident">Error</span>::<span class="ident">KnownError</span>(<span class="ident">ffi_err</span>) <span class="op">=&gt;</span> {
+				<span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;known error {:?}: {}&quot;</span>, <span class="ident">ffi_err</span>, <span class="ident">ffi_err</span>)
+			},
 			<span class="ident">Error</span>::<span class="ident">UnknownError</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;unknown error code: {:?}&quot;</span>, <span class="ident">e</span>),
 		}
 	}
@@ -157,27 +165,27 @@
 	<span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
 		<span class="kw">use</span> <span class="ident">ffi</span>::<span class="ident">DNSServiceError</span>::<span class="kw-2">*</span>;
 		<span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-			<span class="ident">Unknown</span>               <span class="op">=&gt;</span> <span class="string">&quot;unknown error&quot;</span>,
-			<span class="ident">NoSuchName</span>            <span class="op">=&gt;</span> <span class="string">&quot;no such name&quot;</span>,
-			<span class="ident">NoMemory</span>              <span class="op">=&gt;</span> <span class="string">&quot;out of memory&quot;</span>,
-			<span class="ident">BadParam</span>              <span class="op">=&gt;</span> <span class="string">&quot;bad parameter&quot;</span>,
-			<span class="ident">BadReference</span>          <span class="op">=&gt;</span> <span class="string">&quot;bad reference&quot;</span>,
-			<span class="ident">BadState</span>              <span class="op">=&gt;</span> <span class="string">&quot;bad state&quot;</span>,
-			<span class="ident">BadFlags</span>              <span class="op">=&gt;</span> <span class="string">&quot;bad flags&quot;</span>,
-			<span class="ident">Unsupported</span>           <span class="op">=&gt;</span> <span class="string">&quot;not supported&quot;</span>,
-			<span class="ident">NotInitialized</span>        <span class="op">=&gt;</span> <span class="string">&quot;not initialized&quot;</span>,
-			<span class="ident">NoCache</span>               <span class="op">=&gt;</span> <span class="string">&quot;no cache&quot;</span>,
-			<span class="ident">AlreadyRegistered</span>     <span class="op">=&gt;</span> <span class="string">&quot;already registered&quot;</span>,
-			<span class="ident">NameConflict</span>          <span class="op">=&gt;</span> <span class="string">&quot;name conflict&quot;</span>,
-			<span class="ident">Invalid</span>               <span class="op">=&gt;</span> <span class="string">&quot;invalid&quot;</span>,
-			<span class="ident">Incompatible</span>          <span class="op">=&gt;</span> <span class="string">&quot;client library incompatible with daemon&quot;</span>,
-			<span class="ident">BadInterfaceIndex</span>     <span class="op">=&gt;</span> <span class="string">&quot;bad interface index&quot;</span>,
-			<span class="ident">Refused</span>               <span class="op">=&gt;</span> <span class="string">&quot;refused&quot;</span>,
-			<span class="ident">NoSuchRecord</span>          <span class="op">=&gt;</span> <span class="string">&quot;no such record&quot;</span>,
-			<span class="ident">NoAuth</span>                <span class="op">=&gt;</span> <span class="string">&quot;no auth&quot;</span>,
-			<span class="ident">NoSuchKey</span>             <span class="op">=&gt;</span> <span class="string">&quot;no such key&quot;</span>,
-			<span class="ident">NoValue</span>               <span class="op">=&gt;</span> <span class="string">&quot;no value&quot;</span>,
-			<span class="ident">BufferTooSmall</span>        <span class="op">=&gt;</span> <span class="string">&quot;buffer too small&quot;</span>,
+			<span class="ident">Unknown</span> <span class="op">=&gt;</span> <span class="string">&quot;unknown error&quot;</span>,
+			<span class="ident">NoSuchName</span> <span class="op">=&gt;</span> <span class="string">&quot;no such name&quot;</span>,
+			<span class="ident">NoMemory</span> <span class="op">=&gt;</span> <span class="string">&quot;out of memory&quot;</span>,
+			<span class="ident">BadParam</span> <span class="op">=&gt;</span> <span class="string">&quot;bad parameter&quot;</span>,
+			<span class="ident">BadReference</span> <span class="op">=&gt;</span> <span class="string">&quot;bad reference&quot;</span>,
+			<span class="ident">BadState</span> <span class="op">=&gt;</span> <span class="string">&quot;bad state&quot;</span>,
+			<span class="ident">BadFlags</span> <span class="op">=&gt;</span> <span class="string">&quot;bad flags&quot;</span>,
+			<span class="ident">Unsupported</span> <span class="op">=&gt;</span> <span class="string">&quot;not supported&quot;</span>,
+			<span class="ident">NotInitialized</span> <span class="op">=&gt;</span> <span class="string">&quot;not initialized&quot;</span>,
+			<span class="ident">NoCache</span> <span class="op">=&gt;</span> <span class="string">&quot;no cache&quot;</span>,
+			<span class="ident">AlreadyRegistered</span> <span class="op">=&gt;</span> <span class="string">&quot;already registered&quot;</span>,
+			<span class="ident">NameConflict</span> <span class="op">=&gt;</span> <span class="string">&quot;name conflict&quot;</span>,
+			<span class="ident">Invalid</span> <span class="op">=&gt;</span> <span class="string">&quot;invalid&quot;</span>,
+			<span class="ident">Incompatible</span> <span class="op">=&gt;</span> <span class="string">&quot;client library incompatible with daemon&quot;</span>,
+			<span class="ident">BadInterfaceIndex</span> <span class="op">=&gt;</span> <span class="string">&quot;bad interface index&quot;</span>,
+			<span class="ident">Refused</span> <span class="op">=&gt;</span> <span class="string">&quot;refused&quot;</span>,
+			<span class="ident">NoSuchRecord</span> <span class="op">=&gt;</span> <span class="string">&quot;no such record&quot;</span>,
+			<span class="ident">NoAuth</span> <span class="op">=&gt;</span> <span class="string">&quot;no auth&quot;</span>,
+			<span class="ident">NoSuchKey</span> <span class="op">=&gt;</span> <span class="string">&quot;no such key&quot;</span>,
+			<span class="ident">NoValue</span> <span class="op">=&gt;</span> <span class="string">&quot;no value&quot;</span>,
+			<span class="ident">BufferTooSmall</span> <span class="op">=&gt;</span> <span class="string">&quot;buffer too small&quot;</span>,
 		}
 	}
 }

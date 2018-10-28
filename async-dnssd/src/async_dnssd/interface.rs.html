@@ -101,7 +101,7 @@
 <span class="doccomment">/// Network interface index</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Identifies a single interface by index.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">PartialOrd</span>,<span class="ident">Ord</span>,<span class="ident">Hash</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InterfaceIndex</span>(<span class="ident">u32</span>);
 
 <span class="kw">impl</span> <span class="ident">InterfaceIndex</span> {
@@ -139,7 +139,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Either identifies a single interface (by index) or the special &quot;Any&quot;</span>
 <span class="doccomment">/// or &quot;LocalOnly&quot; interfaces.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>,<span class="ident">Copy</span>,<span class="ident">PartialEq</span>,<span class="ident">Eq</span>,<span class="ident">PartialOrd</span>,<span class="ident">Ord</span>,<span class="ident">Hash</span>,<span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Interface</span> {
 	<span class="doccomment">/// Any interface; depending on domain name this means either</span>
 	<span class="doccomment">/// multicast or unicast</span>
