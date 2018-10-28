@@ -279,6 +279,14 @@
 <span id="279">279</span>
 <span id="280">280</span>
 <span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="self">self</span>,<span class="ident">Async</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_void</span>,<span class="ident">c_char</span>};
@@ -432,6 +440,14 @@
 	<span class="kw">pub</span> <span class="ident">host</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span>,
 	<span class="doccomment">/// The TXT record rdata. Empty RDATA is treated like `b&quot;\0&quot;`, i.e.</span>
 	<span class="doccomment">/// a TXT record with a single empty string.</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// You can use [`TxtRecord`] to create the value for this field</span>
+	<span class="doccomment">/// (both [`TxtRecord::data`] and [`TxtRecord::rdata`] produce</span>
+	<span class="doccomment">/// appropriate values).</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// [`TxtRecord`]: struct.TxtRecord.html</span>
+	<span class="doccomment">/// [`TxtRecord::data`]: struct.TxtRecord.html#method.data</span>
+	<span class="doccomment">/// [`TxtRecord::rdata`]: struct.TxtRecord.html#method.rdata</span>
 	<span class="kw">pub</span> <span class="ident">txt</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>],
 }
 

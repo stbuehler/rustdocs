@@ -121,6 +121,13 @@
 <span id="121">121</span>
 <span id="122">122</span>
 <span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! # Asynchronous wrapper for DNS-SD C libraries</span>
 <span class="doccomment">//!</span>
@@ -163,6 +170,10 @@
 <span class="doccomment">//! * [`DNSServiceRefSockFD`] used for integration with tokio (event loop)</span>
 <span class="doccomment">//! * [`DNSServiceRemoveRecord`] called when dropping [`Record`](struct.Record.html)</span>
 <span class="doccomment">//!</span>
+<span class="doccomment">//! The `TXTRecord*` &quot;TXT Record Construction Functions&quot; are not</span>
+<span class="doccomment">//! wrapped; [`TxtRecord`] provides a native rust implementation with</span>
+<span class="doccomment">//! similar functionality.</span>
+<span class="doccomment">//!</span>
 <span class="doccomment">//! [`DNSServiceAddRecord`]: https://developer.apple.com/documentation/dnssd/1804730-dnsserviceaddrecord</span>
 <span class="doccomment">//! [`DNSServiceBrowse`]: https://developer.apple.com/documentation/dnssd/1804742-dnsservicebrowse</span>
 <span class="doccomment">//! [`DNSServiceConstructFullName`]: https://developer.apple.com/documentation/dnssd/1804753-dnsserviceconstructfullname</span>
@@ -192,6 +203,7 @@
 <span class="doccomment">//! [`Record::update_record`]: struct.Record.html#method.update_record</span>
 <span class="doccomment">//! [`RegisterRecord::update_record`]: struct.RegisterRecord.html#method.update_record</span>
 <span class="doccomment">//! [`TimeoutStream`]: struct.TimeoutStream.html</span>
+<span class="doccomment">//! [`TxtRecord`]: struct.TxtRecord.html</span>
 
 <span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
 
@@ -215,6 +227,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">remote</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">service</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">timeout_stream</span>::<span class="kw-2">*</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">txt_record</span>::<span class="kw-2">*</span>;
 
 <span class="kw">mod</span> <span class="ident">flags_macro</span>;
 
@@ -230,6 +243,7 @@
 <span class="kw">mod</span> <span class="ident">service</span>;
 <span class="kw">mod</span> <span class="ident">stream</span>;
 <span class="kw">mod</span> <span class="ident">timeout_stream</span>;
+<span class="kw">mod</span> <span class="ident">txt_record</span>;
 
 <span class="kw">fn</span> <span class="ident">init</span>() {
 	<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">unix</span>, <span class="ident">not</span>(<span class="ident">any</span>(<span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;macos&quot;</span>, <span class="ident">target_os</span> <span class="op">=</span> <span class="string">&quot;ios&quot;</span>))))]</span>
