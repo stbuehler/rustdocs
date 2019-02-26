@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `cidr` crate."><meta name="keywords" content="rust, rustlang, rust-lang, cidr"><title>cidr - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate cidr</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'cidr', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>cidr</a></span><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/cidr/lib.rs.html#1-52' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>This library provides types to represent an IP network (<code>Cidr</code>) or
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `cidr` crate."><meta name="keywords" content="rust, rustlang, rust-lang, cidr"><title>cidr - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><p class='location'>Crate cidr</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all cidr's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'cidr', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/cidr/lib.rs.html#1-52' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>cidr</a></span></h1><div class='docblock'><p>This library provides types to represent an IP network (<code>Cidr</code>) or
 an IP host withing a network (<code>Inet</code>)</p>
 <p>The naming follows the names of the <a href="https://www.postgresql.org/docs/current/static/datatype-net-types.html">PostgreSQL data types</a></p>
 <p>Address parsing also accepts IPv4 address with less than four octets
@@ -22,114 +22,23 @@ from the newtype wrapping) as a tuple of two values:</p>
 </ul>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use <a class="enum" href="../cidr/enum.Family.html" title="enum cidr::Family">Family</a>::*;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.InetIterator.html"
-                                  title='struct cidr::InetIterator'>InetIterator</a></td>
-                           <td class='docblock-short'>
-                                <p>Iterator type to iterate over a list of IP addresses in a network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Ipv4Cidr.html"
-                                  title='struct cidr::Ipv4Cidr'>Ipv4Cidr</a></td>
-                           <td class='docblock-short'>
-                                <p><code>Cidr</code> type representing an IPv4 network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Ipv4Inet.html"
-                                  title='struct cidr::Ipv4Inet'>Ipv4Inet</a></td>
-                           <td class='docblock-short'>
-                                <p><code>Inet</code> type representing an IPv4 host within a network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Ipv6Cidr.html"
-                                  title='struct cidr::Ipv6Cidr'>Ipv6Cidr</a></td>
-                           <td class='docblock-short'>
-                                <p><code>Cidr</code> type representing an IPv6 network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Ipv6Inet.html"
-                                  title='struct cidr::Ipv6Inet'>Ipv6Inet</a></td>
-                           <td class='docblock-short'>
-                                <p><code>Inet</code> type representing an IPv6 host within a network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.NetworkLengthTooLongError.html"
-                                  title='struct cidr::NetworkLengthTooLongError'>NetworkLengthTooLongError</a></td>
-                           <td class='docblock-short'>
-                                <p>Error returned when the network length was longer than the address</p>
-
-                           </td>
-                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.AnyIpCidr.html"
-                                  title='enum cidr::AnyIpCidr'>AnyIpCidr</a></td>
-                           <td class='docblock-short'>
-                                <p>Represents either an IPv4 or an IPv6 network or &quot;any&quot;.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.Family.html"
-                                  title='enum cidr::Family'>Family</a></td>
-                           <td class='docblock-short'>
-                                <p>Represents the type of an IP address</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.IpCidr.html"
-                                  title='enum cidr::IpCidr'>IpCidr</a></td>
-                           <td class='docblock-short'>
-                                <p><code>Cidr</code> type representing either an IPv4 or an IPv6 network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.IpInet.html"
-                                  title='enum cidr::IpInet'>IpInet</a></td>
-                           <td class='docblock-short'>
-                                <p><code>Inet</code> type representing either an IPv4 or an IPv6 host within a
+<table><tr class='module-item'><td><a class="struct" href="struct.InetIterator.html" title='cidr::InetIterator struct'>InetIterator</a></td><td class='docblock-short'><p>Iterator type to iterate over a list of IP addresses in a network</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Ipv4Cidr.html" title='cidr::Ipv4Cidr struct'>Ipv4Cidr</a></td><td class='docblock-short'><p><code>Cidr</code> type representing an IPv4 network</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Ipv4Inet.html" title='cidr::Ipv4Inet struct'>Ipv4Inet</a></td><td class='docblock-short'><p><code>Inet</code> type representing an IPv4 host within a network</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Ipv6Cidr.html" title='cidr::Ipv6Cidr struct'>Ipv6Cidr</a></td><td class='docblock-short'><p><code>Cidr</code> type representing an IPv6 network</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Ipv6Inet.html" title='cidr::Ipv6Inet struct'>Ipv6Inet</a></td><td class='docblock-short'><p><code>Inet</code> type representing an IPv6 host within a network</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.NetworkLengthTooLongError.html" title='cidr::NetworkLengthTooLongError struct'>NetworkLengthTooLongError</a></td><td class='docblock-short'><p>Error returned when the network length was longer than the address</p>
+</td></tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table><tr class='module-item'><td><a class="enum" href="enum.AnyIpCidr.html" title='cidr::AnyIpCidr enum'>AnyIpCidr</a></td><td class='docblock-short'><p>Represents either an IPv4 or an IPv6 network or &quot;any&quot;.</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.Family.html" title='cidr::Family enum'>Family</a></td><td class='docblock-short'><p>Represents the type of an IP address</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.IpCidr.html" title='cidr::IpCidr enum'>IpCidr</a></td><td class='docblock-short'><p><code>Cidr</code> type representing either an IPv4 or an IPv6 network</p>
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.IpInet.html" title='cidr::IpInet enum'>IpInet</a></td><td class='docblock-short'><p><code>Inet</code> type representing either an IPv4 or an IPv6 host within a
 network</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.NetworkParseError.html"
-                                  title='enum cidr::NetworkParseError'>NetworkParseError</a></td>
-                           <td class='docblock-short'>
-                                <p>Error type returned when parsing IP networks</p>
-
-                           </td>
-                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Cidr.html"
-                                  title='trait cidr::Cidr'>Cidr</a></td>
-                           <td class='docblock-short'>
-                                <p>Types implementing Cidr represent IP networks.  An IP network in
+</td></tr><tr class='module-item'><td><a class="enum" href="enum.NetworkParseError.html" title='cidr::NetworkParseError enum'>NetworkParseError</a></td><td class='docblock-short'><p>Error type returned when parsing IP networks</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Cidr.html" title='cidr::Cidr trait'>Cidr</a></td><td class='docblock-short'><p>Types implementing Cidr represent IP networks.  An IP network in
 this case is a set of IP addresses which share a common prefix (when
 viewed as a bitstring).  The length of this prefix is called
 <code>network_length</code>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Inet.html"
-                                  title='trait cidr::Inet'>Inet</a></td>
-                           <td class='docblock-short'>
-                                <p>Types implementing Inet represent IP hosts within networks.</p>
-
-                           </td>
-                       </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "cidr";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Inet.html" title='cidr::Inet trait'>Inet</a></td><td class='docblock-short'><p>Types implementing Inet represent IP hosts within networks.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "cidr";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
