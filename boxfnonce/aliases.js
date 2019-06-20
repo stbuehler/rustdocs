@@ -1,2 +1,2 @@
 var ALIASES = {};
-ALIASES['boxfnonce'] = {};
+ALIASES["boxfnonce"] = {};
