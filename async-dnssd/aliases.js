@@ -1,2 +1,2 @@
 var ALIASES = {};
-ALIASES['async_dnssd'] = {};
+ALIASES["async_dnssd"] = {};
