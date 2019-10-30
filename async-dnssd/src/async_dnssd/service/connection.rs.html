@@ -235,23 +235,6 @@
 <span id="235">235</span>
 <span id="236">236</span>
 <span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">futures</span>::{
 	<span class="self">self</span>,
@@ -263,10 +246,6 @@
 	<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
 	<span class="ident">rc</span>::<span class="ident">Rc</span>,
 };
-<span class="kw">use</span> <span class="ident">tokio_core</span>::<span class="ident">reactor</span>::{
-	<span class="ident">Handle</span>,
-	<span class="ident">Remote</span>,
-};
 
 <span class="kw">use</span> <span class="ident">cstr</span>;
 <span class="kw">use</span> <span class="ident">dns_consts</span>::{
@@ -277,28 +256,21 @@
 <span class="kw">use</span> <span class="ident">ffi</span>;
 <span class="kw">use</span> <span class="ident">interface</span>::<span class="ident">Interface</span>;
 <span class="kw">use</span> <span class="ident">raw</span>;
-<span class="kw">use</span> <span class="ident">remote</span>::<span class="ident">GetRemote</span>;
 
 <span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> ::<span class="ident">future</span>::<span class="ident">ServiceFutureSingle</span><span class="op">&lt;</span><span class="ident">RegisterRecordResult</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Connection to register records with</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Connection</span>(<span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">EventedDNSService</span><span class="op">&gt;</span>);
 
-<span class="kw">impl</span> <span class="ident">GetRemote</span> <span class="kw">for</span> <span class="ident">Connection</span> {
-	<span class="kw">fn</span> <span class="ident">remote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Remote</span> {
-		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">remote</span>()
-	}
-}
-
 <span class="doccomment">/// Create [`Connection`](struct.Connection.html) to register records</span>
 <span class="doccomment">/// with</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`DNSServiceCreateConnection`](https://developer.apple.com/documentation/dnssd/1804724-dnsservicecreateconnection).</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>(<span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Connection</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>() <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Connection</span><span class="op">&gt;</span> {
 	::<span class="ident">init</span>();
 
 	<span class="kw">let</span> <span class="ident">con</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">DNSService</span>::<span class="ident">create_connection</span>()<span class="question-mark">?</span>;
-	<span class="prelude-val">Ok</span>(<span class="ident">Connection</span>(<span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">EventedDNSService</span>::<span class="ident">new</span>(<span class="ident">con</span>, <span class="ident">handle</span>)<span class="question-mark">?</span>)))
+	<span class="prelude-val">Ok</span>(<span class="ident">Connection</span>(<span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">EventedDNSService</span>::<span class="ident">new</span>(<span class="ident">con</span>)<span class="question-mark">?</span>)))
 }
 
 <span class="macro">bitflags</span><span class="macro">!</span> {
@@ -338,12 +310,6 @@
 			<span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>),
 			<span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
 		}
-	}
-}
-
-<span class="kw">impl</span> <span class="ident">GetRemote</span> <span class="kw">for</span> <span class="ident">RegisterRecord</span> {
-	<span class="kw">fn</span> <span class="ident">remote</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Remote</span> {
-		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">remote</span>()
 	}
 }
 
@@ -499,11 +465,11 @@
 	<span class="comment">//   before. instead we could store the callback context with the</span>
 	<span class="comment">//   underyling service, and drop it either when dropping the</span>
 	<span class="comment">//   service or the callback was called.</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keep</span>(<span class="self">self</span>, <span class="ident">handle</span>: <span class="kw-2">&amp;</span><span class="ident">Handle</span>) {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keep</span>(<span class="self">self</span>) {
 		<span class="kw">let</span> (<span class="ident">fut</span>, <span class="ident">rec</span>) <span class="op">=</span>
 			(<span class="self">self</span>.<span class="number">0</span>, <span class="self">self</span>.<span class="number">1</span>.<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>));
 		<span class="comment">// drive future to continuation, ignore errors</span>
-		<span class="ident">handle</span>.<span class="ident">spawn</span>(<span class="ident">fut</span>.<span class="ident">then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="prelude-val">Ok</span>(())));
+		<span class="ident">tokio</span>::<span class="ident">runtime</span>::<span class="ident">current_thread</span>::<span class="ident">spawn</span>(<span class="ident">fut</span>.<span class="ident">then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="prelude-val">Ok</span>(())));
 		<span class="ident">rec</span>.<span class="ident">keep</span>();
 	}
 }
