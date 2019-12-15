@@ -6,5 +6,4 @@ implementors["async_dnssd"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

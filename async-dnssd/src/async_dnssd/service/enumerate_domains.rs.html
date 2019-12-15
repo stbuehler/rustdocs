@@ -124,7 +124,9 @@
 <span id="124">124</span>
 <span id="125">125</span>
 <span id="126">126</span>
+<span id="127">127</span>
 </pre><div class="example-wrap"><pre class="rust ">
+<span class="kw">use</span> <span class="ident">bitflags</span>::<span class="ident">bitflags</span>;
 <span class="kw">use</span> <span class="ident">futures</span>::{
 	<span class="self">self</span>,
 	<span class="ident">Async</span>,
@@ -137,12 +139,12 @@
 	},
 };
 
-<span class="kw">use</span> <span class="ident">cstr</span>;
-<span class="kw">use</span> <span class="ident">ffi</span>;
-<span class="kw">use</span> <span class="ident">interface</span>::<span class="ident">Interface</span>;
-<span class="kw">use</span> <span class="ident">raw</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">cstr</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">interface</span>::<span class="ident">Interface</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">raw</span>;
 
-<span class="kw">type</span> <span class="ident">CallbackStream</span> <span class="op">=</span> ::<span class="ident">stream</span>::<span class="ident">ServiceStream</span><span class="op">&lt;</span><span class="ident">EnumerateResult</span><span class="op">&gt;</span>;
+<span class="kw">type</span> <span class="ident">CallbackStream</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">stream</span>::<span class="ident">ServiceStream</span><span class="op">&lt;</span><span class="ident">EnumerateResult</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Whether to enumerate domains which are browsed or domains for which</span>
 <span class="doccomment">/// registrations can be made.</span>
@@ -155,10 +157,10 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Enumerate</span> {
-	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
+	<span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
 		<span class="kw">match</span> <span class="self">self</span> {
-			<span class="ident">Enumerate</span>::<span class="ident">BrowseDomains</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_BROWSE_DOMAINS</span>,
-			<span class="ident">Enumerate</span>::<span class="ident">RegistrationDomains</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_REGISTRATION_DOMAINS</span>,
+			<span class="ident">Enumerate</span>::<span class="ident">BrowseDomains</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_BROWSE_DOMAINS</span>,
+			<span class="ident">Enumerate</span>::<span class="ident">RegistrationDomains</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_REGISTRATION_DOMAINS</span>,
 		}
 	}
 }
@@ -194,7 +196,7 @@
 	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>;
 	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">EnumerateResult</span>;
 
-	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Async</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Async</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">poll</span>()
 	}
 }
@@ -220,7 +222,7 @@
 	<span class="ident">reply_domain</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_char</span>,
 	<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 ) {
-	<span class="ident">CallbackStream</span>::<span class="ident">run_callback</span>(<span class="ident">context</span>, <span class="ident">error_code</span>, <span class="op">||</span> {
+	<span class="ident">CallbackStream</span>::<span class="ident">run_callback</span>(<span class="ident">context</span>, <span class="ident">error_code</span>, <span class="op">|</span><span class="op">|</span> {
 		<span class="kw">let</span> <span class="ident">reply_domain</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">cstr</span>::<span class="ident">from_cstr</span>(<span class="ident">reply_domain</span>) }<span class="question-mark">?</span>;
 
 		<span class="prelude-val">Ok</span>(<span class="ident">EnumerateResult</span> {
@@ -237,8 +239,8 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enumerate_domains</span>(
 	<span class="ident">enumerate</span>: <span class="ident">Enumerate</span>,
 	<span class="ident">interface</span>: <span class="ident">Interface</span>,
-) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EnumerateDomains</span><span class="op">&gt;</span> {
-	::<span class="ident">init</span>();
+) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">EnumerateDomains</span><span class="op">&gt;</span> {
+	<span class="kw">crate</span>::<span class="ident">init</span>();
 
 	<span class="prelude-val">Ok</span>(<span class="ident">EnumerateDomains</span>(<span class="ident">CallbackStream</span>::<span class="ident">new</span>(
 		<span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {

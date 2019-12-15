@@ -117,7 +117,7 @@
 <span class="kw">mod</span> <span class="ident">resolve</span>;
 <span class="kw">mod</span> <span class="ident">resolve_host</span>;
 
-<span class="kw">use</span> <span class="ident">dns_consts</span>::{
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dns_consts</span>::{
 	<span class="ident">Class</span>,
 	<span class="ident">Type</span>,
 };
@@ -126,16 +126,16 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`DNSServiceReconfirmRecord`](https://developer.apple.com/documentation/dnssd/1804726-dnsservicereconfirmrecord).</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reconfirm_record</span>(
-	<span class="ident">interface</span>: ::<span class="ident">interface</span>::<span class="ident">Interface</span>,
+	<span class="ident">interface</span>: <span class="kw">crate</span>::<span class="ident">interface</span>::<span class="ident">Interface</span>,
 	<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
 	<span class="ident">rr_type</span>: <span class="ident">Type</span>,
 	<span class="ident">rr_class</span>: <span class="ident">Class</span>,
 	<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-	::<span class="ident">init</span>();
+) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+	<span class="kw">crate</span>::<span class="ident">init</span>();
 
-	<span class="kw">let</span> <span class="ident">fullname</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">fullname</span>)<span class="question-mark">?</span>;
-	::<span class="ident">raw</span>::<span class="ident">reconfirm_record</span>(
+	<span class="kw">let</span> <span class="ident">fullname</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">fullname</span>)<span class="question-mark">?</span>;
+	<span class="kw">crate</span>::<span class="ident">raw</span>::<span class="ident">reconfirm_record</span>(
 		<span class="number">0</span>, <span class="comment">// no flags</span>
 		<span class="ident">interface</span>.<span class="ident">into_raw</span>(),
 		<span class="kw-2">&amp;</span><span class="ident">fullname</span>,
@@ -161,18 +161,18 @@
 	<span class="doccomment">/// Escape and concatenate all three parts to a full name</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// See [`DNSServiceConstructFullName`](https://developer.apple.com/documentation/dnssd/1804753-dnsserviceconstructfullname)</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">construct</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">construct</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> ::<span class="ident">std</span>::<span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
 		<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
-		<span class="kw">let</span> <span class="ident">service</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">NullableCStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">service</span>)<span class="question-mark">?</span>;
-		<span class="kw">let</span> <span class="ident">reg_type</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">reg_type</span>)<span class="question-mark">?</span>;
-		<span class="kw">let</span> <span class="ident">domain</span> <span class="op">=</span> ::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">domain</span>)<span class="question-mark">?</span>;
+		<span class="kw">let</span> <span class="ident">service</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">cstr</span>::<span class="ident">NullableCStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">service</span>)<span class="question-mark">?</span>;
+		<span class="kw">let</span> <span class="ident">reg_type</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">reg_type</span>)<span class="question-mark">?</span>;
+		<span class="kw">let</span> <span class="ident">domain</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">domain</span>)<span class="question-mark">?</span>;
 
-		<span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> ::<span class="ident">ffi</span>::<span class="ident">MAX_DOMAIN_NAME</span> <span class="op">+</span> <span class="number">200</span>;
+		<span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">MAX_DOMAIN_NAME</span> <span class="op">+</span> <span class="number">200</span>;
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span>::<span class="ident">new</span>();
 		<span class="ident">buf</span>.<span class="ident">reserve</span>(<span class="ident">SIZE</span>);
 		<span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw">unsafe</span> {
-			::<span class="ident">ffi</span>::<span class="ident">DNSServiceConstructFullName</span>(
+			<span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">DNSServiceConstructFullName</span>(
 				<span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">i8</span>,
 				<span class="ident">service</span>.<span class="ident">as_ptr</span>(),
 				<span class="ident">reg_type</span>.<span class="ident">as_ptr</span>(),
