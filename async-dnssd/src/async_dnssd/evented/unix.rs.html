@@ -76,16 +76,24 @@
 <span id="76">76</span>
 <span id="77">77</span>
 <span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Async</span>, <span class="ident">Poll</span>, <span class="ident">try_ready</span>};
+<span class="kw">use</span> <span class="ident">futures</span>::{
+	<span class="ident">try_ready</span>,
+	<span class="ident">Async</span>,
+	<span class="ident">Poll</span>,
+};
 <span class="kw">use</span> <span class="ident">mio</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">io</span>,
 	<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_int</span>,
 };
-<span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">reactor</span>::{
-	<span class="ident">PollEvented2</span> <span class="kw">as</span> <span class="ident">PollEvented</span>,
-};
+<span class="kw">use</span> <span class="ident">tokio</span>::<span class="ident">reactor</span>::<span class="ident">PollEvented2</span> <span class="kw">as</span> <span class="ident">PollEvented</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_readable</span>(<span class="ident">fd</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
 	<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">fds</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">pollfd</span> {
@@ -95,11 +103,15 @@
 	};
 	<span class="kw">loop</span> {
 		<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">libc</span>::<span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fds</span>, <span class="number">1</span>, <span class="number">0</span>) };
-		<span class="kw">if</span> <span class="ident">r</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>); }
-		<span class="kw">if</span> <span class="ident">r</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> { <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>); }
+		<span class="kw">if</span> <span class="ident">r</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+			<span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
+		}
+		<span class="kw">if</span> <span class="ident">r</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+			<span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">true</span>);
+		}
 		<span class="kw">let</span> <span class="ident">e</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">last_os_error</span>();
 		<span class="kw">if</span> <span class="ident">e</span>.<span class="ident">kind</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">Interrupted</span> {
-			<span class="kw">continue</span>
+			<span class="kw">continue</span>;
 		}
 		<span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="bool-val">false</span>);
 	}

@@ -46,11 +46,15 @@
 <span id="46">46</span>
 <span id="47">47</span>
 <span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">dns_consts</span>::<span class="ident">Type</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">raw</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{
+	<span class="ident">dns_consts</span>::<span class="ident">Type</span>,
+	<span class="ident">raw</span>,
+};
 
 <span class="doccomment">/// A successful record registration</span>
 <span class="doccomment">///</span>
