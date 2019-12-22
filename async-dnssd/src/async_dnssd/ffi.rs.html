@@ -444,7 +444,7 @@
 }
 
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DNSServiceDomainEnumReply</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-	<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
+	<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
 		<span class="ident">sd_ref</span>: <span class="ident">DNSServiceRef</span>,
 		<span class="ident">flags</span>: <span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,
@@ -454,7 +454,7 @@
 	),
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DNSServiceRegisterReply</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-	<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
+	<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
 		<span class="ident">sd_ref</span>: <span class="ident">DNSServiceRef</span>,
 		<span class="ident">flags</span>: <span class="ident">DNSServiceFlags</span>,
 		<span class="ident">error_code</span>: <span class="ident">DNSServiceErrorType</span>,
@@ -465,7 +465,7 @@
 	),
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DNSServiceBrowseReply</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-	<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
+	<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
 		<span class="ident">sd_ref</span>: <span class="ident">DNSServiceRef</span>,
 		<span class="ident">flags</span>: <span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,
@@ -477,7 +477,7 @@
 	),
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DNSServiceResolveReply</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-	<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
+	<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
 		<span class="ident">sd_ref</span>: <span class="ident">DNSServiceRef</span>,
 		<span class="ident">flags</span>: <span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,
@@ -491,7 +491,7 @@
 	),
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DNSServiceRegisterRecordReply</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-	<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
+	<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
 		<span class="ident">sd_ref</span>: <span class="ident">DNSServiceRef</span>,
 		<span class="ident">record_ref</span>: <span class="ident">DNSRecordRef</span>,
 		<span class="ident">flags</span>: <span class="ident">DNSServiceFlags</span>,
@@ -500,7 +500,7 @@
 	),
 <span class="op">&gt;</span>;
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DNSServiceQueryRecordReply</span> <span class="op">=</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>
-	<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
+	<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>(
 		<span class="ident">sd_ref</span>: <span class="ident">DNSServiceRef</span>,
 		<span class="ident">flags</span>: <span class="ident">DNSServiceFlags</span>,
 		<span class="ident">interface_index</span>: <span class="ident">u32</span>,

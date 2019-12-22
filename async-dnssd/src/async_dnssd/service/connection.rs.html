@@ -319,7 +319,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">struct</span> <span class="ident">RegisterRecordResult</span>;
 
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">register_record_callback</span>(
+<span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">register_record_callback</span>(
 	<span class="ident">_sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span>,
 	<span class="ident">_record_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSRecordRef</span>,
 	<span class="ident">_flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
