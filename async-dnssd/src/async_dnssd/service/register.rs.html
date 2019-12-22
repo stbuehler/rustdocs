@@ -275,39 +275,45 @@
 <span id="275">275</span>
 <span id="276">276</span>
 <span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">bitflags</span>::<span class="ident">bitflags</span>;
-<span class="kw">use</span> <span class="ident">futures</span>::{
-	<span class="self">self</span>,
-	<span class="ident">Async</span>,
-};
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">io</span>,
 	<span class="ident">os</span>::<span class="ident">raw</span>::{
 		<span class="ident">c_char</span>,
 		<span class="ident">c_void</span>,
 	},
+	<span class="ident">pin</span>::<span class="ident">Pin</span>,
+	<span class="ident">task</span>::{
+		<span class="ident">Context</span>,
+		<span class="ident">Poll</span>,
+	},
 };
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">cstr</span>,
 	<span class="ident">dns_consts</span>::<span class="ident">Type</span>,
-	<span class="ident">evented</span>::<span class="ident">EventedDNSService</span>,
 	<span class="ident">ffi</span>,
+	<span class="ident">inner</span>,
 	<span class="ident">interface</span>::<span class="ident">Interface</span>,
-	<span class="ident">raw</span>,
 };
 
-<span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">future</span>::<span class="ident">ServiceFuture</span><span class="op">&lt;</span><span class="ident">RegisterResult</span><span class="op">&gt;</span>;
+<span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">future</span>::<span class="ident">ServiceFuture</span><span class="op">&lt;</span><span class="ident">inner</span>::<span class="ident">SharedService</span>, <span class="ident">RegisterResult</span><span class="op">&gt;</span>;
 
-<span class="macro">bitflags</span><span class="macro">!</span> {
+<span class="ident">bitflags</span>::<span class="macro">bitflags</span><span class="macro">!</span> {
 	<span class="doccomment">/// Flags used to register service</span>
 	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterFlags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
+	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterFlags</span>: <span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
 		<span class="doccomment">/// Indicates a name conflict should not get handled automatically.</span>
 		<span class="doccomment">///</span>
 		<span class="doccomment">/// See [`kDNSServiceFlagsNoAutoRename`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsnoautorename).</span>
-		<span class="kw">const</span> <span class="ident">NO_AUTO_RENAME</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_NO_AUTO_RENAME</span>;
+		<span class="kw">const</span> <span class="ident">NO_AUTO_RENAME</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">ffi</span>::<span class="ident">FLAGS_NO_AUTO_RENAME</span>;
 
 		<span class="doccomment">/// Indicates there might me multiple records with the given name, type and class.</span>
 		<span class="doccomment">///</span>
@@ -327,7 +333,7 @@
 <span class="doccomment">/// Registered [`Record`](struct.Record.html)s from this `Registration`</span>
 <span class="doccomment">/// or the originating [`Register`](struct.Register.html) future will</span>
 <span class="doccomment">/// keep the `Registration` alive.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Registration</span>(<span class="ident">EventedDNSService</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Registration</span>(<span class="ident">inner</span>::<span class="ident">SharedService</span>);
 
 <span class="kw">impl</span> <span class="ident">Registration</span> {
 	<span class="doccomment">/// Add a record to a registered service</span>
@@ -336,7 +342,7 @@
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rr_type</span>: <span class="ident">Type</span>, <span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Ok</span>(<span class="self">self</span>
 			.<span class="number">0</span>
-			.<span class="ident">service</span>()
+			.<span class="ident">clone</span>()
 			.<span class="ident">add_record</span>(<span class="number">0</span> <span class="comment">/* no flags */</span>, <span class="ident">rr_type</span>, <span class="ident">rdata</span>, <span class="ident">ttl</span>)<span class="question-mark">?</span>
 			.<span class="ident">into</span>())
 	}
@@ -347,7 +353,7 @@
 	<span class="doccomment">/// [`Record::keep`](struct.Record.html#method.keep) doesn&#39;t do</span>
 	<span class="doccomment">/// anything useful on that handle.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_default_txt_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">Record</span> {
-		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">service</span>().<span class="ident">get_default_txt_record</span>().<span class="ident">into</span>()
+		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>().<span class="ident">get_default_txt_record</span>().<span class="ident">into</span>()
 	}
 }
 
@@ -356,16 +362,21 @@
 <span class="doccomment">/// Becomes invalid when the future completes; use the returned</span>
 <span class="doccomment">/// [`Registration`](struct.Registration.html) instead.</span>
 <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;futures do nothing unless polled&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Register</span>(<span class="ident">CallbackFuture</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Register</span> {
+	<span class="ident">future</span>: <span class="ident">CallbackFuture</span>,
+}
 
 <span class="kw">impl</span> <span class="ident">Register</span> {
+	<span class="ident">pin_utils</span>::<span class="macro">unsafe_pinned</span><span class="macro">!</span>(<span class="ident">future</span>: <span class="ident">CallbackFuture</span>);
+
 	<span class="doccomment">/// Add a record to a registered service</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// See [`DNSServiceAddRecord`](https://developer.apple.com/documentation/dnssd/1804730-dnsserviceaddrecord)</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">add_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rr_type</span>: <span class="ident">Type</span>, <span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span> {
 		<span class="prelude-val">Ok</span>(<span class="self">self</span>
-			.<span class="number">0</span>
+			.<span class="ident">future</span>
 			.<span class="ident">service</span>()
+			.<span class="ident">clone</span>()
 			.<span class="ident">add_record</span>(<span class="number">0</span> <span class="comment">/* no flags */</span>, <span class="ident">rr_type</span>, <span class="ident">rdata</span>, <span class="ident">ttl</span>)<span class="question-mark">?</span>
 			.<span class="ident">into</span>())
 	}
@@ -376,20 +387,20 @@
 	<span class="doccomment">/// [`Record::keep`](struct.Record.html#method.keep) doesn&#39;t do</span>
 	<span class="doccomment">/// anything useful on that handle.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_default_txt_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">crate</span>::<span class="ident">Record</span> {
-		<span class="self">self</span>.<span class="number">0</span>.<span class="ident">service</span>().<span class="ident">get_default_txt_record</span>().<span class="ident">into</span>()
+		<span class="self">self</span>.<span class="ident">future</span>
+			.<span class="ident">service</span>()
+			.<span class="ident">clone</span>()
+			.<span class="ident">get_default_txt_record</span>()
+			.<span class="ident">into</span>()
 	}
 }
 
 <span class="kw">impl</span> <span class="ident">futures</span>::<span class="ident">Future</span> <span class="kw">for</span> <span class="ident">Register</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>;
-	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> (<span class="ident">Registration</span>, <span class="ident">RegisterResult</span>);
+	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">Registration</span>, <span class="ident">RegisterResult</span>)<span class="op">&gt;</span>;
 
-	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Async</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">poll</span>() {
-			<span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>((<span class="ident">service</span>, <span class="ident">item</span>))) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>((<span class="ident">Registration</span>(<span class="ident">service</span>), <span class="ident">item</span>))),
-			<span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>),
-			<span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
-		}
+	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Output</span><span class="op">&gt;</span> {
+		<span class="kw">let</span> (<span class="ident">service</span>, <span class="ident">item</span>) <span class="op">=</span> <span class="ident">futures</span>::<span class="macro">ready</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">future</span>().<span class="ident">poll</span>(<span class="ident">cx</span>))<span class="question-mark">?</span>;
+		<span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Ok</span>((<span class="ident">Registration</span>(<span class="ident">service</span>), <span class="ident">item</span>)))
 	}
 }
 
@@ -504,8 +515,8 @@
 	<span class="kw">let</span> <span class="ident">domain</span> <span class="op">=</span> <span class="ident">cstr</span>::<span class="ident">NullableCStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">domain</span>)<span class="question-mark">?</span>;
 	<span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">cstr</span>::<span class="ident">NullableCStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>.<span class="ident">host</span>)<span class="question-mark">?</span>;
 
-	<span class="prelude-val">Ok</span>(<span class="ident">Register</span>(<span class="ident">CallbackFuture</span>::<span class="ident">new</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {
-		<span class="ident">raw</span>::<span class="ident">DNSService</span>::<span class="ident">register</span>(
+	<span class="kw">let</span> <span class="ident">future</span> <span class="op">=</span> <span class="ident">CallbackFuture</span>::<span class="ident">new</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {
+		<span class="ident">inner</span>::<span class="ident">OwnedService</span>::<span class="ident">register</span>(
 			<span class="ident">data</span>.<span class="ident">flags</span>.<span class="ident">bits</span>(),
 			<span class="ident">data</span>.<span class="ident">interface</span>.<span class="ident">into_raw</span>(),
 			<span class="kw-2">&amp;</span><span class="ident">name</span>,
@@ -517,7 +528,10 @@
 			<span class="prelude-val">Some</span>(<span class="ident">register_callback</span>),
 			<span class="ident">sender</span>,
 		)
-	})<span class="question-mark">?</span>))
+		.<span class="ident">map</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">share</span>())
+	})<span class="question-mark">?</span>;
+
+	<span class="prelude-val">Ok</span>(<span class="ident">Register</span> { <span class="ident">future</span> })
 }
 
 <span class="doccomment">/// Register a service</span>
@@ -543,9 +557,9 @@
 <span class="doccomment">/// ```no_run</span>
 <span class="doccomment">/// # use async_dnssd::register;</span>
 <span class="doccomment">/// # #[deny(unused_must_use)]</span>
-<span class="doccomment">/// # fn main() -&gt; std::io::Result&lt;()&gt; {</span>
-<span class="doccomment">/// let mut rt = tokio::runtime::current_thread::Runtime::new()?;</span>
-<span class="doccomment">/// let registration = rt.block_on(register(&quot;_ssh._tcp&quot;, 22)?)?;</span>
+<span class="doccomment">/// # #[tokio::main(basic_scheduler)]</span>
+<span class="doccomment">/// # async fn main() -&gt; std::io::Result&lt;()&gt; {</span>
+<span class="doccomment">/// let registration = register(&quot;_ssh._tcp&quot;, 22)?.await?;</span>
 <span class="doccomment">/// # Ok(())</span>
 <span class="doccomment">/// # }</span>
 <span class="doccomment">/// ```</span>

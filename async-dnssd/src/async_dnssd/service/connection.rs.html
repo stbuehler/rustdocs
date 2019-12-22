@@ -227,17 +227,24 @@
 <span id="227">227</span>
 <span id="228">228</span>
 <span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">bitflags</span>::<span class="ident">bitflags</span>;
-<span class="kw">use</span> <span class="ident">futures</span>::{
-	<span class="self">self</span>,
-	<span class="ident">Async</span>,
-	<span class="ident">Future</span>,
-};
+<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">io</span>,
 	<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-	<span class="ident">rc</span>::<span class="ident">Rc</span>,
+	<span class="ident">pin</span>::<span class="ident">Pin</span>,
+	<span class="ident">task</span>::{
+		<span class="ident">Context</span>,
+		<span class="ident">Poll</span>,
+	},
 };
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -246,16 +253,15 @@
 		<span class="ident">Class</span>,
 		<span class="ident">Type</span>,
 	},
-	<span class="ident">evented</span>::<span class="ident">EventedDNSService</span>,
 	<span class="ident">ffi</span>,
+	<span class="ident">inner</span>,
 	<span class="ident">interface</span>::<span class="ident">Interface</span>,
-	<span class="ident">raw</span>,
 };
 
-<span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">future</span>::<span class="ident">ServiceFutureSingle</span><span class="op">&lt;</span><span class="ident">RegisterRecordResult</span><span class="op">&gt;</span>;
+<span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">future</span>::<span class="ident">ServiceFuture</span><span class="op">&lt;</span><span class="ident">inner</span>::<span class="ident">SharedService</span>, <span class="ident">RegisterRecordResult</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Connection to register records with</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Connection</span>(<span class="ident">Rc</span><span class="op">&lt;</span><span class="ident">EventedDNSService</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Connection</span>(<span class="ident">inner</span>::<span class="ident">SharedService</span>);
 
 <span class="doccomment">/// Create [`Connection`](struct.Connection.html) to register records</span>
 <span class="doccomment">/// with</span>
@@ -264,11 +270,10 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Connection</span><span class="op">&gt;</span> {
 	<span class="kw">crate</span>::<span class="ident">init</span>();
 
-	<span class="kw">let</span> <span class="ident">con</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">DNSService</span>::<span class="ident">create_connection</span>()<span class="question-mark">?</span>;
-	<span class="prelude-val">Ok</span>(<span class="ident">Connection</span>(<span class="ident">Rc</span>::<span class="ident">new</span>(<span class="ident">EventedDNSService</span>::<span class="ident">new</span>(<span class="ident">con</span>)<span class="question-mark">?</span>)))
+	<span class="prelude-val">Ok</span>(<span class="ident">Connection</span>(<span class="ident">inner</span>::<span class="ident">SharedService</span>::<span class="ident">create_connection</span>()<span class="question-mark">?</span>))
 }
 
-<span class="macro">bitflags</span><span class="macro">!</span> {
+<span class="ident">bitflags</span>::<span class="macro">bitflags</span><span class="macro">!</span> {
 	<span class="doccomment">/// Flags used to register a record</span>
 	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterRecordFlags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
@@ -291,18 +296,23 @@
 <span class="comment">// the future gets canceled by dropping the record; must</span>
 <span class="comment">// not drop the future without dropping the record.</span>
 <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;futures do nothing unless polled&quot;</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterRecord</span>(<span class="ident">CallbackFuture</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterRecord</span> {
+	<span class="ident">future</span>: <span class="ident">CallbackFuture</span>,
+	<span class="ident">record</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">RegisterRecord</span> {
+	<span class="ident">pin_utils</span>::<span class="macro">unsafe_pinned</span><span class="macro">!</span>(<span class="ident">future</span>: <span class="ident">CallbackFuture</span>);
+
+	<span class="ident">pin_utils</span>::<span class="macro">unsafe_unpinned</span><span class="macro">!</span>(<span class="ident">record</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>);
+}
 
 <span class="kw">impl</span> <span class="ident">Future</span> <span class="kw">for</span> <span class="ident">RegisterRecord</span> {
-	<span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">io</span>::<span class="ident">Error</span>;
-	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">Record</span>;
+	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>;
 
-	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Async</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
-		<span class="kw">match</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">poll</span>() {
-			<span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="ident">RegisterRecordResult</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">Ready</span>(<span class="self">self</span>.<span class="number">1</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>())),
-			<span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Async</span>::<span class="ident">NotReady</span>),
-			<span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">e</span>),
-		}
+	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Output</span><span class="op">&gt;</span> {
+		<span class="ident">futures</span>::<span class="macro">ready</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">future</span>().<span class="ident">poll</span>(<span class="ident">cx</span>))<span class="question-mark">?</span>;
+		<span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">record</span>().<span class="ident">take</span>().<span class="ident">unwrap</span>()))
 	}
 }
 
@@ -367,8 +377,8 @@
 	) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RegisterRecord</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="ident">fullname</span> <span class="op">=</span> <span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">fullname</span>)<span class="question-mark">?</span>;
 
-		<span class="kw">let</span> (<span class="ident">serv</span>, <span class="ident">record</span>) <span class="op">=</span> <span class="ident">CallbackFuture</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(), <span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {
-			<span class="self">self</span>.<span class="number">0</span>.<span class="ident">service</span>().<span class="ident">register_record</span>(
+		<span class="kw">let</span> (<span class="ident">future</span>, <span class="ident">record</span>) <span class="op">=</span> <span class="ident">CallbackFuture</span>::<span class="ident">new_with</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(), <span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {
+			<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>().<span class="ident">register_record</span>(
 				<span class="ident">data</span>.<span class="ident">flags</span>.<span class="ident">bits</span>(),
 				<span class="ident">data</span>.<span class="ident">interface</span>.<span class="ident">into_raw</span>(),
 				<span class="kw-2">&amp;</span><span class="ident">fullname</span>,
@@ -381,7 +391,10 @@
 			)
 		})<span class="question-mark">?</span>;
 
-		<span class="prelude-val">Ok</span>(<span class="ident">RegisterRecord</span>(<span class="ident">serv</span>, <span class="prelude-val">Some</span>(<span class="ident">record</span>.<span class="ident">into</span>())))
+		<span class="prelude-val">Ok</span>(<span class="ident">RegisterRecord</span> {
+			<span class="ident">future</span>,
+			<span class="ident">record</span>: <span class="prelude-val">Some</span>(<span class="ident">record</span>.<span class="ident">into</span>()),
+		})
 	}
 
 	<span class="doccomment">/// Register record on interface with given name, type, class, rdata</span>
@@ -404,8 +417,8 @@
 }
 
 <span class="kw">impl</span> <span class="ident">RegisterRecord</span> {
-	<span class="kw">fn</span> <span class="ident">record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw">crate</span>::<span class="ident">Record</span> {
-		<span class="self">self</span>.<span class="number">1</span>.<span class="ident">as_ref</span>().<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>)
+	<span class="kw">fn</span> <span class="ident">inner_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw">crate</span>::<span class="ident">Record</span> {
+		<span class="self">self</span>.<span class="ident">record</span>.<span class="ident">as_ref</span>().<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>)
 	}
 
 	<span class="doccomment">/// Type of the record</span>
@@ -415,7 +428,7 @@
 	<span class="doccomment">/// Panics after the future completed.  Use the returned</span>
 	<span class="doccomment">/// [`Record`](struct.Record.html) instead.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rr_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Type</span> {
-		<span class="self">self</span>.<span class="ident">record</span>().<span class="ident">rr_type</span>()
+		<span class="self">self</span>.<span class="ident">inner_record</span>().<span class="ident">rr_type</span>()
 	}
 
 	<span class="doccomment">/// Update record</span>
@@ -429,7 +442,7 @@
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// See [`DNSServiceUpdateRecord`](https://developer.apple.com/documentation/dnssd/1804739-dnsserviceupdaterecord).</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">record</span>().<span class="ident">update_record</span>(<span class="ident">rdata</span>, <span class="ident">ttl</span>)
+		<span class="self">self</span>.<span class="ident">inner_record</span>().<span class="ident">update_record</span>(<span class="ident">rdata</span>, <span class="ident">ttl</span>)
 	}
 
 	<span class="doccomment">/// Keep record for as long as the underlying connection lives.</span>
@@ -451,9 +464,12 @@
 	<span class="comment">//   underyling service, and drop it either when dropping the</span>
 	<span class="comment">//   service or the callback was called.</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">keep</span>(<span class="self">self</span>) {
-		<span class="kw">let</span> (<span class="ident">fut</span>, <span class="ident">rec</span>) <span class="op">=</span> (<span class="self">self</span>.<span class="number">0</span>, <span class="self">self</span>.<span class="number">1</span>.<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>));
+		<span class="kw">let</span> (<span class="ident">fut</span>, <span class="ident">rec</span>) <span class="op">=</span> (
+			<span class="self">self</span>.<span class="ident">future</span>,
+			<span class="self">self</span>.<span class="ident">record</span>.<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>),
+		);
 		<span class="comment">// drive future to continuation, ignore errors</span>
-		<span class="ident">tokio</span>::<span class="ident">runtime</span>::<span class="ident">current_thread</span>::<span class="ident">spawn</span>(<span class="ident">fut</span>.<span class="ident">then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="prelude-val">Ok</span>(())));
+		<span class="ident">tokio</span>::<span class="ident">spawn</span>(<span class="ident">fut</span>.<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> ()));
 		<span class="ident">rec</span>.<span class="ident">keep</span>();
 	}
 }

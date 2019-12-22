@@ -53,7 +53,7 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">dns_consts</span>::<span class="ident">Type</span>,
-	<span class="ident">raw</span>,
+	<span class="ident">inner</span>,
 };
 
 <span class="doccomment">/// A successful record registration</span>
@@ -68,7 +68,7 @@
 <span class="doccomment">/// [`Register::get_default_txt_record`]: struct.Register.html#method.get_default_txt_record</span>
 <span class="doccomment">/// [`Registration`]: struct.Registration.html</span>
 <span class="doccomment">/// [`Connection`]: struct.Connection.html</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Record</span>(<span class="ident">raw</span>::<span class="ident">DNSRecord</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Record</span>(<span class="ident">inner</span>::<span class="ident">DNSRecord</span>);
 
 <span class="kw">impl</span> <span class="ident">Record</span> {
 	<span class="doccomment">/// Type of the record</span>
@@ -94,8 +94,8 @@
 	}
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">raw</span>::<span class="ident">DNSRecord</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Record</span> {
-	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">r</span>: <span class="ident">raw</span>::<span class="ident">DNSRecord</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">inner</span>::<span class="ident">DNSRecord</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Record</span> {
+	<span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">r</span>: <span class="ident">inner</span>::<span class="ident">DNSRecord</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 		<span class="ident">Record</span>(<span class="ident">r</span>)
 	}
 }
