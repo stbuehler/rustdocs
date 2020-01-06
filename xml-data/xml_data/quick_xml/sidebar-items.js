@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["serialize_document","Serialize element into full document in memory"]],"struct":[["Parser","Parser adaptor for `quick_xml::Reader`"],["Serializer","Serializer adaptor for `quick_xml::Writer`"]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"derive":[["Element","Derive `xml-data::{parser,serializer}::Element`"],["Inner","Derive `xml-data::{parser,serializer}::Inner`"],["ParserElement","Derive `xml-data::parser::Element`"],["ParserInner","Derive `xml-data::parser::Inner`"],["SerializerElement","Derive `xml-data::serializer::Element`"],["SerializerInner","Derive `xml-data::serializer::Inner`"]]});

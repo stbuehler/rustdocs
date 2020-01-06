@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["_","extend `ElementParser` trait with convenience methods"]]});

@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `xml_data` crate."><meta name="keywords" content="rust, rustlang, rust-lang, xml_data"><title>xml_data - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../xml_data/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate xml_data</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all xml_data's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'xml_data', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/xml_data/lib.rs.html#1-49' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>xml_data</a></span></h1><div class='docblock'><p>This library provides a generic interface to parse XML data: a user might implement how to
+parse and serialize their data (possibly derived), while others will implement adaptors for
+generic XML parsers.</p>
+<p>This is similar to what serde does; but serde assumes your data consists of &quot;native data&quot;
+(strings, integers, floats, ...) and nested data (lists and maps).  XML doesn't map to this
+very well; while there are some adaptors, they often accept lots of structually different input
+data: an element might be interpreted as map in serde. A subelement with text now can be
+interpreted as key (<code>&lt;key&gt;value&lt;/key&gt;</code>), but an attribute is interpreted the same way <code>&lt;... key=&quot;value&quot;&gt;</code>.</p>
+<p>This library focuses only on XML instead, and provides a more strict interface with clearly
+defined output.</p>
+<p>For the following XML handling crates adaptors are included if enabled through the equally
+named features:</p>
+<ul>
+<li><a href="https://crates.io/crates/quick-xml"><code>quick-xml</code></a></li>
+</ul>
+<p>If the <code>derive</code> feature is enabled the following traits can be derived:</p>
+<ul>
+<li><code>Element</code></li>
+<li><code>parser::Element</code></li>
+<li><code>serializer::Element</code></li>
+<li><code>Inner</code></li>
+<li><code>parser::Inner</code></li>
+<li><code>serializer::Inner</code></li>
+</ul>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr class='module-item'><td><a class="mod" href="errors/index.html" title='xml_data::errors mod'>errors</a></td><td class='docblock-short'><p>Helper functions to generate common errors</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="extensions/index.html" title='xml_data::extensions mod'>extensions</a></td><td class='docblock-short'><p>Use this to activate all trait extensions without importing their names.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="parser/index.html" title='xml_data::parser mod'>parser</a></td><td class='docblock-short'><p>Traits and helper structs to parse XML</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="quick_xml/index.html" title='xml_data::quick_xml mod'>quick_xml</a></td><td class='docblock-short'><p>Parser/serializer adaptors using <code>quick-xml</code></p>
+</td></tr><tr class='module-item'><td><a class="mod" href="serializer/index.html" title='xml_data::serializer mod'>serializer</a></td><td class='docblock-short'><p>Traits and helper structs to serialize XML</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Element.html" title='xml_data::Element trait'>Element</a></td><td class='docblock-short'><p>Combining <code>parser::Element</code> and <code>serializer::Element</code>.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Inner.html" title='xml_data::Inner trait'>Inner</a></td><td class='docblock-short'><p>Combining <code>parser::Inner</code> and <code>serializer::Inner</code>.</p>
+</td></tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table><tr class='module-item'><td><a class="type" href="type.Error.html" title='xml_data::Error type'>Error</a></td><td class='docblock-short'><p>For now we use a simple boxed error to show the user</p>
+</td></tr><tr class='module-item'><td><a class="type" href="type.Result.html" title='xml_data::Result type'>Result</a></td><td class='docblock-short'><p>Result alias with out error type included</p>
+</td></tr></table><h2 id='derives' class='section-header'><a href="#derives">Derive Macros</a></h2>
+<table><tr class='module-item'><td><a class="derive" href="derive.Element.html" title='xml_data::Element derive'>Element</a></td><td class='docblock-short'><p>Derive <code>xml-data::{parser,serializer}::Element</code></p>
+</td></tr><tr class='module-item'><td><a class="derive" href="derive.Inner.html" title='xml_data::Inner derive'>Inner</a></td><td class='docblock-short'><p>Derive <code>xml-data::{parser,serializer}::Inner</code></p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../";window.currentCrate = "xml_data";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
