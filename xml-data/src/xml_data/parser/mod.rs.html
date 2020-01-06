@@ -55,12 +55,6 @@
 <span id="55">55</span>
 <span id="56">56</span>
 <span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
-<span id="61">61</span>
-<span id="62">62</span>
-<span id="63">63</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Traits and helper structs to parse XML</span>
 <span class="doccomment">//!</span>
@@ -93,8 +87,8 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{
 	<span class="ident">core</span>::{
-		<span class="ident">ElementState</span>,
 		<span class="ident">ElementParser</span>,
+		<span class="ident">ElementState</span>,
 	},
 	<span class="ident">default</span>::{
 		<span class="ident">Element</span>,
@@ -102,21 +96,15 @@
 		<span class="ident">Inner</span>,
 		<span class="ident">InnerDefaultParseState</span>,
 	},
-	<span class="ident">extensions</span>::{
-		<span class="ident">ElementParserExt</span>,
-	},
-	<span class="ident">fixed_element</span>::{
-		<span class="ident">FixedElementState</span>,
-	},
-	<span class="ident">ignore</span>::{
-		<span class="ident">IgnoreElement</span>,
-	},
+	<span class="ident">extensions</span>::<span class="ident">ElementParserExt</span>,
+	<span class="ident">fixed_element</span>::<span class="ident">FixedElementState</span>,
+	<span class="ident">ignore</span>::<span class="ident">IgnoreElement</span>,
 	<span class="ident">inner</span>::{
-		<span class="ident">InnerState</span>,
 		<span class="ident">InnerParseResult</span>,
+		<span class="ident">InnerState</span>,
+		<span class="ident">ParseElementList</span>,
 		<span class="ident">ParseElementOnce</span>,
 		<span class="ident">ParseElementOptional</span>,
-		<span class="ident">ParseElementList</span>,
 		<span class="ident">ParseInnerOptional</span>,
 	},
 	<span class="ident">value</span>::{

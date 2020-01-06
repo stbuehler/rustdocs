@@ -240,19 +240,51 @@
 <span id="240">240</span>
 <span id="241">241</span>
 <span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="kw">crate</span>::{
-	<span class="ident">element</span>::{
-		<span class="ident">Field</span>,
-		<span class="ident">FieldAttribute</span>,
-		<span class="ident">Meta</span>,
-	},
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">element</span>::{
+	<span class="ident">Field</span>,
+	<span class="ident">FieldAttribute</span>,
+	<span class="ident">Meta</span>,
 };
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span>;
-<span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">quote</span>, <span class="ident">quote_spanned</span>};
+<span class="kw">use</span> <span class="ident">quote</span>::{
+	<span class="ident">quote</span>,
+	<span class="ident">quote_spanned</span>,
+};
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build_parser</span>(<span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="ident">Meta</span>, <span class="ident">impl_element</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
-	<span class="kw">let</span> <span class="ident">Meta</span> { <span class="ident">xml_data_crate</span>, <span class="ident">name</span>, <span class="ident">tag</span>, .. } <span class="op">=</span> <span class="ident">meta</span>;
+	<span class="kw">let</span> <span class="ident">Meta</span> {
+		<span class="ident">xml_data_crate</span>,
+		<span class="ident">name</span>,
+		<span class="ident">tag</span>,
+		..
+	} <span class="op">=</span> <span class="ident">meta</span>;
 
 	<span class="kw">let</span> <span class="ident">parse_success</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">impl_element</span> {
 		<span class="macro">quote</span><span class="macro">!</span> { <span class="prelude-val">Ok</span>(()) }
@@ -260,95 +292,115 @@
 		<span class="macro">quote</span><span class="macro">!</span> { <span class="prelude-val">Ok</span>(<span class="ident">InnerParseResult</span>::<span class="ident">Success</span>) }
 	};
 
-	<span class="kw">let</span> <span class="ident">state_fields</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
-		<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, <span class="ident">ty</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attr</span> {
-			<span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">optional</span> {
-				<span class="comment">// already optional</span>
-				<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-					#<span class="ident">name</span>: #<span class="ident">ty</span>,
+	<span class="kw">let</span> <span class="ident">state_fields</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>
+		.<span class="ident">fields</span>
+		.<span class="ident">iter</span>()
+		.<span class="ident">map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, <span class="ident">ty</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
+			<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attr</span> {
+				<span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">optional</span> {
+					<span class="comment">// already optional</span>
+					<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+						#<span class="ident">name</span>: #<span class="ident">ty</span>,
+					}
+				} <span class="kw">else</span> {
+					<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+						#<span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>,
+					}
 				}
 			} <span class="kw">else</span> {
+				<span class="comment">// inner</span>
 				<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-					#<span class="ident">name</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>#<span class="ident">ty</span><span class="op">&gt;</span>,
+					#<span class="ident">name</span>: <span class="op">&lt;</span>#<span class="ident">ty</span> <span class="kw">as</span> <span class="ident">Inner</span><span class="op">&gt;</span>::<span class="ident">ParseState</span>,
 				}
 			}
-		} <span class="kw">else</span> {
-			<span class="comment">// inner</span>
-			<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-				#<span class="ident">name</span>: <span class="op">&lt;</span>#<span class="ident">ty</span> <span class="kw">as</span> <span class="ident">Inner</span><span class="op">&gt;</span>::<span class="ident">ParseState</span>,
-			}
-		}
-	}).<span class="ident">collect</span>();
-	<span class="kw">let</span> <span class="ident">finish</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
-		<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attr</span> {
-			<span class="kw">let</span> <span class="ident">FieldAttribute</span> { <span class="ident">key</span>: <span class="ident">attr_key</span>, .. } <span class="op">=</span> <span class="ident">attr</span>;
-			<span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">optional</span> {
-				<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-					#<span class="ident">name</span>: <span class="self">self</span>.#<span class="ident">name</span>,
+		})
+		.<span class="ident">collect</span>();
+	<span class="kw">let</span> <span class="ident">finish</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>
+		.<span class="ident">fields</span>
+		.<span class="ident">iter</span>()
+		.<span class="ident">map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
+			<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
+			<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attr</span> {
+				<span class="kw">let</span> <span class="ident">FieldAttribute</span> { <span class="ident">key</span>: <span class="ident">attr_key</span>, .. } <span class="op">=</span> <span class="ident">attr</span>;
+				<span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">optional</span> {
+					<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+						#<span class="ident">name</span>: <span class="self">self</span>.#<span class="ident">name</span>,
+					}
+				} <span class="kw">else</span> {
+					<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+						#<span class="ident">name</span>: <span class="kw">match</span> <span class="self">self</span>.#<span class="ident">name</span> {
+							<span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
+							<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">missing_attribute</span>(#<span class="ident">attr_key</span>)),
+						},
+					}
 				}
 			} <span class="kw">else</span> {
+				<span class="comment">// inner</span>
 				<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-					#<span class="ident">name</span>: <span class="kw">match</span> <span class="self">self</span>.#<span class="ident">name</span> {
-						<span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
-						<span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">missing_attribute</span>(#<span class="ident">attr_key</span>)),
-					},
+					#<span class="ident">name</span>: <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">parse_inner_finish</span>()<span class="question-mark">?</span>,
 				}
 			}
-		} <span class="kw">else</span> {
-			<span class="comment">// inner</span>
-			<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-				#<span class="ident">name</span>: <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">parse_inner_finish</span>()<span class="question-mark">?</span>,
-			}
-		}
-	}).<span class="ident">collect</span>();
+		})
+		.<span class="ident">collect</span>();
 
-	<span class="kw">let</span> <span class="ident">el_attrs</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
-		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attr</span> {
-			<span class="kw">let</span> <span class="ident">FieldAttribute</span> { <span class="ident">key</span>: <span class="ident">attr_key</span>, .. } <span class="op">=</span> <span class="ident">attr</span>;
-			<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
-			<span class="kw">let</span> <span class="ident">value_t</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">is_string</span> {
-				<span class="macro">quote</span><span class="macro">!</span>(<span class="ident">ValueString</span>)
+	<span class="kw">let</span> <span class="ident">el_attrs</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>
+		.<span class="ident">fields</span>
+		.<span class="ident">iter</span>()
+		.<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
+			<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">field</span>.<span class="ident">attr</span> {
+				<span class="kw">let</span> <span class="ident">FieldAttribute</span> { <span class="ident">key</span>: <span class="ident">attr_key</span>, .. } <span class="op">=</span> <span class="ident">attr</span>;
+				<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
+				<span class="kw">let</span> <span class="ident">value_t</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">attr</span>.<span class="ident">is_string</span> {
+					<span class="macro">quote</span><span class="macro">!</span>(<span class="ident">ValueString</span>)
+				} <span class="kw">else</span> {
+					<span class="macro">quote</span><span class="macro">!</span>(<span class="ident">ValueDefault</span>)
+				};
+				<span class="prelude-val">Some</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+					<span class="kw">if</span> #<span class="ident">attr_key</span> <span class="op">=</span><span class="op">=</span> <span class="ident">key</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">is_none</span>() {
+						<span class="self">self</span>.#<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(#<span class="ident">value_t</span>::<span class="ident">parse_value</span>(<span class="ident">value</span>)<span class="question-mark">?</span>);
+						<span class="kw">return</span> <span class="prelude-val">Ok</span>(())
+					}
+				})
 			} <span class="kw">else</span> {
-				<span class="macro">quote</span><span class="macro">!</span>(<span class="ident">ValueDefault</span>)
-			};
-			<span class="prelude-val">Some</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-				<span class="kw">if</span> #<span class="ident">attr_key</span> <span class="op">=</span><span class="op">=</span> <span class="ident">key</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">is_none</span>() {
-					<span class="self">self</span>.#<span class="ident">name</span> <span class="op">=</span> <span class="prelude-val">Some</span>(#<span class="ident">value_t</span>::<span class="ident">parse_value</span>(<span class="ident">value</span>)<span class="question-mark">?</span>);
-					<span class="kw">return</span> <span class="prelude-val">Ok</span>(())
-				}
-			})
-		} <span class="kw">else</span> {
-			<span class="prelude-val">None</span>
-		}
-	}).<span class="ident">collect</span>();
-	<span class="kw">let</span> <span class="ident">el_inner_node</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
-		<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attr</span>.<span class="ident">is_none</span>() {
-			<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
-			<span class="prelude-val">Some</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-				<span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">parse_inner_node</span>(<span class="ident">tag</span>, <span class="ident">parser</span>)<span class="question-mark">?</span> {
-					<span class="ident">InnerParseResult</span>::<span class="ident">Next</span>(<span class="ident">p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">p</span>,
-					<span class="ident">InnerParseResult</span>::<span class="ident">Success</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> #<span class="ident">parse_success</span>,
-				};
-			})
-		} <span class="kw">else</span> {
-			<span class="prelude-val">None</span>
-		}
-	}).<span class="ident">collect</span>();
-	<span class="kw">let</span> <span class="ident">el_inner_text</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>.<span class="ident">fields</span>.<span class="ident">iter</span>().<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
-	<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attr</span>.<span class="ident">is_none</span>() {
-			<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
-			<span class="prelude-val">Some</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
-				<span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">parse_inner_text</span>(<span class="ident">text</span>)<span class="question-mark">?</span> {
-					<span class="ident">InnerParseResult</span>::<span class="ident">Next</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">t</span>,
-					<span class="ident">InnerParseResult</span>::<span class="ident">Success</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> #<span class="ident">parse_success</span>,
-				};
-			})
-		} <span class="kw">else</span> {
-			<span class="prelude-val">None</span>
-		}
-	}).<span class="ident">collect</span>();
+				<span class="prelude-val">None</span>
+			}
+		})
+		.<span class="ident">collect</span>();
+	<span class="kw">let</span> <span class="ident">el_inner_node</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>
+		.<span class="ident">fields</span>
+		.<span class="ident">iter</span>()
+		.<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
+			<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attr</span>.<span class="ident">is_none</span>() {
+				<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
+				<span class="prelude-val">Some</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+					<span class="kw">let</span> <span class="ident">parser</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">parse_inner_node</span>(<span class="ident">tag</span>, <span class="ident">parser</span>)<span class="question-mark">?</span> {
+						<span class="ident">InnerParseResult</span>::<span class="ident">Next</span>(<span class="ident">p</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">p</span>,
+						<span class="ident">InnerParseResult</span>::<span class="ident">Success</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> #<span class="ident">parse_success</span>,
+					};
+				})
+			} <span class="kw">else</span> {
+				<span class="prelude-val">None</span>
+			}
+		})
+		.<span class="ident">collect</span>();
+	<span class="kw">let</span> <span class="ident">el_inner_text</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">meta</span>
+		.<span class="ident">fields</span>
+		.<span class="ident">iter</span>()
+		.<span class="ident">filter_map</span>(<span class="op">|</span><span class="ident">field</span><span class="op">|</span> {
+			<span class="kw">if</span> <span class="ident">field</span>.<span class="ident">attr</span>.<span class="ident">is_none</span>() {
+				<span class="kw">let</span> <span class="ident">Field</span> { <span class="ident">name</span>, <span class="ident">span</span>, .. } <span class="op">=</span> <span class="ident">field</span>;
+				<span class="prelude-val">Some</span>(<span class="macro">quote_spanned</span><span class="macro">!</span> {<span class="kw-2">*</span><span class="ident">span</span><span class="op">=</span><span class="op">&gt;</span>
+					<span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.#<span class="ident">name</span>.<span class="ident">parse_inner_text</span>(<span class="ident">text</span>)<span class="question-mark">?</span> {
+						<span class="ident">InnerParseResult</span>::<span class="ident">Next</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">t</span>,
+						<span class="ident">InnerParseResult</span>::<span class="ident">Success</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> #<span class="ident">parse_success</span>,
+					};
+				})
+			} <span class="kw">else</span> {
+				<span class="prelude-val">None</span>
+			}
+		})
+		.<span class="ident">collect</span>();
 
 	<span class="kw">let</span> <span class="ident">handle_unknown_attribute</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">meta</span>.<span class="ident">ignore_unknown_attribute</span> {
 		<span class="macro">quote</span><span class="macro">!</span> {

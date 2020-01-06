@@ -75,8 +75,8 @@
 <span id="75">75</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
-	<span class="prelude-ty">Result</span>,
 	<span class="ident">errors</span>,
+	<span class="prelude-ty">Result</span>,
 };
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
 
@@ -101,7 +101,7 @@
 	<span class="doccomment">/// The default implementation will fail with &quot;unexpected attribute&quot;.</span>
 	<span class="kw">fn</span> <span class="ident">parse_element_attribute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">value</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">value</span>;
-		<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_attribute</span>(<span class="ident">key</span>));
+		<span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_attribute</span>(<span class="ident">key</span>))
 	}
 
 	<span class="doccomment">/// Parse text or CDATA into state.</span>
@@ -119,7 +119,7 @@
 	<span class="doccomment">/// The default implementation will fail with &quot;unexpected element&quot;.</span>
 	<span class="kw">fn</span> <span class="ident">parse_element_inner_node</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">ElementParser</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">tag</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">parser</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">parser</span>;
-		<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_element</span>(<span class="ident">tag</span>));
+		<span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_element</span>(<span class="ident">tag</span>))
 	}
 
 	<span class="doccomment">/// Finish parsing an element.</span>

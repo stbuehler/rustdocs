@@ -22,10 +22,6 @@
 <span id="22">22</span>
 <span id="23">23</span>
 <span id="24">24</span>
-<span id="25">25</span>
-<span id="26">26</span>
-<span id="27">27</span>
-<span id="28">28</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">parser</span>,
@@ -41,19 +37,15 @@
 <span class="doccomment">/// Combining `parser::Element` and `serializer::Element`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Can be derived (if `derive` feature is active).</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Element</span>: <span class="ident">parser</span>::<span class="ident">Element</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Element</span> {
-}
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Element</span>: <span class="ident">parser</span>::<span class="ident">Element</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Element</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">parser</span>::<span class="ident">Element</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Element</span><span class="op">&gt;</span> <span class="ident">Element</span> <span class="kw">for</span> <span class="ident">E</span> {
-}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">parser</span>::<span class="ident">Element</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Element</span><span class="op">&gt;</span> <span class="ident">Element</span> <span class="kw">for</span> <span class="ident">E</span> {}
 
 <span class="doccomment">/// Combining `parser::Inner` and `serializer::Inner`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Can be derived (if `derive` feature is active).</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Inner</span>: <span class="ident">parser</span>::<span class="ident">Inner</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Inner</span> {
-}
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Inner</span>: <span class="ident">parser</span>::<span class="ident">Inner</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Inner</span> {}
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">parser</span>::<span class="ident">Inner</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Inner</span><span class="op">&gt;</span> <span class="ident">Inner</span> <span class="kw">for</span> <span class="ident">E</span> {
-}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">parser</span>::<span class="ident">Inner</span> <span class="op">+</span> <span class="ident">serializer</span>::<span class="ident">Inner</span><span class="op">&gt;</span> <span class="ident">Inner</span> <span class="kw">for</span> <span class="ident">E</span> {}
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "xml_data";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>

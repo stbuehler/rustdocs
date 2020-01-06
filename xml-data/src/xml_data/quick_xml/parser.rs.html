@@ -194,16 +194,26 @@
 <span id="194">194</span>
 <span id="195">195</span>
 <span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
+	<span class="ident">errors</span>,
 	<span class="ident">extensions</span>::<span class="kw-2">*</span>,
 	<span class="ident">parser</span>::{
+		<span class="ident">Element</span>,
 		<span class="ident">ElementParser</span>,
 		<span class="ident">ElementState</span>,
-		<span class="ident">Element</span>,
 	},
 	<span class="prelude-ty">Result</span>,
-	<span class="ident">errors</span>,
 };
 <span class="kw">use</span> <span class="ident">quick_xml</span>::<span class="ident">events</span>::<span class="ident">Event</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">BufRead</span>;
@@ -233,7 +243,9 @@
 	}
 
 	<span class="kw">fn</span> <span class="ident">peek</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>() { <span class="self">self</span>.<span class="ident">shift</span>()<span class="question-mark">?</span>; }
+		<span class="kw">if</span> <span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">is_none</span>() {
+			<span class="self">self</span>.<span class="ident">shift</span>()<span class="question-mark">?</span>;
+		}
 		<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">pending</span>.<span class="ident">clone</span>().<span class="ident">expect</span>(<span class="string">&quot;can&#39;t be None&quot;</span>))
 	}
 
@@ -264,10 +276,13 @@
 				<span class="ident">Event</span>::<span class="ident">End</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
 					<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_end</span>());
 				},
-				<span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">s</span>)<span class="op">|</span><span class="ident">Event</span>::<span class="ident">Empty</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> {
+				<span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">s</span>) <span class="op">|</span> <span class="ident">Event</span>::<span class="ident">Empty</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> {
 					<span class="kw">let</span> <span class="ident">tag</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">decode</span>(<span class="ident">s</span>.<span class="ident">name</span>());
 					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">finished_inner</span> <span class="op">=</span> <span class="bool-val">false</span>;
-					<span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">PRef</span> { <span class="ident">parser</span>: <span class="self">self</span>, <span class="ident">finished_element</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">finished_inner</span> };
+					<span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">PRef</span> {
+						<span class="ident">parser</span>: <span class="self">self</span>,
+						<span class="ident">finished_element</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">finished_inner</span>,
+					};
 					<span class="ident">output</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">p</span>.<span class="ident">parse_element</span>::<span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">tag</span>)<span class="question-mark">?</span>);
 					<span class="kw">if</span> <span class="op">!</span><span class="ident">finished_inner</span> {
 						<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">inner_element_not_parsed</span>(<span class="kw-2">&amp;</span><span class="ident">tag</span>));
@@ -290,7 +305,7 @@
 				<span class="comment">// ignore comments</span>
 				<span class="ident">Event</span>::<span class="ident">Comment</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> (),
 				<span class="comment">// text+cdata</span>
-				<span class="ident">Event</span>::<span class="ident">Text</span>(<span class="ident">t</span>)<span class="op">|</span><span class="ident">Event</span>::<span class="ident">CData</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> {
+				<span class="ident">Event</span>::<span class="ident">Text</span>(<span class="ident">t</span>) <span class="op">|</span> <span class="ident">Event</span>::<span class="ident">CData</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> {
 					<span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">unescape_and_decode</span>(<span class="self">self</span>.<span class="ident">inner</span>)<span class="question-mark">?</span>;
 					<span class="kw">if</span> <span class="op">!</span><span class="ident">t</span>.<span class="ident">trim</span>().<span class="ident">is_empty</span>() {
 						<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_text</span>());
@@ -342,10 +357,13 @@
 					<span class="kw-2">*</span><span class="self">self</span>.<span class="ident">finished_element</span> <span class="op">=</span> <span class="bool-val">true</span>;
 					<span class="kw">return</span> <span class="prelude-val">Ok</span>(());
 				},
-				<span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">s</span>)<span class="op">|</span><span class="ident">Event</span>::<span class="ident">Empty</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> {
+				<span class="ident">Event</span>::<span class="ident">Start</span>(<span class="ident">s</span>) <span class="op">|</span> <span class="ident">Event</span>::<span class="ident">Empty</span>(<span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> {
 					<span class="kw">let</span> <span class="ident">tag</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">inner</span>.<span class="ident">decode</span>(<span class="ident">s</span>.<span class="ident">name</span>());
 					<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">finished_inner</span> <span class="op">=</span> <span class="bool-val">false</span>;
-					<span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">PRef</span> { <span class="ident">parser</span>: <span class="self">self</span>.<span class="ident">parser</span>, <span class="ident">finished_element</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">finished_inner</span> };
+					<span class="kw">let</span> <span class="ident">p</span> <span class="op">=</span> <span class="ident">PRef</span> {
+						<span class="ident">parser</span>: <span class="self">self</span>.<span class="ident">parser</span>,
+						<span class="ident">finished_element</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">finished_inner</span>,
+					};
 					<span class="ident">state</span>.<span class="ident">parse_element_inner_node</span>(<span class="kw-2">&amp;</span><span class="ident">tag</span>, <span class="ident">p</span>)<span class="question-mark">?</span>;
 					<span class="kw">if</span> <span class="op">!</span><span class="ident">finished_inner</span> {
 						<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">inner_element_not_parsed</span>(<span class="kw-2">&amp;</span><span class="ident">tag</span>));
@@ -360,7 +378,7 @@
 				<span class="comment">// ignore comments</span>
 				<span class="ident">Event</span>::<span class="ident">Comment</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> (),
 				<span class="comment">// text+cdata</span>
-				<span class="ident">Event</span>::<span class="ident">Text</span>(<span class="ident">t</span>)<span class="op">|</span><span class="ident">Event</span>::<span class="ident">CData</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> {
+				<span class="ident">Event</span>::<span class="ident">Text</span>(<span class="ident">t</span>) <span class="op">|</span> <span class="ident">Event</span>::<span class="ident">CData</span>(<span class="ident">t</span>) <span class="op">=</span><span class="op">&gt;</span> {
 					<span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">unescape_and_decode</span>(<span class="self">self</span>.<span class="ident">parser</span>.<span class="ident">inner</span>)<span class="question-mark">?</span>;
 					<span class="ident">state</span>.<span class="ident">parse_element_inner_text</span>(<span class="ident">t</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
 				},
@@ -373,8 +391,10 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-	<span class="kw">use</span> <span class="kw">crate</span>::<span class="prelude-ty">Result</span>;
-	<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">test_struct</span>::<span class="kw-2">*</span>;
+	<span class="kw">use</span> <span class="kw">crate</span>::{
+		<span class="ident">test_struct</span>::<span class="kw-2">*</span>,
+		<span class="prelude-ty">Result</span>,
+	};
 
 	<span class="kw">fn</span> <span class="ident">parse</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="kw">super</span>::<span class="ident">Element</span><span class="op">&gt;</span>(<span class="ident">input</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">quick_xml</span>::<span class="ident">Reader</span>::<span class="ident">from_reader</span>(<span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">Cursor</span>::<span class="ident">new</span>(<span class="ident">input</span>));

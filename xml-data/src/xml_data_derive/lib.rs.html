@@ -102,6 +102,9 @@
 <span id="102">102</span>
 <span id="103">103</span>
 <span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Derive `xml-data` trait implementations</span>
 <span class="doccomment">//!</span>
@@ -132,7 +135,10 @@
 <span class="kw">mod</span> <span class="ident">serialize</span>;
 
 <span class="kw">use</span> <span class="ident">proc_macro</span>::<span class="ident">TokenStream</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">parse_macro_input</span>, <span class="ident">DeriveInput</span>};
+<span class="kw">use</span> <span class="ident">syn</span>::{
+	<span class="ident">parse_macro_input</span>,
+	<span class="ident">DeriveInput</span>,
+};
 
 <span class="doccomment">/// Derive `xml-data::{parser,serializer}::Element`</span>
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">Element</span>, <span class="ident">attributes</span>(<span class="ident">xml_data</span>))]</span>
