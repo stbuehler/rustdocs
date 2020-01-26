@@ -229,6 +229,38 @@
 <span id="229">229</span>
 <span id="230">230</span>
 <span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">fmt</span>,
@@ -259,6 +291,7 @@
 		<span class="ident">Class</span>,
 		<span class="ident">Type</span>,
 	},
+	<span class="ident">ffi</span>,
 	<span class="ident">interface</span>::<span class="ident">Interface</span>,
 	<span class="ident">service</span>::{
 		<span class="ident">query_record_extended</span>,
@@ -268,25 +301,49 @@
 	},
 };
 
-<span class="kw">fn</span> <span class="ident">decode_a</span>(<span class="ident">a</span>: <span class="ident">QueryRecordResult</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">IpAddr</span>, <span class="ident">Interface</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">decode_a</span>(<span class="ident">a</span>: <span class="ident">QueryRecordResult</span>, <span class="ident">port</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ResolveHostResult</span><span class="op">&gt;</span> {
 	<span class="kw">if</span> <span class="ident">a</span>.<span class="ident">rr_class</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Class</span>::<span class="ident">IN</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">a</span>.<span class="ident">rr_type</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Type</span>::<span class="ident">A</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">a</span>.<span class="ident">rdata</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">4</span> {
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">octets</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">4</span>];
 		<span class="ident">octets</span>.<span class="ident">clone_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">rdata</span>);
-		<span class="prelude-val">Some</span>((<span class="ident">IpAddr</span>::<span class="ident">V4</span>(<span class="ident">Ipv4Addr</span>::<span class="ident">from</span>(<span class="ident">octets</span>)), <span class="ident">a</span>.<span class="ident">interface</span>))
+		<span class="kw">let</span> <span class="ident">ip</span> <span class="op">=</span> <span class="ident">IpAddr</span>::<span class="ident">V4</span>(<span class="ident">Ipv4Addr</span>::<span class="ident">from</span>(<span class="ident">octets</span>));
+		<span class="kw">let</span> <span class="ident">addr</span> <span class="op">=</span> <span class="ident">ScopedSocketAddr</span>::<span class="ident">new</span>(<span class="ident">ip</span>, <span class="ident">port</span>, <span class="ident">a</span>.<span class="ident">interface</span>.<span class="ident">scope_id</span>());
+		<span class="prelude-val">Some</span>(<span class="ident">ResolveHostResult</span> {
+			<span class="ident">flags</span>: <span class="ident">ResolvedHostFlags</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">a</span>.<span class="ident">flags</span>.<span class="ident">bits</span>()),
+			<span class="ident">address</span>: <span class="ident">addr</span>,
+		})
 	} <span class="kw">else</span> {
 		<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Invalid A response: {:?}&quot;</span>, <span class="ident">a</span>);
 		<span class="prelude-val">None</span>
 	}
 }
 
-<span class="kw">fn</span> <span class="ident">decode_aaaa</span>(<span class="ident">a</span>: <span class="ident">QueryRecordResult</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">IpAddr</span>, <span class="ident">Interface</span>)<span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">decode_aaaa</span>(<span class="ident">a</span>: <span class="ident">QueryRecordResult</span>, <span class="ident">port</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ResolveHostResult</span><span class="op">&gt;</span> {
 	<span class="kw">if</span> <span class="ident">a</span>.<span class="ident">rr_class</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Class</span>::<span class="ident">IN</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">a</span>.<span class="ident">rr_type</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Type</span>::<span class="ident">AAAA</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">a</span>.<span class="ident">rdata</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">16</span> {
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">octets</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">16</span>];
 		<span class="ident">octets</span>.<span class="ident">clone_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">a</span>.<span class="ident">rdata</span>);
-		<span class="prelude-val">Some</span>((<span class="ident">IpAddr</span>::<span class="ident">V6</span>(<span class="ident">Ipv6Addr</span>::<span class="ident">from</span>(<span class="ident">octets</span>)), <span class="ident">a</span>.<span class="ident">interface</span>))
+		<span class="kw">let</span> <span class="ident">ip</span> <span class="op">=</span> <span class="ident">IpAddr</span>::<span class="ident">V6</span>(<span class="ident">Ipv6Addr</span>::<span class="ident">from</span>(<span class="ident">octets</span>));
+		<span class="kw">let</span> <span class="ident">addr</span> <span class="op">=</span> <span class="ident">ScopedSocketAddr</span>::<span class="ident">new</span>(<span class="ident">ip</span>, <span class="ident">port</span>, <span class="ident">a</span>.<span class="ident">interface</span>.<span class="ident">scope_id</span>());
+		<span class="prelude-val">Some</span>(<span class="ident">ResolveHostResult</span> {
+			<span class="ident">flags</span>: <span class="ident">ResolvedHostFlags</span>::<span class="ident">from_bits_truncate</span>(<span class="ident">a</span>.<span class="ident">flags</span>.<span class="ident">bits</span>()),
+			<span class="ident">address</span>: <span class="ident">addr</span>,
+		})
 	} <span class="kw">else</span> {
 		<span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Invalid AAAA response: {:?}&quot;</span>, <span class="ident">a</span>);
 		<span class="prelude-val">None</span>
+	}
+}
+
+<span class="ident">bitflags</span>::<span class="macro">bitflags</span><span class="macro">!</span> {
+	<span class="doccomment">/// Flags for [`ResolveHostResult`](struct.ResolveHostResult.html)</span>
+	<span class="doccomment">///</span>
+	<span class="doccomment">/// Doesn&#39;t include `MORE_COMING` as there are two underlying streams.</span>
+	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
+	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ResolvedHostFlags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
+		<span class="doccomment">/// Indicates the result is new.  If not set indicates the result</span>
+		<span class="doccomment">/// was removed.</span>
+		<span class="doccomment">///</span>
+		<span class="doccomment">/// See [`kDNSServiceFlagsAdd`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsadd).</span>
+		<span class="kw">const</span> <span class="ident">ADD</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_ADD</span>;
 	}
 }
 
@@ -312,26 +369,33 @@
 <span class="doccomment">/// Pending resolve</span>
 <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;streams do nothing unless polled&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ResolveHost</span> {
-	<span class="comment">// inner: stream::BoxStream&lt;&#39;static, io::Result&lt;(IpAddr, Interface)&gt;&gt;,</span>
-	<span class="ident">inner</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="ident">IpAddr</span>, <span class="ident">Interface</span>)<span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-	<span class="ident">port</span>: <span class="ident">u16</span>,
+	<span class="ident">inner</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ResolveHostResult</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">ResolveHost</span> {
-	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ScopedSocketAddr</span><span class="op">&gt;</span>;
+	<span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ResolveHostResult</span><span class="op">&gt;</span>;
 
 	<span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-		<span class="ident">Poll</span>::<span class="ident">Ready</span>(
-			<span class="ident">futures</span>::<span class="macro">ready</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">poll_next_unpin</span>(<span class="ident">cx</span>)<span class="question-mark">?</span>)
-				.<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">ip</span>, <span class="ident">iface</span>)<span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="ident">ScopedSocketAddr</span>::<span class="ident">new</span>(<span class="ident">ip</span>, <span class="self">self</span>.<span class="ident">port</span>, <span class="ident">iface</span>.<span class="ident">scope_id</span>()))),
-		)
+		<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">poll_next_unpin</span>(<span class="ident">cx</span>)
 	}
+}
+
+<span class="doccomment">/// Resolve host result</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// See [`DNSServiceResolveReply`](https://developer.apple.com/documentation/dnssd/dnsserviceresolvereply).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ResolveHostResult</span> {
+	<span class="doccomment">/// flags</span>
+	<span class="kw">pub</span> <span class="ident">flags</span>: <span class="ident">ResolvedHostFlags</span>,
+	<span class="doccomment">/// address</span>
+	<span class="kw">pub</span> <span class="ident">address</span>: <span class="ident">ScopedSocketAddr</span>,
 }
 
 <span class="doccomment">/// IP address with port and &quot;scope id&quot; (even for IPv4)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// When converting to `SocketAddr` the &quot;scope id&quot; is lost for IPv4; when converting to</span>
 <span class="doccomment">/// `SocketAddrV6` it uses `to_ipv6_mapped()` for IPv4 addresses.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Hash</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ScopedSocketAddr</span> {
 	<span class="doccomment">/// IPv4 target</span>
 	<span class="ident">V4</span> {
@@ -454,12 +518,12 @@
 	};
 
 	<span class="kw">let</span> <span class="ident">inner_v6</span> <span class="op">=</span> <span class="ident">query_record_extended</span>(<span class="ident">host</span>, <span class="ident">Type</span>::<span class="ident">AAAA</span>, <span class="ident">qrdata</span>)<span class="question-mark">?</span>
-		.<span class="ident">try_filter_map</span>(<span class="op">|</span><span class="ident">addr</span><span class="op">|</span> <span class="kw">async</span> { <span class="prelude-val">Ok</span>(<span class="ident">decode_aaaa</span>(<span class="ident">addr</span>)) });
+		.<span class="ident">try_filter_map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">addr</span><span class="op">|</span> <span class="kw">async</span> <span class="kw">move</span> { <span class="prelude-val">Ok</span>(<span class="ident">decode_aaaa</span>(<span class="ident">addr</span>, <span class="ident">port</span>)) });
 	<span class="kw">let</span> <span class="ident">inner_v4</span> <span class="op">=</span> <span class="ident">query_record_extended</span>(<span class="ident">host</span>, <span class="ident">Type</span>::<span class="ident">A</span>, <span class="ident">qrdata</span>)<span class="question-mark">?</span>
-		.<span class="ident">try_filter_map</span>(<span class="op">|</span><span class="ident">addr</span><span class="op">|</span> <span class="kw">async</span> { <span class="prelude-val">Ok</span>(<span class="ident">decode_a</span>(<span class="ident">addr</span>)) });
+		.<span class="ident">try_filter_map</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">addr</span><span class="op">|</span> <span class="kw">async</span> <span class="kw">move</span> { <span class="prelude-val">Ok</span>(<span class="ident">decode_a</span>(<span class="ident">addr</span>, <span class="ident">port</span>)) });
 	<span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">Box</span>::<span class="ident">pin</span>(<span class="ident">stream</span>::<span class="ident">select</span>(<span class="ident">inner_v6</span>, <span class="ident">inner_v4</span>));
 
-	<span class="prelude-val">Ok</span>(<span class="ident">ResolveHost</span> { <span class="ident">inner</span>, <span class="ident">port</span> })
+	<span class="prelude-val">Ok</span>(<span class="ident">ResolveHost</span> { <span class="ident">inner</span> })
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "async_dnssd";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
