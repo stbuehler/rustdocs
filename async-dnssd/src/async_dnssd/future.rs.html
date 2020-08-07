@@ -113,6 +113,9 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">futures</span>::{
 	<span class="ident">channel</span>::<span class="ident">oneshot</span>,
@@ -151,8 +154,11 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">ServiceFuture</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">EventedService</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Inner</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">EventedService</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ServiceFuture</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">run_callback</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="ident">error_code</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceErrorType</span>, <span class="ident">f</span>: <span class="ident">F</span>)
-	<span class="kw">where</span>
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">run_callback</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
+		<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
+		<span class="ident">error_code</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceErrorType</span>,
+		<span class="ident">f</span>: <span class="ident">F</span>,
+	) <span class="kw">where</span>
 		<span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 		<span class="ident">T</span>: ::<span class="ident">std</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span>,
 	{
