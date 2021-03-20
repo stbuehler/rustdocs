@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/dns_consts.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dns_consts.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../async_dnssd/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/dns_consts.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dns_consts.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../async_dnssd/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -252,16 +255,16 @@
 
 <span class="kw">impl</span> <span class="ident">Class</span> {
 	<span class="doccomment">/// CLASS Internet</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN</span>: <span class="ident">Class</span> <span class="op">=</span> <span class="ident">Class</span>(<span class="number">0x0001</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IN</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0001</span>); <span class="comment">// RFC 1035</span>
 	<span class="comment">// CS = 0x0002, // &quot;CSNET&quot; (not just obsolete; unassigned in the IANA registry)</span>
 	<span class="doccomment">/// CLASS &quot;Chaos&quot;</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CH</span>: <span class="ident">Class</span> <span class="op">=</span> <span class="ident">Class</span>(<span class="number">0x0003</span>); <span class="comment">// &quot;Chaos&quot;</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CH</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0003</span>); <span class="comment">// &quot;Chaos&quot;</span>
 	<span class="doccomment">/// CLASS &quot;Hesiod&quot;</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HS</span>: <span class="ident">Class</span> <span class="op">=</span> <span class="ident">Class</span>(<span class="number">0x0004</span>); <span class="comment">// &quot;Hesiod&quot;</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HS</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0004</span>); <span class="comment">// &quot;Hesiod&quot;</span>
 	<span class="doccomment">/// QCLASS NONE</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="ident">Class</span> <span class="op">=</span> <span class="ident">Class</span>(<span class="number">0x00fe</span>); <span class="comment">// RFC 2136</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NONE</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00fe</span>); <span class="comment">// RFC 2136</span>
 	<span class="doccomment">/// QCLASS &quot;*&quot; (ANY)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ANY</span>: <span class="ident">Class</span> <span class="op">=</span> <span class="ident">Class</span>(<span class="number">0x00ff</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ANY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00ff</span>); <span class="comment">// RFC 1035</span>
 }
 
 <span class="doccomment">/// DNS (RR)TYPE</span>
@@ -282,178 +285,178 @@
 
 <span class="kw">impl</span> <span class="ident">Type</span> {
 	<span class="doccomment">/// a host address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">A</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0001</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">A</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0001</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// an authoritative name server</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NS</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0002</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NS</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0002</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a mail destination (OBSOLETE - use MX)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MD</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0003</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MD</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0003</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a mail forwarder (OBSOLETE - use MX)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MF</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0004</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MF</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0004</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// the canonical name for an alias</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CNAME</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0005</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CNAME</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0005</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// marks the start of a zone of authority</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SOA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0006</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SOA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0006</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a mailbox domain name (EXPERIMENTAL)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MB</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0007</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MB</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0007</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a mail group member (EXPERIMENTAL)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MG</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0008</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MG</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0008</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a mail rename domain name (EXPERIMENTAL)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MR</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0009</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MR</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0009</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a null RR (EXPERIMENTAL)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NULL</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x000a</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NULL</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x000a</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a well known service description</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">WKS</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x000b</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">WKS</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x000b</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// a domain name pointer</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PTR</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x000c</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PTR</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x000c</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// host information</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HINFO</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x000d</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HINFO</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x000d</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// mailbox or mail list information</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MINFO</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x000e</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MINFO</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x000e</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// mail exchange</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MX</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x000f</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MX</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x000f</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// text strings</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TXT</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0010</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TXT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0010</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// for Responsible Person</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RP</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0011</span>); <span class="comment">// RFC 1183</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RP</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0011</span>); <span class="comment">// RFC 1183</span>
 	<span class="doccomment">/// for AFS Data Base location</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AFSDB</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0012</span>); <span class="comment">// RFC 1183</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AFSDB</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0012</span>); <span class="comment">// RFC 1183</span>
 	<span class="doccomment">/// for X.25 PSDN address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">X25</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0013</span>); <span class="comment">// RFC 1183</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">X25</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0013</span>); <span class="comment">// RFC 1183</span>
 	<span class="doccomment">/// for ISDN address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ISDN</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0014</span>); <span class="comment">// RFC 1183</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ISDN</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0014</span>); <span class="comment">// RFC 1183</span>
 	<span class="doccomment">/// for Route Through</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RT</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0015</span>); <span class="comment">// RFC 1183</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0015</span>); <span class="comment">// RFC 1183</span>
 	<span class="doccomment">/// for NSAP address, NSAP style A record</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSAP</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0016</span>); <span class="comment">// RFC 1706</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSAP</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0016</span>); <span class="comment">// RFC 1706</span>
 	<span class="doccomment">/// for domain name pointer, NSAP style</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSAP_PTR</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0017</span>); <span class="comment">// RFC 1348</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSAP_PTR</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0017</span>); <span class="comment">// RFC 1348</span>
 	<span class="doccomment">/// for security signature</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIG</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0018</span>); <span class="comment">// RFC 2535</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SIG</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0018</span>); <span class="comment">// RFC 2535</span>
 	<span class="doccomment">/// for security key</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0019</span>); <span class="comment">// RFC 2535</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0019</span>); <span class="comment">// RFC 2535</span>
 	<span class="doccomment">/// X.400 mail mapping information</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PX</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x001a</span>); <span class="comment">// RFC 2163</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">PX</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x001a</span>); <span class="comment">// RFC 2163</span>
 	<span class="doccomment">/// Geographical Position</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GPOS</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x001b</span>); <span class="comment">// RFC 1712</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GPOS</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x001b</span>); <span class="comment">// RFC 1712</span>
 	<span class="doccomment">/// IP6 Address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AAAA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x001c</span>); <span class="comment">// RFC 3596</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AAAA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x001c</span>); <span class="comment">// RFC 3596</span>
 	<span class="doccomment">/// Location Information</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOC</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x001d</span>); <span class="comment">// RFC 1876</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOC</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x001d</span>); <span class="comment">// RFC 1876</span>
 	<span class="doccomment">/// Next Domain (OBSOLETE)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NXT</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x001e</span>); <span class="comment">// RFC 2535</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NXT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x001e</span>); <span class="comment">// RFC 2535</span>
 	<span class="doccomment">/// Endpoint Identifier</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EID</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x001f</span>); <span class="comment">// Michael Patton: http://ana-3.lcs.mit.edu/~jnc/nimrod/dns.txt</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EID</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x001f</span>); <span class="comment">// Michael Patton: http://ana-3.lcs.mit.edu/~jnc/nimrod/dns.txt</span>
 	<span class="doccomment">/// Nimrod Locator</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NIMLOC</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0020</span>); <span class="comment">// Michael Patton: http://ana-3.lcs.mit.edu/~jnc/nimrod/dns.txt</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NIMLOC</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0020</span>); <span class="comment">// Michael Patton: http://ana-3.lcs.mit.edu/~jnc/nimrod/dns.txt</span>
 	<span class="doccomment">/// Server Selection</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SRV</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0021</span>); <span class="comment">// RFC 2782</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SRV</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0021</span>); <span class="comment">// RFC 2782</span>
 	<span class="doccomment">/// ATM Address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ATMA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0022</span>); <span class="comment">// http://www.broadband-forum.org/ftp/pub/approved-specs/af-dans-0152.000.pdf</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ATMA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0022</span>); <span class="comment">// http://www.broadband-forum.org/ftp/pub/approved-specs/af-dans-0152.000.pdf</span>
 	<span class="doccomment">/// Naming Authority Pointer</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NAPTR</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0023</span>); <span class="comment">// RFC 2168</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NAPTR</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0023</span>); <span class="comment">// RFC 2168</span>
 	<span class="doccomment">/// Key Exchanger</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KX</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0024</span>); <span class="comment">// RFC 2230</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">KX</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0024</span>); <span class="comment">// RFC 2230</span>
 	<span class="doccomment">/// CERT</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CERT</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0025</span>); <span class="comment">// RFC 4398</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CERT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0025</span>); <span class="comment">// RFC 4398</span>
 	<span class="doccomment">/// A6 (OBSOLETE - use AAAA)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">A6</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0026</span>); <span class="comment">// RFC 2874</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">A6</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0026</span>); <span class="comment">// RFC 2874</span>
 	<span class="doccomment">/// DNAME</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DNAME</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0027</span>); <span class="comment">// RFC 6672</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DNAME</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0027</span>); <span class="comment">// RFC 6672</span>
 	<span class="doccomment">/// SINK</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SINK</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0028</span>); <span class="comment">// Donald E Eastlake: http://tools.ietf.org/html/draft-eastlake-kitchen-sink</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SINK</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0028</span>); <span class="comment">// Donald E Eastlake: http://tools.ietf.org/html/draft-eastlake-kitchen-sink</span>
 	<span class="doccomment">/// OPT</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OPT</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0029</span>); <span class="comment">// RFC 6891</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OPT</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0029</span>); <span class="comment">// RFC 6891</span>
 	<span class="doccomment">/// APL</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">APL</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x002a</span>); <span class="comment">// RFC 3123</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">APL</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x002a</span>); <span class="comment">// RFC 3123</span>
 	<span class="doccomment">/// Delegation Signer</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DS</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x002b</span>); <span class="comment">// RFC 3658</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DS</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x002b</span>); <span class="comment">// RFC 3658</span>
 	<span class="doccomment">/// SSH Key Fingerprint</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSHFP</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x002c</span>); <span class="comment">// RFC 4255</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SSHFP</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x002c</span>); <span class="comment">// RFC 4255</span>
 	<span class="doccomment">/// IPSECKEY</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPSECKEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x002d</span>); <span class="comment">// RFC 4025</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IPSECKEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x002d</span>); <span class="comment">// RFC 4025</span>
 	<span class="doccomment">/// RRSIG</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RRSIG</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x002e</span>); <span class="comment">// RFC 4034</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RRSIG</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x002e</span>); <span class="comment">// RFC 4034</span>
 	<span class="doccomment">/// NSEC</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSEC</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x002f</span>); <span class="comment">// RFC 4034</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSEC</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x002f</span>); <span class="comment">// RFC 4034</span>
 	<span class="doccomment">/// DNSKEY</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DNSKEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0030</span>); <span class="comment">// RFC 4034</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DNSKEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0030</span>); <span class="comment">// RFC 4034</span>
 	<span class="doccomment">/// DHCID</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DHCID</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0031</span>); <span class="comment">// RFC 4701</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DHCID</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0031</span>); <span class="comment">// RFC 4701</span>
 	<span class="doccomment">/// NSEC3</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSEC3</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0032</span>); <span class="comment">// RFC 5155</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSEC3</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0032</span>); <span class="comment">// RFC 5155</span>
 	<span class="doccomment">/// NSEC3PARAM</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSEC3PARAM</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0033</span>); <span class="comment">// RFC 5155</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NSEC3PARAM</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0033</span>); <span class="comment">// RFC 5155</span>
 	<span class="doccomment">/// TLSA</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TLSA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0034</span>); <span class="comment">// RFC 6698</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TLSA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0034</span>); <span class="comment">// RFC 6698</span>
 	<span class="doccomment">/// S/MIME cert association</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SMIMEA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0035</span>); <span class="comment">// RFC 8162</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SMIMEA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0035</span>); <span class="comment">// RFC 8162</span>
 	<span class="doccomment">/// Host Identity Protocol</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HIP</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0037</span>); <span class="comment">// RFC 8005</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">HIP</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0037</span>); <span class="comment">// RFC 8005</span>
 	<span class="doccomment">/// NINFO</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NINFO</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0038</span>); <span class="comment">// Jim Reid: https://tools.ietf.org/html/draft-reid-dnsext-zs-01</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NINFO</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0038</span>); <span class="comment">// Jim Reid: https://tools.ietf.org/html/draft-reid-dnsext-zs-01</span>
 	<span class="doccomment">/// RKEY</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RKEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0039</span>); <span class="comment">// Jim Reid: https://tools.ietf.org/html/draft-reid-dnsext-rkey-00</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RKEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0039</span>); <span class="comment">// Jim Reid: https://tools.ietf.org/html/draft-reid-dnsext-rkey-00</span>
 	<span class="doccomment">/// Trust Anchor LINK</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TALINK</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x003a</span>); <span class="comment">// Wouter Wijngaards</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TALINK</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x003a</span>); <span class="comment">// Wouter Wijngaards</span>
 	<span class="doccomment">/// Child DS</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CDS</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x003b</span>); <span class="comment">// RFC 7344</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CDS</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x003b</span>); <span class="comment">// RFC 7344</span>
 	<span class="doccomment">/// DNSKEY(s) the Child wants reflected in DS</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CDNSKEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x003c</span>); <span class="comment">// RFC 7344</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CDNSKEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x003c</span>); <span class="comment">// RFC 7344</span>
 	<span class="doccomment">/// OpenPGP Key</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OPENPGPKEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x003d</span>); <span class="comment">// RFC 7929</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">OPENPGPKEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x003d</span>); <span class="comment">// RFC 7929</span>
 	<span class="doccomment">/// Child-To-Parent Synchronization</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CSYNC</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x003e</span>); <span class="comment">// RFC 7477</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CSYNC</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x003e</span>); <span class="comment">// RFC 7477</span>
 	<span class="doccomment">/// SPF</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SPF</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0063</span>); <span class="comment">// RFC 7208</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">SPF</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0063</span>); <span class="comment">// RFC 7208</span>
 	<span class="doccomment">/// UINFO</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UINFO</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0064</span>); <span class="comment">// IANA-Reserved</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UINFO</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0064</span>); <span class="comment">// IANA-Reserved</span>
 	<span class="doccomment">/// UID</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UID</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0065</span>); <span class="comment">// IANA-Reserved</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UID</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0065</span>); <span class="comment">// IANA-Reserved</span>
 	<span class="doccomment">/// GID</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GID</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0066</span>); <span class="comment">// IANA-Reserved</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">GID</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0066</span>); <span class="comment">// IANA-Reserved</span>
 	<span class="doccomment">/// UNSPEC</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UNSPEC</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0067</span>); <span class="comment">// IANA-Reserved</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">UNSPEC</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0067</span>); <span class="comment">// IANA-Reserved</span>
 	<span class="doccomment">/// NID</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NID</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0068</span>); <span class="comment">// RFC 6742</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">NID</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0068</span>); <span class="comment">// RFC 6742</span>
 	<span class="doccomment">/// L32</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">L32</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0069</span>); <span class="comment">// RFC 6742</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">L32</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0069</span>); <span class="comment">// RFC 6742</span>
 	<span class="doccomment">/// L64</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">L64</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x006a</span>); <span class="comment">// RFC 6742</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">L64</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x006a</span>); <span class="comment">// RFC 6742</span>
 	<span class="doccomment">/// LP</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LP</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x006b</span>); <span class="comment">// RFC 6742</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LP</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x006b</span>); <span class="comment">// RFC 6742</span>
 	<span class="doccomment">/// an EUI-48 address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EUI48</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x006c</span>); <span class="comment">// RFC 7043</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EUI48</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x006c</span>); <span class="comment">// RFC 7043</span>
 	<span class="doccomment">/// an EUI-64 address</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EUI64</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x006d</span>); <span class="comment">// RFC 7043</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">EUI64</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x006d</span>); <span class="comment">// RFC 7043</span>
 
 	<span class="comment">// 0x0080..0x00ff: meta and qtypes</span>
 	<span class="doccomment">/// Transaction Key</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TKEY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00f9</span>); <span class="comment">// RFC 2930</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TKEY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00f9</span>); <span class="comment">// RFC 2930</span>
 	<span class="doccomment">/// Transaction Signature</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TSIG</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00fa</span>); <span class="comment">// RFC 2845</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TSIG</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00fa</span>); <span class="comment">// RFC 2845</span>
 	<span class="doccomment">/// incremental transfer</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IXFR</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00fb</span>); <span class="comment">// RFC 1995</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">IXFR</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00fb</span>); <span class="comment">// RFC 1995</span>
 	<span class="doccomment">/// transfer of an entire zone</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AXFR</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00fc</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AXFR</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00fc</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// mailbox-related RRs (MB, MG or MR)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAILB</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00fd</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAILB</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00fd</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// mail agent RRs (OBSOLETE - see MX)</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAILA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00fe</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAILA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00fe</span>); <span class="comment">// RFC 1035</span>
 	<span class="doccomment">/// &quot;*&quot;, a request for all records the server/cache has available</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ANY</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x00ff</span>); <span class="comment">// RFC 1035</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ANY</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x00ff</span>); <span class="comment">// RFC 1035</span>
 
 	<span class="doccomment">/// URI</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">URI</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0100</span>); <span class="comment">// RFC 7553</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">URI</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0100</span>); <span class="comment">// RFC 7553</span>
 	<span class="doccomment">/// Certification Authority Restriction</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0101</span>); <span class="comment">// RFC 6844</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CAA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0101</span>); <span class="comment">// RFC 6844</span>
 	<span class="doccomment">/// Application Visibility and Control</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AVC</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0102</span>); <span class="comment">// Wolfgang Riedel</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AVC</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0102</span>); <span class="comment">// Wolfgang Riedel</span>
 	<span class="doccomment">/// Digital Object Architecture</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DOA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x0103</span>); <span class="comment">// http://www.iana.org/go/draft-durand-doa-over-dns</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DOA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x0103</span>); <span class="comment">// http://www.iana.org/go/draft-durand-doa-over-dns</span>
 	<span class="doccomment">/// DNSSEC Trust Authorities</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TA</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x8000</span>); <span class="comment">//</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TA</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x8000</span>); <span class="comment">//</span>
 	<span class="doccomment">/// DNSSEC Lookaside Validation</span>
-	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLV</span>: <span class="ident">Type</span> <span class="op">=</span> <span class="ident">Type</span>(<span class="number">0x8001</span>); <span class="comment">// RFC 4431</span>
+	<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DLV</span>: <span class="self">Self</span> <span class="op">=</span> <span class="self">Self</span>(<span class="number">0x8001</span>); <span class="comment">// RFC 4431</span>
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "async_dnssd";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
