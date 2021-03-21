@@ -46,8 +46,14 @@
 <span id="43">43</span>
 <span id="44">44</span>
 <span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
+<span id="48">48</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">futures_core</span>::{
+	<span class="ident">Stream</span>,
+	<span class="ident">TryStream</span>,
+};
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">pin</span>::<span class="ident">Pin</span>,
 	<span class="ident">task</span>::{

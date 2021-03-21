@@ -496,11 +496,9 @@
 <span id="493">493</span>
 <span id="494">494</span>
 <span id="495">495</span>
-<span id="496">496</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">too_many_arguments</span>)]</span>
-
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">futures_util</span>::<span class="ident">FutureExt</span>;
 <span class="kw">use</span> <span class="ident">libc</span>::<span class="ident">c_void</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">io</span>,
@@ -598,7 +596,7 @@
 		<span class="kw">let</span> <span class="ident">bg_inner</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">clone</span>();
 		<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">processing</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">processing</span>;
 
-		<span class="kw">let</span> <span class="ident">bg_task</span> <span class="op">=</span> <span class="ident">futures</span>::<span class="ident">future</span>::<span class="ident">poll_fn</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">cx</span><span class="op">|</span> {
+		<span class="kw">let</span> <span class="ident">bg_task</span> <span class="op">=</span> <span class="ident">futures_util</span>::<span class="ident">future</span>::<span class="ident">poll_fn</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">cx</span><span class="op">|</span> {
 			<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">bg_inner</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
 			<span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">handle</span>.<span class="ident">as_raw</span>();
 			<span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">processing</span>.<span class="ident">process</span>(<span class="ident">cx</span>, <span class="op">|</span><span class="op">|</span> {
