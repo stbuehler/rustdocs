@@ -1,4 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `xml-data/src/parser/core.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>core.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../xml_data/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1"> 1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `xml-data/src/parser/core.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>core.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../xml_data/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button">?</button>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -73,22 +76,26 @@
 <span id="73">73</span>
 <span id="74">74</span>
 <span id="75">75</span>
-</pre><div class="example-wrap"><pre class="rust ">
+<span id="76">76</span>
+<span id="77">77</span>
+</pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">errors</span>,
 	<span class="prelude-ty">Result</span>,
 };
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
+<span class="kw">use</span> <span class="ident">std::borrow::Cow</span>;
 
 <span class="doccomment">/// A state to parse exactly one element</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The idea is that a parser will try different implementors of this to parse an element it finds;</span>
-<span class="doccomment">/// the first implementor returning `Some(..)` on `parse_element_start` will be used to actually</span>
-<span class="doccomment">/// parse it.</span>
+<span class="doccomment">/// the first implementor returning `Some(..)` on [`ElementState::parse_element_start`] will be</span>
+<span class="doccomment">/// used to actually parse it.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// After a successful `parse_element_start` the parser needs to call `parse_element_attribute` for</span>
-<span class="doccomment">/// all attributes on the element, then `parse_element_inner_text` and `parse_element_inner_node`</span>
-<span class="doccomment">/// until the closing tag of the element is hit, upon which it needs to call `parse_element_finish`.</span>
+<span class="doccomment">/// After a successful [`ElementState::parse_element_start`] the parser needs to call</span>
+<span class="doccomment">/// [`ElementState::parse_element_attribute`] for all attributes on the element, then</span>
+<span class="doccomment">/// [`ElementState::parse_element_inner_text`] and [`ElementState::parse_element_inner_node`] until</span>
+<span class="doccomment">/// the closing tag of the element is hit, upon which it needs to call</span>
+<span class="doccomment">/// [`ElementState::parse_element_finish`].</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ElementState</span>: <span class="ident">Sized</span> {
 	<span class="doccomment">/// Once fully parsed this is the resulting output type.</span>
 	<span class="kw">type</span> <span class="ident">Output</span>: <span class="ident">Sized</span>;
@@ -101,7 +108,7 @@
 	<span class="doccomment">/// The default implementation will fail with &quot;unexpected attribute&quot;.</span>
 	<span class="kw">fn</span> <span class="ident">parse_element_attribute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">value</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">value</span>;
-		<span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_attribute</span>(<span class="ident">key</span>))
+		<span class="prelude-val">Err</span>(<span class="ident">errors::unexpected_attribute</span>(<span class="ident">key</span>))
 	}
 
 	<span class="doccomment">/// Parse text or CDATA into state.</span>
@@ -109,7 +116,7 @@
 	<span class="doccomment">/// The default implementation will ignore whitespace and fail otherwise.</span>
 	<span class="kw">fn</span> <span class="ident">parse_element_inner_text</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">text</span>: <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">str</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="kw">if</span> <span class="op">!</span><span class="ident">text</span>.<span class="ident">trim</span>().<span class="ident">is_empty</span>() {
-			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_text</span>());
+			<span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">errors::unexpected_text</span>());
 		}
 		<span class="prelude-val">Ok</span>(())
 	}
@@ -119,22 +126,22 @@
 	<span class="doccomment">/// The default implementation will fail with &quot;unexpected element&quot;.</span>
 	<span class="kw">fn</span> <span class="ident">parse_element_inner_node</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">ElementParser</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">tag</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">parser</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">parser</span>;
-		<span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">unexpected_element</span>(<span class="ident">tag</span>))
+		<span class="prelude-val">Err</span>(<span class="ident">errors::unexpected_element</span>(<span class="ident">tag</span>))
 	}
 
 	<span class="doccomment">/// Finish parsing an element.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// This is where you make sure you got all required data (unpacking their types) and can</span>
 	<span class="doccomment">/// optionally check data for consistency.</span>
-	<span class="kw">fn</span> <span class="ident">parse_element_finish</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Output</span><span class="op">&gt;</span>;
+	<span class="kw">fn</span> <span class="ident">parse_element_finish</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Output</span><span class="op">&gt;</span>;
 
-	<span class="doccomment">/// In case `parse_element_start` didn&#39;t get to accept any element (either because it always</span>
-	<span class="doccomment">/// returned `None` or there just wasn&#39;t enough data), a parser can use this to generate an</span>
-	<span class="doccomment">/// error.</span>
+	<span class="doccomment">/// In case [`ElementState::parse_element_start`] didn&#39;t get to accept any element (either</span>
+	<span class="doccomment">/// because it always returned `None` or there just wasn&#39;t enough data), a parser can use this</span>
+	<span class="doccomment">/// to generate an error.</span>
 	<span class="doccomment">///</span>
-	<span class="doccomment">/// `ParseElementOnce` uses this.</span>
+	<span class="doccomment">/// [`ParseElementOnce`][`super::ParseElementOnce`] uses this.</span>
 	<span class="kw">fn</span> <span class="ident">parse_error_not_found</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-		<span class="prelude-val">Err</span>(<span class="ident">errors</span>::<span class="ident">missing_unknown_element</span>())
+		<span class="prelude-val">Err</span>(<span class="ident">errors::missing_unknown_element</span>())
 	}
 }
 
@@ -142,12 +149,13 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ElementParser</span>: <span class="ident">Sized</span> {
 	<span class="doccomment">/// Start parsing an element with the prepared state</span>
 	<span class="doccomment">///</span>
-	<span class="doccomment">/// A parser will call the various `ElementState` to parse the element.</span>
+	<span class="doccomment">/// A parser will call the various [`ElementState`] to parse the element.</span>
 	<span class="doccomment">///</span>
-	<span class="doccomment">/// Users of this method will create the state using `ElementState::parse_element_start` and</span>
-	<span class="doccomment">/// produce the final result using `ElementState::parse_element_finish` after calling this</span>
+	<span class="doccomment">/// Users of this method will create the state using [`ElementState::parse_element_start`] and</span>
+	<span class="doccomment">/// produce the final result using [`ElementState::parse_element_finish`] after calling this</span>
 	<span class="doccomment">/// method.</span>
 	<span class="kw">fn</span> <span class="ident">parse_element_state</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">ElementState</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>;
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "xml_data";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="xml_data" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
