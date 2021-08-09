@@ -228,6 +228,10 @@
 <span id="228">228</span>
 <span id="229">229</span>
 <span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">errors</span>::{
@@ -245,6 +249,10 @@
 	<span class="ident">Family</span>,
 	<span class="ident">InetIterator</span>,
 };
+<span class="kw">use</span> <span class="ident">std</span>::{
+	<span class="ident">fmt::Debug</span>,
+	<span class="ident">hash::Hash</span>,
+};
 
 <span class="doccomment">/// Maps IP address type to other types based on this address type</span>
 <span class="doccomment">///</span>
@@ -253,7 +261,7 @@
 <span class="doccomment">/// [`Ipv4Addr`]: std::net::Ipv4Addr</span>
 <span class="doccomment">/// [`Ipv6Addr`]: std::net::Ipv6Addr</span>
 <span class="doccomment">/// [`IpAddr`]: std::net::IpAddr</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Address</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PrivUnspecAddress</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Address</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Ord</span> <span class="op">+</span> <span class="ident">Hash</span> <span class="op">+</span> <span class="ident">PrivUnspecAddress</span> {
 	<span class="doccomment">/// Corresponding [`Inet`] type (representing an address + a network</span>
 	<span class="doccomment">/// containing it)</span>
 	<span class="kw">type</span> <span class="ident">Inet</span>: <span class="ident">Inet</span><span class="op">&lt;</span><span class="ident">Address</span> <span class="op">=</span> <span class="self">Self</span><span class="op">&gt;</span>;
@@ -281,7 +289,7 @@
 <span class="doccomment">/// are the network part, the remaining bits are the host part.</span>
 <span class="doccomment">/// Requiring an address to be the first in a network is equivalent to</span>
 <span class="doccomment">/// requiring the host part being zero.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cidr</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PrivCidr</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Cidr</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Ord</span> <span class="op">+</span> <span class="ident">Hash</span> <span class="op">+</span> <span class="ident">PrivCidr</span> {
 	<span class="doccomment">/// Type for the underlying address ([`IpAddr`], [`Ipv4Addr`] or</span>
 	<span class="doccomment">/// [`Ipv6Addr`]).</span>
 	<span class="doccomment">///</span>
@@ -347,7 +355,7 @@
 <span class="doccomment">/// The representation of a [`Inet`] type is similar to that of the</span>
 <span class="doccomment">/// corresponding [`Cidr`] type, but uses the host address instead of the</span>
 <span class="doccomment">/// first address of the network.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Inet</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PrivInet</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Inet</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Ord</span> <span class="op">+</span> <span class="ident">Hash</span> <span class="op">+</span> <span class="ident">PrivInet</span> {
 	<span class="doccomment">/// Type for the underlying address ([`IpAddr`], [`Ipv4Addr`] or</span>
 	<span class="doccomment">/// [`Ipv6Addr`]).</span>
 	<span class="doccomment">///</span>
@@ -403,7 +411,7 @@
 }
 
 <span class="doccomment">/// Pair of two addresses in the same network</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InetPair</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">PrivInetPair</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">InetPair</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Debug</span> <span class="op">+</span> <span class="ident">Eq</span> <span class="op">+</span> <span class="ident">Hash</span> <span class="op">+</span> <span class="ident">PrivInetPair</span> {
 	<span class="doccomment">/// Type for the underlying address ([`IpAddr`], [`Ipv4Addr`] or</span>
 	<span class="doccomment">/// [`Ipv6Addr`]).</span>
 	<span class="doccomment">///</span>
