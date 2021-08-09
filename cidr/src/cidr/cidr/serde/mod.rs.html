@@ -156,8 +156,10 @@
 <span id="156">156</span>
 <span id="157">157</span>
 <span id="158">158</span>
+<span id="159">159</span>
 </pre><pre class="rust">
 <span class="attribute">#![<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)))]</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
 	<span class="ident">cidr</span>::{

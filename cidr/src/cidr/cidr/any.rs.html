@@ -365,6 +365,7 @@
 <span id="365">365</span>
 <span id="366">366</span>
 <span id="367">367</span>
+<span id="368">368</span>
 </pre><pre class="rust">
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">fmt</span>,
@@ -635,6 +636,7 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bitstring&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bitstring&quot;</span>)))]</span>
 <span class="kw">impl</span> <span class="ident">bitstring::BitString</span> <span class="kw">for</span> <span class="ident">AnyIpCidr</span> {
 	<span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ndx</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
 		<span class="macro">assert!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_any</span>());
