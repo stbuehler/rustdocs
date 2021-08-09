@@ -204,15 +204,11 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="ident">std</span>::{
-	<span class="ident">fmt</span>,
-	<span class="ident">net</span>::{
-		<span class="ident">Ipv4Addr</span>,
-		<span class="ident">Ipv6Addr</span>,
-	},
+<span class="kw">use</span> <span class="ident">core::fmt</span>;
+<span class="kw">use</span> <span class="ident">std::net</span>::{
+	<span class="ident">Ipv4Addr</span>,
+	<span class="ident">Ipv6Addr</span>,
 };
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -391,7 +387,7 @@
 
 		<span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">n</span> {
 			<span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
-				<span class="kw">use</span> <span class="ident">std::fmt::Write</span>;
+				<span class="kw">use</span> <span class="ident">core::fmt::Write</span>;
 				<span class="ident">f</span>.<span class="ident">write_char</span>(<span class="string">&#39;(&#39;</span>)<span class="question-mark">?</span>;
 				<span class="self">self</span>.<span class="ident">first</span>().<span class="ident">fmt</span>(<span class="ident">f</span>)<span class="question-mark">?</span>;
 				<span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;, &quot;</span>)<span class="question-mark">?</span>;

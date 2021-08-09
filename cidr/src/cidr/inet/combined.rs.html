@@ -253,11 +253,11 @@
 <span id="253">253</span>
 <span id="254">254</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="ident">std</span>::{
+<span class="kw">use</span> <span class="ident">core</span>::{
 	<span class="ident">fmt</span>,
-	<span class="ident">net::IpAddr</span>,
 	<span class="ident">str::FromStr</span>,
 };
+<span class="kw">use</span> <span class="ident">std::net::IpAddr</span>;
 
 <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::from_str::inet_from_str</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{

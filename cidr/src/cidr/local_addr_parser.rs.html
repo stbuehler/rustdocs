@@ -107,17 +107,13 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
-<span id="110">110</span>
-<span id="111">111</span>
 </pre><pre class="rust">
-<span class="kw">use</span> <span class="ident">std</span>::{
-	<span class="ident">net</span>::{
-		<span class="ident">AddrParseError</span>,
-		<span class="ident">IpAddr</span>,
-		<span class="ident">Ipv4Addr</span>,
-		<span class="ident">Ipv6Addr</span>,
-	},
-	<span class="ident">str::FromStr</span>,
+<span class="kw">use</span> <span class="ident">core::str::FromStr</span>;
+<span class="kw">use</span> <span class="ident">std::net</span>::{
+	<span class="ident">AddrParseError</span>,
+	<span class="ident">IpAddr</span>,
+	<span class="ident">Ipv4Addr</span>,
+	<span class="ident">Ipv6Addr</span>,
 };
 
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ParseableAddress</span>: <span class="ident">Sized</span> {
