@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/service/connection.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>connection.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../async_dnssd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;service&#x2F;connection.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>connection.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../async_dnssd/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -242,13 +239,12 @@
 <span id="239">239</span>
 <span id="240">240</span>
 <span id="241">241</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">futures_util</span>::<span class="ident">FutureExt</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">futures_util::FutureExt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
-	<span class="ident">future</span>::<span class="ident">Future</span>,
+	<span class="ident">future::Future</span>,
 	<span class="ident">io</span>,
-	<span class="ident">os</span>::<span class="ident">raw</span>::<span class="ident">c_void</span>,
-	<span class="ident">pin</span>::<span class="ident">Pin</span>,
+	<span class="ident">os::raw::c_void</span>,
+	<span class="ident">pin::Pin</span>,
 	<span class="ident">task</span>::{
 		<span class="ident">Context</span>,
 		<span class="ident">Poll</span>,
@@ -263,37 +259,37 @@
 	},
 	<span class="ident">ffi</span>,
 	<span class="ident">inner</span>,
-	<span class="ident">interface</span>::<span class="ident">Interface</span>,
+	<span class="ident">interface::Interface</span>,
 };
 
-<span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">future</span>::<span class="ident">ServiceFuture</span><span class="op">&lt;</span><span class="ident">inner</span>::<span class="ident">SharedService</span>, <span class="ident">RegisterRecordResult</span><span class="op">&gt;</span>;
+<span class="kw">type</span> <span class="ident">CallbackFuture</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::future::ServiceFuture</span><span class="op">&lt;</span><span class="ident">inner::SharedService</span>, <span class="ident">RegisterRecordResult</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Connection to register records with</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Connection</span>(<span class="ident">inner</span>::<span class="ident">SharedService</span>);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Connection</span>(<span class="ident">inner::SharedService</span>);
 
 <span class="doccomment">/// Create [`Connection`](struct.Connection.html) to register records</span>
 <span class="doccomment">/// with</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`DNSServiceCreateConnection`](https://developer.apple.com/documentation/dnssd/1804724-dnsservicecreateconnection).</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Connection</span><span class="op">&gt;</span> {
-	<span class="kw">crate</span>::<span class="ident">init</span>();
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">Connection</span><span class="op">&gt;</span> {
+	<span class="ident"><span class="kw">crate</span>::init</span>();
 
-	<span class="prelude-val">Ok</span>(<span class="ident">Connection</span>(<span class="ident">inner</span>::<span class="ident">SharedService</span>::<span class="ident">create_connection</span>()<span class="question-mark">?</span>))
+	<span class="prelude-val">Ok</span>(<span class="ident">Connection</span>(<span class="ident">inner::SharedService::create_connection</span>()<span class="question-mark">?</span>))
 }
 
-<span class="ident">bitflags</span>::<span class="macro">bitflags</span><span class="macro">!</span> {
+<span class="macro">bitflags::bitflags!</span> {
 	<span class="doccomment">/// Flags used to register a record</span>
 	<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>)]</span>
-	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterRecordFlags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span> {
+	<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterRecordFlags</span>: <span class="ident">ffi::DNSServiceFlags</span> {
 		<span class="doccomment">/// Indicates there might me multiple records with the given name, type and class.</span>
 		<span class="doccomment">///</span>
 		<span class="doccomment">/// See [`kDNSServiceFlagsShared`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsshared).</span>
-		<span class="kw">const</span> <span class="ident">SHARED</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_SHARED</span>;
+		<span class="kw">const</span> <span class="ident">SHARED</span> <span class="op">=</span> <span class="ident">ffi::FLAGS_SHARED</span>;
 
 		<span class="doccomment">/// Indicates the records with the given name, type and class is unique.</span>
 		<span class="doccomment">///</span>
 		<span class="doccomment">/// See [`kDNSServiceFlagsUnique`](https://developer.apple.com/documentation/dnssd/1823436-anonymous/kdnsserviceflagsunique).</span>
-		<span class="kw">const</span> <span class="ident">UNIQUE</span> <span class="op">=</span> <span class="ident">ffi</span>::<span class="ident">FLAGS_UNIQUE</span>;
+		<span class="kw">const</span> <span class="ident">UNIQUE</span> <span class="op">=</span> <span class="ident">ffi::FLAGS_UNIQUE</span>;
 	}
 }
 
@@ -306,21 +302,21 @@
 <span class="attribute">#[<span class="ident">must_use</span> <span class="op">=</span> <span class="string">&quot;futures do nothing unless polled&quot;</span>]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">RegisterRecord</span> {
 	<span class="ident">future</span>: <span class="ident">CallbackFuture</span>,
-	<span class="ident">record</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>,
+	<span class="ident">record</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::Record</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">RegisterRecord</span> {
-	<span class="ident">pin_utils</span>::<span class="macro">unsafe_pinned</span><span class="macro">!</span>(<span class="ident">future</span>: <span class="ident">CallbackFuture</span>);
+	<span class="macro">pin_utils::unsafe_pinned!</span>(<span class="ident">future</span>: <span class="ident">CallbackFuture</span>);
 
-	<span class="ident">pin_utils</span>::<span class="macro">unsafe_unpinned</span><span class="macro">!</span>(<span class="ident">record</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>);
+	<span class="macro">pin_utils::unsafe_unpinned!</span>(<span class="ident">record</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::Record</span><span class="op">&gt;</span>);
 }
 
 <span class="kw">impl</span> <span class="ident">Future</span> <span class="kw">for</span> <span class="ident">RegisterRecord</span> {
-	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Record</span><span class="op">&gt;</span>;
+	<span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::Record</span><span class="op">&gt;</span>;
 
-	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Output</span><span class="op">&gt;</span> {
-		<span class="ident">futures_core</span>::<span class="macro">ready</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">future</span>().<span class="ident">poll</span>(<span class="ident">cx</span>))<span class="question-mark">?</span>;
-		<span class="ident">Poll</span>::<span class="ident">Ready</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">record</span>().<span class="ident">take</span>().<span class="ident">unwrap</span>()))
+	<span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Output</span><span class="op">&gt;</span> {
+		<span class="macro">futures_core::ready!</span>(<span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">future</span>().<span class="ident">poll</span>(<span class="ident">cx</span>))<span class="question-mark">?</span>;
+		<span class="ident">Poll::Ready</span>(<span class="prelude-val">Ok</span>(<span class="self">self</span>.<span class="ident">record</span>().<span class="ident">take</span>().<span class="ident">unwrap</span>()))
 	}
 }
 
@@ -328,13 +324,13 @@
 <span class="kw">struct</span> <span class="ident">RegisterRecordResult</span>;
 
 <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">register_record_callback</span>(
-	<span class="ident">_sd_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceRef</span>,
-	<span class="ident">_record_ref</span>: <span class="ident">ffi</span>::<span class="ident">DNSRecordRef</span>,
-	<span class="ident">_flags</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceFlags</span>,
-	<span class="ident">error_code</span>: <span class="ident">ffi</span>::<span class="ident">DNSServiceErrorType</span>,
+	<span class="ident">_sd_ref</span>: <span class="ident">ffi::DNSServiceRef</span>,
+	<span class="ident">_record_ref</span>: <span class="ident">ffi::DNSRecordRef</span>,
+	<span class="ident">_flags</span>: <span class="ident">ffi::DNSServiceFlags</span>,
+	<span class="ident">error_code</span>: <span class="ident">ffi::DNSServiceErrorType</span>,
 	<span class="ident">context</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>,
 ) {
-	<span class="ident">CallbackFuture</span>::<span class="ident">run_callback</span>(<span class="ident">context</span>, <span class="ident">error_code</span>, <span class="op">|</span><span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="ident">RegisterRecordResult</span>));
+	<span class="ident">CallbackFuture::run_callback</span>(<span class="ident">context</span>, <span class="ident">error_code</span>, <span class="op">|</span><span class="op">|</span> <span class="prelude-val">Ok</span>(<span class="ident">RegisterRecordResult</span>));
 }
 
 <span class="doccomment">/// Optional data when registering a record; either use its default</span>
@@ -359,17 +355,17 @@
 	<span class="doccomment">/// select a sensible default)</span>
 	<span class="kw">pub</span> <span class="ident">ttl</span>: <span class="ident">u32</span>,
 	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-	<span class="kw">pub</span> <span class="ident">_non_exhaustive</span>: <span class="kw">crate</span>::<span class="ident">non_exhaustive_struct</span>::<span class="ident">NonExhaustiveMarker</span>,
+	<span class="kw">pub</span> <span class="ident">_non_exhaustive</span>: <span class="ident"><span class="kw">crate</span>::non_exhaustive_struct::NonExhaustiveMarker</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">RegisterRecordData</span> {
 	<span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
 		<span class="self">Self</span> {
-			<span class="ident">flags</span>: <span class="ident">RegisterRecordFlags</span>::<span class="ident">default</span>(),
-			<span class="ident">interface</span>: <span class="ident">Interface</span>::<span class="ident">default</span>(),
-			<span class="ident">rr_class</span>: <span class="ident">Class</span>::<span class="ident">IN</span>,
+			<span class="ident">flags</span>: <span class="ident">RegisterRecordFlags::default</span>(),
+			<span class="ident">interface</span>: <span class="ident">Interface::default</span>(),
+			<span class="ident">rr_class</span>: <span class="ident">Class::IN</span>,
 			<span class="ident">ttl</span>: <span class="number">0</span>,
-			<span class="ident">_non_exhaustive</span>: <span class="kw">crate</span>::<span class="ident">non_exhaustive_struct</span>::<span class="ident">NonExhaustiveMarker</span>,
+			<span class="ident">_non_exhaustive</span>: <span class="ident"><span class="kw">crate</span>::non_exhaustive_struct::NonExhaustiveMarker</span>,
 		}
 	}
 }
@@ -385,10 +381,10 @@
 		<span class="ident">rr_type</span>: <span class="ident">Type</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 		<span class="ident">data</span>: <span class="ident">RegisterRecordData</span>,
-	) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RegisterRecord</span><span class="op">&gt;</span> {
-		<span class="kw">let</span> <span class="ident">fullname</span> <span class="op">=</span> <span class="ident">cstr</span>::<span class="ident">CStr</span>::<span class="ident">from</span>(<span class="kw-2">&amp;</span><span class="ident">fullname</span>)<span class="question-mark">?</span>;
+	) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">RegisterRecord</span><span class="op">&gt;</span> {
+		<span class="kw">let</span> <span class="ident">fullname</span> <span class="op">=</span> <span class="ident">cstr::CStr::from</span>(<span class="kw-2">&amp;</span><span class="ident">fullname</span>)<span class="question-mark">?</span>;
 
-		<span class="kw">let</span> (<span class="ident">future</span>, <span class="ident">record</span>) <span class="op">=</span> <span class="ident">CallbackFuture</span>::<span class="ident">new_with</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(), <span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {
+		<span class="kw">let</span> (<span class="ident">future</span>, <span class="ident">record</span>) <span class="op">=</span> <span class="ident">CallbackFuture::new_with</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>(), <span class="kw">move</span> <span class="op">|</span><span class="ident">sender</span><span class="op">|</span> {
 			<span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>().<span class="ident">register_record</span>(
 				<span class="ident">data</span>.<span class="ident">flags</span>.<span class="ident">bits</span>(),
 				<span class="ident">data</span>.<span class="ident">interface</span>.<span class="ident">into_raw</span>(),
@@ -422,13 +418,13 @@
 		<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
 		<span class="ident">rr_type</span>: <span class="ident">Type</span>,
 		<span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-	) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">RegisterRecord</span><span class="op">&gt;</span> {
-		<span class="self">self</span>.<span class="ident">register_record_extended</span>(<span class="ident">fullname</span>, <span class="ident">rr_type</span>, <span class="ident">rdata</span>, <span class="ident">RegisterRecordData</span>::<span class="ident">default</span>())
+	) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">RegisterRecord</span><span class="op">&gt;</span> {
+		<span class="self">self</span>.<span class="ident">register_record_extended</span>(<span class="ident">fullname</span>, <span class="ident">rr_type</span>, <span class="ident">rdata</span>, <span class="ident">RegisterRecordData::default</span>())
 	}
 }
 
 <span class="kw">impl</span> <span class="ident">RegisterRecord</span> {
-	<span class="kw">fn</span> <span class="ident">inner_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw">crate</span>::<span class="ident">Record</span> {
+	<span class="kw">fn</span> <span class="ident">inner_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident"><span class="kw">crate</span>::Record</span> {
 		<span class="self">self</span>.<span class="ident">record</span>.<span class="ident">as_ref</span>().<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>)
 	}
 
@@ -452,7 +448,7 @@
 	<span class="doccomment">/// [`Record`](struct.Record.html) instead.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// See [`DNSServiceUpdateRecord`](https://developer.apple.com/documentation/dnssd/1804739-dnsserviceupdaterecord).</span>
-	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ttl</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">inner_record</span>().<span class="ident">update_record</span>(<span class="ident">rdata</span>, <span class="ident">ttl</span>)
 	}
 
@@ -480,9 +476,11 @@
 			<span class="self">self</span>.<span class="ident">record</span>.<span class="ident">expect</span>(<span class="string">&quot;RegisterRecord future is done&quot;</span>),
 		);
 		<span class="comment">// drive future to continuation, ignore errors</span>
-		<span class="ident">tokio</span>::<span class="ident">spawn</span>(<span class="ident">fut</span>.<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> ()));
+		<span class="ident">tokio::spawn</span>(<span class="ident">fut</span>.<span class="ident">map</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> ()));
 		<span class="ident">rec</span>.<span class="ident">keep</span>();
 	}
 }
-</pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "async_dnssd";</script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</code></pre></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="async_dnssd" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</body></html>

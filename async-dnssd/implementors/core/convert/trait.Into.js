@@ -1,3 +1,0 @@
-(function() {var implementors = {};
-implementors["async_dnssd"] = [{"text":"impl Into&lt;u32&gt; for InterfaceIndex","synthetic":false,"types":[]},{"text":"impl Into&lt;u32&gt; for Interface","synthetic":false,"types":[]},{"text":"impl Into&lt;u32&gt; for Enumerate","synthetic":false,"types":[]},{"text":"impl Into&lt;SocketAddr&gt; for ScopedSocketAddr","synthetic":false,"types":[]},{"text":"impl Into&lt;SocketAddrV6&gt; for ScopedSocketAddr","synthetic":false,"types":[]}];
-if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
