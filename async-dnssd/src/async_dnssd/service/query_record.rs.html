@@ -205,6 +205,8 @@
 <span id="203">203</span>
 <span id="204">204</span>
 <span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">io</span>,
 	<span class="ident">os::raw</span>::{
@@ -390,6 +392,7 @@
 <span class="doccomment">/// Query for an arbitrary DNS record</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`DNSServiceQueryRecord`](https://developer.apple.com/documentation/dnssd/1804747-dnsservicequeryrecord).</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceQueryRecord&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">query_record_extended</span>(<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">rr_type</span>: <span class="ident">Type</span>, <span class="ident">data</span>: <span class="ident">QueryRecordData</span>) -&gt; <span class="ident">QueryRecord</span> {
 	<span class="kw">match</span> <span class="ident">_query_record_extended</span>(<span class="ident">fullname</span>, <span class="ident">rr_type</span>, <span class="ident">data</span>) {
 		<span class="prelude-val">Ok</span>(<span class="ident">qr</span>) =&gt; <span class="ident">qr</span>,
@@ -407,6 +410,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// [`query_record_extended`]: fn.query_record_extended.html</span>
 <span class="doccomment">/// [`QueryRecordData`]: struct.QueryRecordData.html</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceQueryRecord&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">query_record</span>(<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">rr_type</span>: <span class="ident">Type</span>) -&gt; <span class="ident">QueryRecord</span> {
 	<span class="ident">query_record_extended</span>(<span class="ident">fullname</span>, <span class="ident">rr_type</span>, <span class="ident">QueryRecordData::default</span>())
 }

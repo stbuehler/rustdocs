@@ -262,6 +262,7 @@
 <span id="260">260</span>
 <span id="261">261</span>
 <span id="262">262</span>
+<span id="263">263</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">futures_util</span>::{
 	<span class="ident">StreamExt</span>,
 	<span class="ident">TryStreamExt</span>,
@@ -508,6 +509,7 @@
 <span class="doccomment">/// Uses</span>
 <span class="doccomment">/// [`DNSServiceQueryRecord`](https://developer.apple.com/documentation/dnssd/1804747-dnsservicequeryrecord)</span>
 <span class="doccomment">/// to query for `A` and `AAAA` records (in the `IN` class).</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceQueryRecord&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">resolve_host_extended</span>(<span class="ident">host</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">port</span>: <span class="ident">u16</span>, <span class="ident">data</span>: <span class="ident">ResolveHostData</span>) -&gt; <span class="ident">ResolveHost</span> {
 	<span class="kw">let</span> <span class="ident">qrdata</span> <span class="op">=</span> <span class="ident">QueryRecordData</span> {
 		<span class="ident">flags</span>: <span class="ident">data</span>.<span class="ident">flags</span>,

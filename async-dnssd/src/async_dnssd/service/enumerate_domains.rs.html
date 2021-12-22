@@ -132,6 +132,7 @@
 <span id="130">130</span>
 <span id="131">131</span>
 <span id="132">132</span>
+<span id="133">133</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">io</span>,
 	<span class="ident">os::raw</span>::{
@@ -249,6 +250,7 @@
 <span class="doccomment">/// Enumerate domains that are recommended for registration or browsing</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`DNSServiceEnumerateDomains`](https://developer.apple.com/documentation/dnssd/1804754-dnsserviceenumeratedomains).</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceEnumerateDomains&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enumerate_domains</span>(<span class="ident">enumerate</span>: <span class="ident">Enumerate</span>, <span class="ident">interface</span>: <span class="ident">Interface</span>) -&gt; <span class="ident">EnumerateDomains</span> {
 	<span class="ident"><span class="kw">crate</span>::init</span>();
 

@@ -241,6 +241,10 @@
 <span id="239">239</span>
 <span id="240">240</span>
 <span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">futures_util::FutureExt</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
 	<span class="ident">future::Future</span>,
@@ -273,6 +277,7 @@
 <span class="doccomment">/// with</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`DNSServiceCreateConnection`](https://developer.apple.com/documentation/dnssd/1804724-dnsservicecreateconnection).</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceCreateConnection&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span>() -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span><span class="ident">Connection</span><span class="op">&gt;</span> {
 	<span class="ident"><span class="kw">crate</span>::init</span>();
 
@@ -377,6 +382,7 @@
 	<span class="doccomment">/// and ttl</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// See [`DNSServiceRegisterRecord`](https://developer.apple.com/documentation/dnssd/1804727-dnsserviceregisterrecord).</span>
+	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceRegisterRecord&quot;</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_record_extended</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -415,6 +421,7 @@
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// [`register_record_extended`]: fn.register_record_extended.html</span>
 	<span class="doccomment">/// [`RegisterRecordData`]: struct.RegisterRecordData.html</span>
+	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceRegisterRecord&quot;</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_record</span>(
 		<span class="kw-2">&amp;</span><span class="self">self</span>,
 		<span class="ident">fullname</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
@@ -450,6 +457,7 @@
 	<span class="doccomment">/// [`Record`](struct.Record.html) instead.</span>
 	<span class="doccomment">///</span>
 	<span class="doccomment">/// See [`DNSServiceUpdateRecord`](https://developer.apple.com/documentation/dnssd/1804739-dnsserviceupdaterecord).</span>
+	<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;DNSServiceUpdateRecord&quot;</span>)]</span>
 	<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_record</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rdata</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">ttl</span>: <span class="ident">u32</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
 		<span class="self">self</span>.<span class="ident">inner_record</span>().<span class="ident">update_record</span>(<span class="ident">rdata</span>, <span class="ident">ttl</span>)
 	}
