@@ -1,1 +1,1 @@
-window.ALL_CRATES = ["async_dnssd","bitflags","cfg_if","futures_channel","futures_core","futures_io","futures_macro","futures_sink","futures_task","futures_util","libc","log","memchr","mio","pin_project_lite","pin_utils","proc_macro2","quote","slab","syn","tokio","tokio_macros","unicode_xid"];
+window.ALL_CRATES = ["async_dnssd","bitflags","cfg_if","futures_channel","futures_core","futures_task","futures_util","libc","log","mio","pin_project_lite","pin_utils","slab","tokio"];
