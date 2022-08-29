@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Iter","Iterator to iterate over all `FixedBitString` values with a shared prefix."]],"trait":[["FixedBitString","A bit string with fixed length."]]});
+window.SIDEBAR_ITEMS = {"struct":[["Iter","Iterator to iterate over all `FixedBitString` values with a shared prefix."]],"trait":[["FixedBitString","A bit string with fixed length."]]};

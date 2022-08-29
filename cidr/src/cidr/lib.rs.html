@@ -1,12 +1,12 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../cidr/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1"> 1</span>
-<span id="2"> 2</span>
-<span id="3"> 3</span>
-<span id="4"> 4</span>
-<span id="5"> 5</span>
-<span id="6"> 6</span>
-<span id="7"> 7</span>
-<span id="8"> 8</span>
-<span id="9"> 9</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" href="../../normalize.css"><link rel="stylesheet" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" href="../../ayu.css" disabled><link rel="stylesheet" href="../../dark.css" disabled><link rel="stylesheet" href="../../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../../storage.js"></script><script defer src="../../source-script.js"></script><script defer src="../../source-files.js"></script><script defer src="../../main.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../../cidr/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a><h2 class="location"></h2></nav><nav class="sidebar"><a class="sidebar-logo" href="../../cidr/index.html"><div class="logo-container"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></div></a></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../../cidr/index.html"><img class="rust-logo" src="../../rust-logo.svg" alt="logo"></a><nav class="sub"><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><button type="button">?</button></div><div id="settings-menu" tabindex="-1"><a href="../../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../../wheel.svg"></a></div></div></form></nav></div><section id="main-content" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">1</span>
+<span id="2">2</span>
+<span id="3">3</span>
+<span id="4">4</span>
+<span id="5">5</span>
+<span id="6">6</span>
+<span id="7">7</span>
+<span id="8">8</span>
+<span id="9">9</span>
 <span id="10">10</span>
 <span id="11">11</span>
 <span id="12">12</span>
@@ -92,101 +92,99 @@
 <span id="92">92</span>
 <span id="93">93</span>
 <span id="94">94</span>
-</pre><pre class="rust"><code><span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">doc_cfg</span>, <span class="ident">feature</span>(<span class="ident">doc_cfg</span>))]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>), <span class="ident">no_std</span>)]</span>
-<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">missing_docs</span>)]</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/cidr/0.2.1&quot;</span>)]</span>
-<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy::match_like_matches_macro</span>)]</span>
+</pre><pre class="rust"><code><span class="attribute">#![cfg_attr(doc_cfg, feature(doc_cfg))]
+#![cfg_attr(not(feature = <span class="string">&quot;std&quot;</span>), no_std)]
+#![warn(missing_docs)]
+#![doc(html_root_url = <span class="string">&quot;https://docs.rs/cidr/0.2.1&quot;</span>)]
+#![allow(clippy::match_like_matches_macro)]
 
-<span class="doccomment">//! This library provides types to represent an IP network ([`Cidr`]) or</span>
-<span class="doccomment">//! an IP host withing a network ([`Inet`])</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Address parsing also accepts IPv4 address with less than four octets</span>
-<span class="doccomment">//! (but always parses those as decimal).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! If the `#` flag is used with the `Display` formatting (i.e. `{:#}`) the</span>
-<span class="doccomment">//! prefix will be shown even for host addresses (added in `0.1.1`).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Feature `std`</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Enabled by default, also mandatory right now because [`std::net`] isn&#39;t</span>
-<span class="doccomment">//! available in [`core`].</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Feature `serde`</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This feature enables various types to be serialized using `serde`</span>
-<span class="doccomment">//! (without `serde-derive`).</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! In human readable formats the `Display` and `FromStr` interfaces are</span>
-<span class="doccomment">//! used.  Otherwise all values are serialized in the same format (apart</span>
-<span class="doccomment">//! from the newtype wrapping) as a tuple of two values:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! - `tag: u8`:</span>
-<span class="doccomment">//!   - `0x00...0x20`: IPv4 with network length `tag`</span>
-<span class="doccomment">//!   - `0x40...0xc0`: IPv6 with network length `tag - 0x40`</span>
-<span class="doccomment">//!   - `0xff`: `any`</span>
-<span class="doccomment">//! - address according to `tag`: [`Ipv4Addr`] (`[u8; 4]`), [`Ipv6Addr`]</span>
-<span class="doccomment">//!   (`[u8; 16]`) or `()`</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The represenation hasn&#39;t been changed in 0.2; it is compatible with 0.1.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! # Feature `bitstring`</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! This feature allows various types to be used as [`bitstring::BitString`],</span>
-<span class="doccomment">//! which allows them being in used in containers like [bitstring-trees].</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [bitstring-trees]: https://crates.io/crates/bitstring-trees</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [`Ipv4Addr`]: std::net::Ipv4Addr</span>
-<span class="doccomment">//! [`Ipv6Addr`]: std::net::Ipv6Addr</span>
+</span><span class="doccomment">//! This library provides types to represent an IP network ([`Cidr`]) or
+//! an IP host withing a network ([`Inet`])
+//!
+//! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)
+//!
+//! Address parsing also accepts IPv4 address with less than four octets
+//! (but always parses those as decimal).
+//!
+//! If the `#` flag is used with the `Display` formatting (i.e. `{:#}`) the
+//! prefix will be shown even for host addresses (added in `0.1.1`).
+//!
+//! # Feature `std`
+//!
+//! Enabled by default, also mandatory right now because [`std::net`] isn&#39;t
+//! available in [`core`].
+//!
+//! # Feature `serde`
+//!
+//! This feature enables various types to be serialized using `serde`
+//! (without `serde-derive`).
+//!
+//! In human readable formats the `Display` and `FromStr` interfaces are
+//! used.  Otherwise all values are serialized in the same format (apart
+//! from the newtype wrapping) as a tuple of two values:
+//!
+//! - `tag: u8`:
+//!   - `0x00...0x20`: IPv4 with network length `tag`
+//!   - `0x40...0xc0`: IPv6 with network length `tag - 0x40`
+//!   - `0xff`: `any`
+//! - address according to `tag`: [`Ipv4Addr`] (`[u8; 4]`), [`Ipv6Addr`]
+//!   (`[u8; 16]`) or `()`
+//!
+//! The represenation hasn&#39;t been changed in 0.2; it is compatible with 0.1.
+//!
+//! # Feature `bitstring`
+//!
+//! This feature allows various types to be used as [`bitstring::BitString`],
+//! which allows them being in used in containers like [bitstring-trees].
+//!
+//! [bitstring-trees]: https://crates.io/crates/bitstring-trees
+//!
+//! [`Ipv4Addr`]: std::net::Ipv4Addr
+//! [`Ipv6Addr`]: std::net::Ipv6Addr
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::{
-	<span class="ident">cidr</span>::{
-		<span class="ident">AnyIpCidr</span>,
-		<span class="ident">IpCidr</span>,
-		<span class="ident">Ipv4Cidr</span>,
-		<span class="ident">Ipv6Cidr</span>,
+</span><span class="kw">pub use </span><span class="self">self</span>::{
+	cidr::{
+		AnyIpCidr,
+		IpCidr,
+		Ipv4Cidr,
+		Ipv6Cidr,
 	},
-	<span class="ident">family::Family</span>,
-	<span class="ident">inet</span>::{
-		<span class="ident">IpInet</span>,
-		<span class="ident">Ipv4Inet</span>,
-		<span class="ident">Ipv6Inet</span>,
+	family::Family,
+	inet::{
+		IpInet,
+		Ipv4Inet,
+		Ipv6Inet,
 	},
-	<span class="ident">inet_iterator</span>::{
-		<span class="ident">InetAddressIterator</span>,
-		<span class="ident">InetIterator</span>,
+	inet_iterator::{
+		InetAddressIterator,
+		InetIterator,
 	},
-	<span class="ident">inet_pair</span>::{
-		<span class="ident">IpInetPair</span>,
-		<span class="ident">Ipv4InetPair</span>,
-		<span class="ident">Ipv6InetPair</span>,
+	inet_pair::{
+		IpInetPair,
+		Ipv4InetPair,
+		Ipv6InetPair,
 	},
-	<span class="ident">traits</span>::{
-		<span class="ident">Address</span>,
-		<span class="ident">Cidr</span>,
-		<span class="ident">Inet</span>,
-		<span class="ident">InetPair</span>,
+	traits::{
+		Address,
+		Cidr,
+		Inet,
+		InetPair,
 	},
 };
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">errors</span>;
+<span class="kw">pub mod </span>errors;
 
-<span class="kw">mod</span> <span class="ident">serde_common</span>;
+<span class="kw">mod </span>serde_common;
 
-<span class="kw">mod</span> <span class="ident">address</span>;
-<span class="kw">mod</span> <span class="ident">cidr</span>;
-<span class="kw">mod</span> <span class="ident">family</span>;
-<span class="kw">mod</span> <span class="ident">inet</span>;
-<span class="kw">mod</span> <span class="ident">inet_iterator</span>;
-<span class="kw">mod</span> <span class="ident">inet_pair</span>;
-<span class="kw">mod</span> <span class="ident">internal_traits</span>;
-<span class="kw">mod</span> <span class="ident">local_addr_parser</span>;
-<span class="kw">mod</span> <span class="ident">num</span>;
-<span class="kw">mod</span> <span class="ident">traits</span>;
+<span class="kw">mod </span>address;
+<span class="kw">mod </span>cidr;
+<span class="kw">mod </span>family;
+<span class="kw">mod </span>inet;
+<span class="kw">mod </span>inet_iterator;
+<span class="kw">mod </span>inet_pair;
+<span class="kw">mod </span>internal_traits;
+<span class="kw">mod </span>local_addr_parser;
+<span class="kw">mod </span>num;
+<span class="kw">mod </span>traits;
 </code></pre></div>
-</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cidr" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
-</body></html>
+</section></div></main><div id="rustdoc-vars" data-root-path="../../" data-current-crate="cidr" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.65.0-nightly (ce36e8825 2022-08-28)" ></div></body></html>
