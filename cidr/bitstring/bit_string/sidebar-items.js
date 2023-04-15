@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["BitString","A bit string with variable (but possibly limited) length."]]};
+window.SIDEBAR_ITEMS = {"trait":["BitString"]};

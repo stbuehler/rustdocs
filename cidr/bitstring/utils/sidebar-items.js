@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":[["BigEndianBitString","Generic helper methods to treat [u*]-slices as big endian bit strings."]]};
+window.SIDEBAR_ITEMS = {"trait":["BigEndianBitString"]};
