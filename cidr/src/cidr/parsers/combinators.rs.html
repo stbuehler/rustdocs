@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/parsers/combinators.rs`."><title>combinators.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cidr" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0-nightly (bcf94dec5 2024-06-23)" data-channel="nightly" data-search-js="search-0fe7219eb170c82e.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/parsers/combinators.rs`."><title>combinators.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-46f98efaafac5295.ttf.woff2,FiraSans-Regular-018c141bf0843ffd.woff2,FiraSans-Medium-8f9a781e4970d388.woff2,SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2,SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../../../static.files/rustdoc-dd39b87e5fcfba68.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cidr" data-themes="" data-resource-suffix="" data-rustdoc-version="1.81.0-nightly (6b0f4b5ec 2024-06-24)" data-channel="nightly" data-search-js="search-0fe7219eb170c82e.js" data-settings-js="settings-4313503d2e1961c2.js" ><script src="../../../static.files/storage-118b08c4c78b968e.js"></script><script defer src="../../../static.files/src-script-e66d777a5a92e9b2.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-20a3ad099b048cf2.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-df360f571f6edeae.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc src"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer"></div><main><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="example-wrap"><div data-nosnippet><pre class="src-line-numbers"><a href="#1" id="1">1</a>
 <a href="#2" id="2">2</a>
 <a href="#3" id="3">3</a>
 <a href="#4" id="4">4</a>
@@ -203,6 +203,7 @@
 	AnyIpCidr,
 	Cidr,
 	Inet,
+	IpCidr,
 	IpInet,
 };
 
@@ -210,15 +211,15 @@
 ///
 /// If a '/' is found, parse trailing number as prefix length and leading address with `address_parser`.
 /// Otherwise parse with `host_parser`.
-</span><span class="kw">pub fn </span>parse_cidr_full&lt;C, AP, NP&gt;(
+</span><span class="kw">pub fn </span>parse_cidr_full&lt;C, AP, HP&gt;(
 	s: <span class="kw-2">&amp;</span>str,
 	address_parser: AP,
-	host_parser: NP,
+	host_parser: HP,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;C, NetworkParseError&gt;
 <span class="kw">where
 	</span>C: Cidr,
 	AP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;C::Address, AddrParseError&gt;,
-	NP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;C, NetworkParseError&gt;,
+	HP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;C, NetworkParseError&gt;,
 {
 	<span class="kw">match </span>s.rfind(<span class="string">'/'</span>) {
 		<span class="prelude-val">None </span>=&gt; host_parser(s),
@@ -241,15 +242,15 @@
 <span class="doccomment">/// Parse [`Cidr`] with custom address and network (when no '/' separator was found) parser
 ///
 /// Similar to [`parse_cidr_full`] but ignores host bits in addresses.
-</span><span class="kw">pub fn </span>parse_cidr_full_ignore_hostbits&lt;C, AP, NP&gt;(
+</span><span class="kw">pub fn </span>parse_cidr_full_ignore_hostbits&lt;C, AP, HP&gt;(
 	s: <span class="kw-2">&amp;</span>str,
 	address_parser: AP,
-	host_parser: NP,
+	host_parser: HP,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;C, NetworkParseError&gt;
 <span class="kw">where
 	</span>C: Cidr,
 	AP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;C::Address, AddrParseError&gt;,
-	NP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;C, NetworkParseError&gt;,
+	HP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;C, NetworkParseError&gt;,
 {
 	<span class="kw">match </span>s.rfind(<span class="string">'/'</span>) {
 		<span class="prelude-val">None </span>=&gt; host_parser(s),
@@ -279,18 +280,58 @@
 
 <span class="doccomment">/// Parse [`AnyIpCidr`] with custom address and network (when no '/' separator was found) parser
 ///
-/// Similar to [`parse_any_cidr_full`] but ignores host bits in addresses.
-</span><span class="kw">pub fn </span>parse_any_cidr_full_ignore_hostbits&lt;AP, NP&gt;(
+/// Return [`AnyIpCidr::Any`] for `"any"`.
+/// If a '/' is found, parse trailing number as prefix length and leading address with `address_parser`.
+/// Otherwise parse with `host_parser`.
+</span><span class="kw">pub fn </span>parse_any_cidr_full&lt;AP, HP&gt;(
 	s: <span class="kw-2">&amp;</span>str,
 	address_parser: AP,
-	host_parser: NP,
+	host_parser: HP,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;
 <span class="kw">where
 	</span>AP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpAddr, AddrParseError&gt;,
-	NP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;,
+	HP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpCidr, NetworkParseError&gt;,
 {
+	<span class="kw">if </span>s == <span class="string">"any" </span>{
+		<span class="kw">return </span><span class="prelude-val">Ok</span>(AnyIpCidr::Any);
+	}
 	<span class="kw">match </span>s.rfind(<span class="string">'/'</span>) {
-		<span class="prelude-val">None </span>=&gt; host_parser(s),
+		<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(host_parser(s)<span class="question-mark">?</span>.into()),
+		<span class="prelude-val">Some</span>(pos) =&gt; AnyIpCidr::new(address_parser(<span class="kw-2">&amp;</span>s[<span class="number">0</span>..pos])<span class="question-mark">?</span>, s[pos + <span class="number">1</span>..].parse()<span class="question-mark">?</span>),
+	}
+}
+
+<span class="doccomment">/// Parse [`AnyIpCidr`] with custom address parser
+///
+/// If a '/' is found, parse trailing number as prefix length and leading address with `address_parser`.
+/// If input is just `"any"` returns [`AnyIpCidr::Any`].
+/// Otherwise parse `address_parser` and treat as host (maximum prefix length).
+</span><span class="kw">pub fn </span>parse_any_cidr&lt;AP&gt;(s: <span class="kw-2">&amp;</span>str, address_parser: AP) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;
+<span class="kw">where
+	</span>AP: Fn(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpAddr, AddrParseError&gt;,
+{
+	parse_any_cidr_full(s, <span class="kw-2">&amp;</span>address_parser, |s| {
+		<span class="prelude-val">Ok</span>(IpCidr::new_host(address_parser(s)<span class="question-mark">?</span>))
+	})
+}
+
+<span class="doccomment">/// Parse [`AnyIpCidr`] with custom address and network (when no '/' separator was found) parser
+///
+/// Similar to [`parse_any_cidr_full`] but ignores host bits in addresses.
+</span><span class="kw">pub fn </span>parse_any_cidr_full_ignore_hostbits&lt;AP, HP&gt;(
+	s: <span class="kw-2">&amp;</span>str,
+	address_parser: AP,
+	host_parser: HP,
+) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;
+<span class="kw">where
+	</span>AP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpAddr, AddrParseError&gt;,
+	HP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpCidr, NetworkParseError&gt;,
+{
+	<span class="kw">if </span>s == <span class="string">"any" </span>{
+		<span class="kw">return </span><span class="prelude-val">Ok</span>(AnyIpCidr::Any);
+	}
+	<span class="kw">match </span>s.rfind(<span class="string">'/'</span>) {
+		<span class="prelude-val">None </span>=&gt; <span class="prelude-val">Ok</span>(host_parser(s)<span class="question-mark">?</span>.into()),
 		<span class="prelude-val">Some</span>(pos) =&gt; <span class="prelude-val">Ok</span>(
 			IpInet::new(address_parser(<span class="kw-2">&amp;</span>s[<span class="number">0</span>..pos])<span class="question-mark">?</span>, s[pos + <span class="number">1</span>..].parse()<span class="question-mark">?</span>)<span class="question-mark">?
 				</span>.network()
@@ -309,49 +350,8 @@
 <span class="kw">where
 	</span>AP: Fn(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpAddr, AddrParseError&gt;,
 {
-	parse_any_cidr_full(s, <span class="kw-2">&amp;</span>address_parser, |s| {
-		<span class="kw">if </span>s == <span class="string">"any" </span>{
-			<span class="prelude-val">Ok</span>(AnyIpCidr::Any)
-		} <span class="kw">else </span>{
-			<span class="prelude-val">Ok</span>(AnyIpCidr::new_host(address_parser(s)<span class="question-mark">?</span>))
-		}
-	})
-}
-
-<span class="doccomment">/// Parse [`AnyIpCidr`] with custom address and network (when no '/' separator was found) parser
-///
-/// If a '/' is found, parse trailing number as prefix length and leading address with `address_parser`.
-/// Otherwise parse with `host_parser`.
-</span><span class="kw">pub fn </span>parse_any_cidr_full&lt;AP, NP&gt;(
-	s: <span class="kw-2">&amp;</span>str,
-	address_parser: AP,
-	host_parser: NP,
-) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;
-<span class="kw">where
-	</span>AP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpAddr, AddrParseError&gt;,
-	NP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;,
-{
-	<span class="kw">match </span>s.rfind(<span class="string">'/'</span>) {
-		<span class="prelude-val">None </span>=&gt; host_parser(s),
-		<span class="prelude-val">Some</span>(pos) =&gt; AnyIpCidr::new(address_parser(<span class="kw-2">&amp;</span>s[<span class="number">0</span>..pos])<span class="question-mark">?</span>, s[pos + <span class="number">1</span>..].parse()<span class="question-mark">?</span>),
-	}
-}
-
-<span class="doccomment">/// Parse [`AnyIpCidr`] with custom address parser
-///
-/// If a '/' is found, parse trailing number as prefix length and leading address with `address_parser`.
-/// If input is just `"any"` returns [`AnyIpCidr::Any`].
-/// Otherwise parse `address_parser` and treat as host (maximum prefix length).
-</span><span class="kw">pub fn </span>parse_any_cidr&lt;AP&gt;(s: <span class="kw-2">&amp;</span>str, address_parser: AP) -&gt; <span class="prelude-ty">Result</span>&lt;AnyIpCidr, NetworkParseError&gt;
-<span class="kw">where
-	</span>AP: Fn(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;IpAddr, AddrParseError&gt;,
-{
-	parse_any_cidr_full(s, <span class="kw-2">&amp;</span>address_parser, |s| {
-		<span class="kw">if </span>s == <span class="string">"any" </span>{
-			<span class="prelude-val">Ok</span>(AnyIpCidr::Any)
-		} <span class="kw">else </span>{
-			<span class="prelude-val">Ok</span>(AnyIpCidr::new_host(address_parser(s)<span class="question-mark">?</span>))
-		}
+	parse_any_cidr_full_ignore_hostbits(s, <span class="kw-2">&amp;</span>address_parser, |s| {
+		<span class="prelude-val">Ok</span>(IpCidr::new_host(address_parser(s)<span class="question-mark">?</span>))
 	})
 }
 
@@ -359,15 +359,15 @@
 ///
 /// If a '/' is found, parse trailing number as prefix length and leading address with `address_parser`.
 /// Otherwise parse with `host_parser`.
-</span><span class="kw">pub fn </span>parse_inet_full&lt;I, AP, NP&gt;(
+</span><span class="kw">pub fn </span>parse_inet_full&lt;I, AP, HP&gt;(
 	s: <span class="kw-2">&amp;</span>str,
 	address_parser: AP,
-	host_parser: NP,
+	host_parser: HP,
 ) -&gt; <span class="prelude-ty">Result</span>&lt;I, NetworkParseError&gt;
 <span class="kw">where
 	</span>I: Inet,
 	AP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;I::Address, AddrParseError&gt;,
-	NP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;I, NetworkParseError&gt;,
+	HP: FnOnce(<span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;I, NetworkParseError&gt;,
 {
 	<span class="kw">match </span>s.rfind(<span class="string">'/'</span>) {
 		<span class="prelude-val">None </span>=&gt; host_parser(s),
