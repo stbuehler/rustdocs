@@ -100,12 +100,13 @@
 <a href="#100" id="100">100</a>
 <a href="#101" id="101">101</a>
 <a href="#102" id="102">102</a>
+<a href="#103" id="103">103</a>
 </pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(doc_cfg, feature(doc_cfg))]
 #![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 #![cfg_attr(feature = <span class="string">"no_unsafe"</span>, forbid(unsafe_code))]
 #![warn(missing_docs)]
 #![warn(rust_2018_idioms)]
-#![doc(html_root_url = <span class="string">"https://docs.rs/cidr/0.2.2"</span>)]
+#![doc(html_root_url = <span class="string">"https://docs.rs/cidr/0.2.3"</span>)]
 #![allow(clippy::match_like_matches_macro)]
 
 </span><span class="doccomment">//! This library provides types to represent an IP network ([`Cidr`]) or
@@ -114,7 +115,8 @@
 //! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)
 //!
 //! Address parsing also accepts IPv4 address with less than four octets
-//! (but always parses those as decimal).
+//! (but always parses those as decimal); this is deprecated and will be
+//! removed in 0.3.0.
 //!
 //! If the `#` flag is used with the `Display` formatting (i.e. `{:#}`) the
 //! prefix will be shown even for host addresses (added in `0.1.1`).
