@@ -375,6 +375,45 @@
 <a href="#375" id="375">375</a>
 <a href="#376" id="376">376</a>
 <a href="#377" id="377">377</a>
+<a href="#378" id="378">378</a>
+<a href="#379" id="379">379</a>
+<a href="#380" id="380">380</a>
+<a href="#381" id="381">381</a>
+<a href="#382" id="382">382</a>
+<a href="#383" id="383">383</a>
+<a href="#384" id="384">384</a>
+<a href="#385" id="385">385</a>
+<a href="#386" id="386">386</a>
+<a href="#387" id="387">387</a>
+<a href="#388" id="388">388</a>
+<a href="#389" id="389">389</a>
+<a href="#390" id="390">390</a>
+<a href="#391" id="391">391</a>
+<a href="#392" id="392">392</a>
+<a href="#393" id="393">393</a>
+<a href="#394" id="394">394</a>
+<a href="#395" id="395">395</a>
+<a href="#396" id="396">396</a>
+<a href="#397" id="397">397</a>
+<a href="#398" id="398">398</a>
+<a href="#399" id="399">399</a>
+<a href="#400" id="400">400</a>
+<a href="#401" id="401">401</a>
+<a href="#402" id="402">402</a>
+<a href="#403" id="403">403</a>
+<a href="#404" id="404">404</a>
+<a href="#405" id="405">405</a>
+<a href="#406" id="406">406</a>
+<a href="#407" id="407">407</a>
+<a href="#408" id="408">408</a>
+<a href="#409" id="409">409</a>
+<a href="#410" id="410">410</a>
+<a href="#411" id="411">411</a>
+<a href="#412" id="412">412</a>
+<a href="#413" id="413">413</a>
+<a href="#414" id="414">414</a>
+<a href="#415" id="415">415</a>
+<a href="#416" id="416">416</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::net::{
 	IpAddr,
 	Ipv4Addr,
@@ -434,18 +473,18 @@
 <span class="kw">pub struct </span>Ipv4AddrTools(());
 
 <span class="kw">impl </span>Ipv4AddrTools {
-	<span class="kw">pub const fn </span>to_native(ip: Ipv4Addr) -&gt; u32 {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>to_native(ip: Ipv4Addr) -&gt; u32 {
 		<span class="comment">// const: u32::from
 		</span>u32::from_be_bytes(ip.octets())
 	}
 
-	<span class="kw">pub const fn </span>from_native(ip: u32) -&gt; Ipv4Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>from_native(ip: u32) -&gt; Ipv4Addr {
 		<span class="comment">// const: Ipv4Addr::from
 		</span><span class="kw">let </span>ip = ip.to_be_bytes();
 		Ipv4Addr::new(ip[<span class="number">0</span>], ip[<span class="number">1</span>], ip[<span class="number">2</span>], ip[<span class="number">3</span>])
 	}
 
-	<span class="kw">pub const fn </span>native_host_mask(prefix_len: u8) -&gt; u32 {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>native_host_mask(prefix_len: u8) -&gt; u32 {
 		<span class="comment">// const: unwrap_or(0)
 		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(mask) = (!<span class="number">0u32</span>).checked_shr(prefix_len <span class="kw">as </span>u32) {
 			mask
@@ -454,61 +493,87 @@
 		</span>}
 	}
 
-	<span class="kw">pub const fn </span>_has_zero_host_part(address: Ipv4Addr, prefix_len: u8) -&gt; bool {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_has_zero_host_part(address: Ipv4Addr, prefix_len: u8) -&gt; bool {
 		<span class="kw">let </span>host_mask: u32 = <span class="self">Self</span>::native_host_mask(prefix_len);
 		<span class="kw">let </span>addr_num = <span class="self">Self</span>::to_native(address);
 		(addr_num &amp; host_mask) == <span class="number">0
 	</span>}
 
-	<span class="kw">pub const fn </span>_overflowing_next(address: Ipv4Addr, prefix_len: u8) -&gt; (Ipv4Addr, bool) {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_next(address: Ipv4Addr, prefix_len: u8) -&gt; (Ipv4Addr, bool) {
 		<span class="kw">let </span>op = Ipv4OverflowingOp::new(address, prefix_len);
 		op.handle_result(op.address.overflowing_add(<span class="number">1</span>))
 	}
 
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_inc_u32(
+		address: Ipv4Addr,
+		prefix_len: u8,
+		step_u32: u32,
+	) -&gt; (Ipv4Addr, bool) {
+		<span class="kw">let </span>op = Ipv4OverflowingOp::new(address, prefix_len);
+		<span class="kw">let </span>(res, overflow) = op.handle_result(op.address.overflowing_add(step_u32));
+		(res, overflow)
+	}
+
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_inc(
+		address: Ipv4Addr,
+		prefix_len: u8,
+		step: u128,
+	) -&gt; (Ipv4Addr, bool) {
+		<span class="kw">let </span>step_u32 = step <span class="kw">as </span>u32;
+		<span class="kw">let </span>step_overflow = step_u32 <span class="kw">as </span>u128 != step;
+		<span class="kw">let </span>(res, overflow) = <span class="self">Self</span>::_overflowing_inc_u32(address, prefix_len, step_u32);
+		(res, overflow || step_overflow)
+	}
+
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_prev(address: Ipv4Addr, prefix_len: u8) -&gt; (Ipv4Addr, bool) {
+		<span class="kw">let </span>op = Ipv4OverflowingOp::new(address, prefix_len);
+		op.handle_result(op.address.overflowing_sub(<span class="number">1</span>))
+	}
+
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_dec_u32(
+		address: Ipv4Addr,
+		prefix_len: u8,
+		step_u32: u32,
+	) -&gt; (Ipv4Addr, bool) {
+		<span class="kw">let </span>op = Ipv4OverflowingOp::new(address, prefix_len);
+		<span class="kw">let </span>(res, overflow) = op.handle_result(op.address.overflowing_sub(step_u32));
+		(res, overflow)
+	}
+
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_dec(
+		address: Ipv4Addr,
+		prefix_len: u8,
+		step: u128,
+	) -&gt; (Ipv4Addr, bool) {
+		<span class="kw">let </span>step_u32 = step <span class="kw">as </span>u32;
+		<span class="kw">let </span>step_overflow = step_u32 <span class="kw">as </span>u128 != step;
+		<span class="kw">let </span>(res, overflow) = <span class="self">Self</span>::_overflowing_dec_u32(address, prefix_len, step_u32);
+		(res, overflow || step_overflow)
+	}
+
 	<span class="comment">/*
-	pub const fn _overflowing_inc(address: Ipv4Addr, prefix_len: u8, step: u128) -&gt; (Ipv4Addr, bool) {
-		let op = Ipv4OverflowingOp::new(address, prefix_len);
-		let step_u32 = step as u32;
-		let step_overflow = step_u32 as u128 != step;
-		let (res, overflow) = op.handle_result(op.address.overflowing_add(step_u32));
-		(res, overflow || step_overflow)
-	}
-
-	pub const fn _overflowing_prev(address: Ipv4Addr, prefix_len: u8) -&gt; (Ipv4Addr, bool) {
-		let op = Ipv4OverflowingOp::new(address, prefix_len);
-		op.handle_result(op.address.overflowing_sub(1))
-	}
-
-	pub const fn _overflowing_dec(address: Ipv4Addr, prefix_len: u8, step: u128) -&gt; (Ipv4Addr, bool) {
-		let op = Ipv4OverflowingOp::new(address, prefix_len);
-		let step_u32 = step as u32;
-		let step_overflow = step_u32 as u128 != step;
-		let (res, overflow) = op.handle_result(op.address.overflowing_sub(step_u32));
-		(res, overflow || step_overflow)
-	}
-
-	pub const fn _overflowing_sub(address: Ipv4Addr, other: Ipv4Addr) -&gt; (u128, bool) {
-		let (res, overflow) = Self::to_native(address).overflowing_sub(Self::to_native(other));
-		(res as u128, overflow)
-	}
+		pub(crate) const fn _overflowing_sub(address: Ipv4Addr, other: Ipv4Addr) -&gt; (u128, bool) {
+			let (res, overflow) = Self::to_native(address).overflowing_sub(Self::to_native(other));
+			(res as u128, overflow)
+		}
 	*/
 
-	</span><span class="kw">pub const fn </span>_prefix_match(address: Ipv4Addr, other: Ipv4Addr, prefix_len: u8) -&gt; bool {
+	</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_prefix_match(address: Ipv4Addr, other: Ipv4Addr, prefix_len: u8) -&gt; bool {
 		<span class="kw">let </span>net_mask: u32 = !<span class="self">Self</span>::native_host_mask(prefix_len);
 		(<span class="self">Self</span>::to_native(address) &amp; net_mask) == (<span class="self">Self</span>::to_native(other) &amp; net_mask)
 	}
 
-	<span class="kw">pub const fn </span>_network_address(address: Ipv4Addr, prefix_len: u8) -&gt; Ipv4Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_network_address(address: Ipv4Addr, prefix_len: u8) -&gt; Ipv4Addr {
 		<span class="kw">let </span>net_mask: u32 = !<span class="self">Self</span>::native_host_mask(prefix_len);
 		<span class="self">Self</span>::from_native(<span class="self">Self</span>::to_native(address) &amp; net_mask)
 	}
 
-	<span class="kw">pub const fn </span>_last_address(address: Ipv4Addr, prefix_len: u8) -&gt; Ipv4Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_last_address(address: Ipv4Addr, prefix_len: u8) -&gt; Ipv4Addr {
 		<span class="kw">let </span>host_mask: u32 = <span class="self">Self</span>::native_host_mask(prefix_len);
 		<span class="self">Self</span>::from_native(<span class="self">Self</span>::to_native(address) | host_mask)
 	}
 
-	<span class="kw">pub const fn </span>_network_mask(prefix_len: u8) -&gt; Ipv4Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_network_mask(prefix_len: u8) -&gt; Ipv4Addr {
 		<span class="self">Self</span>::from_native(!<span class="self">Self</span>::native_host_mask(prefix_len))
 	}
 }
@@ -550,12 +615,12 @@
 <span class="kw">pub struct </span>Ipv6AddrTools(());
 
 <span class="kw">impl </span>Ipv6AddrTools {
-	<span class="kw">pub const fn </span>to_native(ip: Ipv6Addr) -&gt; u128 {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>to_native(ip: Ipv6Addr) -&gt; u128 {
 		<span class="comment">// const: u128::from
 		</span>u128::from_be_bytes(ip.octets())
 	}
 
-	<span class="kw">pub const fn </span>from_native(ip: u128) -&gt; Ipv6Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>from_native(ip: u128) -&gt; Ipv6Addr {
 		<span class="comment">// const: Ipv6Addr::from
 		</span><span class="kw">let </span>ip = ip.to_be_bytes();
 		<span class="attr">#[cfg(not(feature = <span class="string">"no_unsafe"</span>))]
@@ -585,7 +650,7 @@
 		}
 	}
 
-	<span class="kw">pub const fn </span>native_host_mask(prefix_len: u8) -&gt; u128 {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>native_host_mask(prefix_len: u8) -&gt; u128 {
 		<span class="comment">// const: unwrap_or(0)
 		</span><span class="kw">if let </span><span class="prelude-val">Some</span>(mask) = (!<span class="number">0u128</span>).checked_shr(prefix_len <span class="kw">as </span>u32) {
 			mask
@@ -594,54 +659,62 @@
 		</span>}
 	}
 
-	<span class="kw">pub const fn </span>_has_zero_host_part(address: Ipv6Addr, prefix_len: u8) -&gt; bool {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_has_zero_host_part(address: Ipv6Addr, prefix_len: u8) -&gt; bool {
 		<span class="kw">let </span>host_mask: u128 = <span class="self">Self</span>::native_host_mask(prefix_len);
 		<span class="kw">let </span>addr_num = <span class="self">Self</span>::to_native(address);
 		(addr_num &amp; host_mask) == <span class="number">0
 	</span>}
 
-	<span class="kw">pub const fn </span>_overflowing_next(address: Ipv6Addr, prefix_len: u8) -&gt; (Ipv6Addr, bool) {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_next(address: Ipv6Addr, prefix_len: u8) -&gt; (Ipv6Addr, bool) {
 		<span class="kw">let </span>op = Ipv6OverflowingOp::new(address, prefix_len);
 		op.handle_result(op.address.overflowing_add(<span class="number">1</span>))
 	}
 
-	<span class="comment">/*
-	pub const fn _overflowing_inc(address: Ipv6Addr, prefix_len: u8, step: u128) -&gt; (Ipv6Addr, bool) {
-		let op = Ipv6OverflowingOp::new(address, prefix_len);
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_inc(
+		address: Ipv6Addr,
+		prefix_len: u8,
+		step: u128,
+	) -&gt; (Ipv6Addr, bool) {
+		<span class="kw">let </span>op = Ipv6OverflowingOp::new(address, prefix_len);
 		op.handle_result(op.address.overflowing_add(step))
 	}
 
-	pub const fn _overflowing_prev(address: Ipv6Addr, prefix_len: u8) -&gt; (Ipv6Addr, bool) {
-		let op = Ipv6OverflowingOp::new(address, prefix_len);
-		op.handle_result(op.address.overflowing_sub(1))
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_prev(address: Ipv6Addr, prefix_len: u8) -&gt; (Ipv6Addr, bool) {
+		<span class="kw">let </span>op = Ipv6OverflowingOp::new(address, prefix_len);
+		op.handle_result(op.address.overflowing_sub(<span class="number">1</span>))
 	}
 
-	pub const fn _overflowing_dec(address: Ipv6Addr, prefix_len: u8, step: u128) -&gt; (Ipv6Addr, bool) {
-		let op = Ipv6OverflowingOp::new(address, prefix_len);
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_overflowing_dec(
+		address: Ipv6Addr,
+		prefix_len: u8,
+		step: u128,
+	) -&gt; (Ipv6Addr, bool) {
+		<span class="kw">let </span>op = Ipv6OverflowingOp::new(address, prefix_len);
 		op.handle_result(op.address.overflowing_sub(step))
 	}
 
-	pub const fn _overflowing_sub(address: Ipv6Addr, other: Ipv6Addr) -&gt; (u128, bool) {
-		Self::to_native(address).overflowing_sub(Self::to_native(other))
-	}
+	<span class="comment">/*
+		pub(crate) const fn _overflowing_sub(address: Ipv6Addr, other: Ipv6Addr) -&gt; (u128, bool) {
+			Self::to_native(address).overflowing_sub(Self::to_native(other))
+		}
 	*/
 
-	</span><span class="kw">pub const fn </span>_prefix_match(address: Ipv6Addr, other: Ipv6Addr, prefix_len: u8) -&gt; bool {
+	</span><span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_prefix_match(address: Ipv6Addr, other: Ipv6Addr, prefix_len: u8) -&gt; bool {
 		<span class="kw">let </span>net_mask: u128 = !<span class="self">Self</span>::native_host_mask(prefix_len);
 		(<span class="self">Self</span>::to_native(address) &amp; net_mask) == (<span class="self">Self</span>::to_native(other) &amp; net_mask)
 	}
 
-	<span class="kw">pub const fn </span>_network_address(address: Ipv6Addr, prefix_len: u8) -&gt; Ipv6Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_network_address(address: Ipv6Addr, prefix_len: u8) -&gt; Ipv6Addr {
 		<span class="kw">let </span>net_mask: u128 = !<span class="self">Self</span>::native_host_mask(prefix_len);
 		<span class="self">Self</span>::from_native(<span class="self">Self</span>::to_native(address) &amp; net_mask)
 	}
 
-	<span class="kw">pub const fn </span>_last_address(address: Ipv6Addr, prefix_len: u8) -&gt; Ipv6Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_last_address(address: Ipv6Addr, prefix_len: u8) -&gt; Ipv6Addr {
 		<span class="kw">let </span>host_mask: u128 = <span class="self">Self</span>::native_host_mask(prefix_len);
 		<span class="self">Self</span>::from_native(<span class="self">Self</span>::to_native(address) | host_mask)
 	}
 
-	<span class="kw">pub const fn </span>_network_mask(prefix_len: u8) -&gt; Ipv6Addr {
+	<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const fn </span>_network_mask(prefix_len: u8) -&gt; Ipv6Addr {
 		<span class="self">Self</span>::from_native(!<span class="self">Self</span>::native_host_mask(prefix_len))
 	}
 }
@@ -652,102 +725,107 @@
 
 <span class="kw">pub struct </span>IpAddrTools(());
 
-<span class="kw">impl </span>IpAddrTools {
-	<span class="kw">pub const fn </span>_has_zero_host_part(address: IpAddr, prefix_len: u8) -&gt; bool {
-		<span class="kw">match </span>address {
-			IpAddr::V4(a) =&gt; Ipv4AddrTools::_has_zero_host_part(a, prefix_len),
-			IpAddr::V6(a) =&gt; Ipv6AddrTools::_has_zero_host_part(a, prefix_len),
-		}
-	}
-
-	<span class="kw">pub const fn </span>_overflowing_next(address: IpAddr, prefix_len: u8) -&gt; (IpAddr, bool) {
-		<span class="kw">match </span>address {
-			IpAddr::V4(a) =&gt; {
-				<span class="kw">let </span>(res, of) = Ipv4AddrTools::_overflowing_next(a, prefix_len);
-				(IpAddr::V4(res), of)
-			},
-			IpAddr::V6(a) =&gt; {
-				<span class="kw">let </span>(res, of) = Ipv6AddrTools::_overflowing_next(a, prefix_len);
-				(IpAddr::V6(res), of)
-			},
-		}
-	}
-
+<span class="comment">// we currently don't use the tools on IpAddr and related enums
+</span><span class="kw">impl </span>IpAddrTools {
 	<span class="comment">/*
-	pub const fn _overflowing_inc(address: IpAddr, prefix_len: u8, step: u128) -&gt; (IpAddr, bool) {
-		match address {
-			IpAddr::V4(a) =&gt; {
-				let (res, of) = Ipv4AddrTools::_overflowing_inc(a, prefix_len, step);
-				(IpAddr::V4(res), of)
-			},
-			IpAddr::V6(a) =&gt; {
-				let (res, of) = Ipv6AddrTools::_overflowing_inc(a, prefix_len, step);
-				(IpAddr::V6(res), of)
-			},
+		pub(crate) const fn _has_zero_host_part(address: IpAddr, prefix_len: u8) -&gt; bool {
+			match address {
+				IpAddr::V4(a) =&gt; Ipv4AddrTools::_has_zero_host_part(a, prefix_len),
+				IpAddr::V6(a) =&gt; Ipv6AddrTools::_has_zero_host_part(a, prefix_len),
+			}
 		}
-	}
 
-	pub const fn _overflowing_prev(address: IpAddr, prefix_len: u8) -&gt; (IpAddr, bool) {
-		match address {
-			IpAddr::V4(a) =&gt; {
-				let (res, of) = Ipv4AddrTools::_overflowing_prev(a, prefix_len);
-				(IpAddr::V4(res), of)
-			},
-			IpAddr::V6(a) =&gt; {
-				let (res, of) = Ipv6AddrTools::_overflowing_prev(a, prefix_len);
-				(IpAddr::V6(res), of)
-			},
+		pub(crate) const fn _overflowing_next(address: IpAddr, prefix_len: u8) -&gt; (IpAddr, bool) {
+			match address {
+				IpAddr::V4(a) =&gt; {
+					let (res, of) = Ipv4AddrTools::_overflowing_next(a, prefix_len);
+					(IpAddr::V4(res), of)
+				},
+				IpAddr::V6(a) =&gt; {
+					let (res, of) = Ipv6AddrTools::_overflowing_next(a, prefix_len);
+					(IpAddr::V6(res), of)
+				},
+			}
 		}
-	}
 
-	pub const fn _overflowing_dec(address: IpAddr, prefix_len: u8, step: u128) -&gt; (IpAddr, bool) {
-		match address {
-			IpAddr::V4(a) =&gt; {
-				let (res, of) = Ipv4AddrTools::_overflowing_dec(a, prefix_len, step);
-				(IpAddr::V4(res), of)
-			},
-			IpAddr::V6(a) =&gt; {
-				let (res, of) = Ipv6AddrTools::_overflowing_dec(a, prefix_len, step);
-				(IpAddr::V6(res), of)
-			},
+		pub(crate) const fn _overflowing_inc(address: IpAddr, prefix_len: u8, step: u128) -&gt; (IpAddr, bool) {
+			match address {
+				IpAddr::V4(a) =&gt; {
+					let (res, of) = Ipv4AddrTools::_overflowing_inc(a, prefix_len, step);
+					(IpAddr::V4(res), of)
+				},
+				IpAddr::V6(a) =&gt; {
+					let (res, of) = Ipv6AddrTools::_overflowing_inc(a, prefix_len, step);
+					(IpAddr::V6(res), of)
+				},
+			}
 		}
-	}
 
-	pub const fn _overflowing_sub(address: IpAddr, other: IpAddr) -&gt; (u128, bool) {
-		match (address, other) {
-			(IpAddr::V4(a), IpAddr::V4(other)) =&gt; Ipv4AddrTools::_overflowing_sub(a, other),
-			(IpAddr::V6(a), IpAddr::V6(other)) =&gt; Ipv6AddrTools::_overflowing_sub(a, other),
-			_ =&gt; (0, false),
+		pub(crate) const fn _overflowing_prev(address: IpAddr, prefix_len: u8) -&gt; (IpAddr, bool) {
+			match address {
+				IpAddr::V4(a) =&gt; {
+					let (res, of) = Ipv4AddrTools::_overflowing_prev(a, prefix_len);
+					(IpAddr::V4(res), of)
+				},
+				IpAddr::V6(a) =&gt; {
+					let (res, of) = Ipv6AddrTools::_overflowing_prev(a, prefix_len);
+					(IpAddr::V6(res), of)
+				},
+			}
 		}
-	}
+
+		pub(crate) const fn _overflowing_dec(address: IpAddr, prefix_len: u8, step: u128) -&gt; (IpAddr, bool) {
+			match address {
+				IpAddr::V4(a) =&gt; {
+					let (res, of) = Ipv4AddrTools::_overflowing_dec(a, prefix_len, step);
+					(IpAddr::V4(res), of)
+				},
+				IpAddr::V6(a) =&gt; {
+					let (res, of) = Ipv6AddrTools::_overflowing_dec(a, prefix_len, step);
+					(IpAddr::V6(res), of)
+				},
+			}
+		}
 	*/
 
-	</span><span class="kw">fn </span>_prefix_match(address: IpAddr, other: IpAddr, prefix_len: u8) -&gt; bool {
-		<span class="kw">match </span>(address, other) {
-			(IpAddr::V4(a), IpAddr::V4(other)) =&gt; {
-				Ipv4AddrTools::_prefix_match(a, other, prefix_len)
-			},
-			(IpAddr::V6(a), IpAddr::V6(other)) =&gt; {
-				Ipv6AddrTools::_prefix_match(a, other, prefix_len)
-			},
-			<span class="kw">_ </span>=&gt; <span class="bool-val">false</span>,
+	/*
+		pub(crate) const fn _overflowing_sub(address: IpAddr, other: IpAddr) -&gt; (u128, bool) {
+			match (address, other) {
+				(IpAddr::V4(a), IpAddr::V4(other)) =&gt; Ipv4AddrTools::_overflowing_sub(a, other),
+				(IpAddr::V6(a), IpAddr::V6(other)) =&gt; Ipv6AddrTools::_overflowing_sub(a, other),
+				_ =&gt; (0, false),
+			}
 		}
-	}
+	*/
 
-	<span class="kw">pub const fn </span>_network_address(address: IpAddr, prefix_len: u8) -&gt; IpAddr {
-		<span class="kw">match </span>address {
-			IpAddr::V4(a) =&gt; IpAddr::V4(Ipv4AddrTools::_network_address(a, prefix_len)),
-			IpAddr::V6(a) =&gt; IpAddr::V6(Ipv6AddrTools::_network_address(a, prefix_len)),
+	/*
+		fn _prefix_match(address: IpAddr, other: IpAddr, prefix_len: u8) -&gt; bool {
+			match (address, other) {
+				(IpAddr::V4(a), IpAddr::V4(other)) =&gt; {
+					Ipv4AddrTools::_prefix_match(a, other, prefix_len)
+				},
+				(IpAddr::V6(a), IpAddr::V6(other)) =&gt; {
+					Ipv6AddrTools::_prefix_match(a, other, prefix_len)
+				},
+				_ =&gt; false,
+			}
 		}
-	}
 
-	<span class="kw">fn </span>_last_address(address: IpAddr, prefix_len: u8) -&gt; IpAddr {
-		<span class="kw">match </span>address {
-			IpAddr::V4(a) =&gt; IpAddr::V4(Ipv4AddrTools::_last_address(a, prefix_len)),
-			IpAddr::V6(a) =&gt; IpAddr::V6(Ipv6AddrTools::_last_address(a, prefix_len)),
+		pub(crate) const fn _network_address(address: IpAddr, prefix_len: u8) -&gt; IpAddr {
+			match address {
+				IpAddr::V4(a) =&gt; IpAddr::V4(Ipv4AddrTools::_network_address(a, prefix_len)),
+				IpAddr::V6(a) =&gt; IpAddr::V6(Ipv6AddrTools::_network_address(a, prefix_len)),
+			}
 		}
-	}
-}
+
+		fn _last_address(address: IpAddr, prefix_len: u8) -&gt; IpAddr {
+			match address {
+				IpAddr::V4(a) =&gt; IpAddr::V4(Ipv4AddrTools::_last_address(a, prefix_len)),
+				IpAddr::V6(a) =&gt; IpAddr::V6(Ipv6AddrTools::_last_address(a, prefix_len)),
+			}
+		}
+	*/
+</span>}
 
 <span class="kw">impl </span>PrivUnspecAddress <span class="kw">for </span>IpAddr {
 	<span class="kw">type </span>_Tools = IpAddrTools;
