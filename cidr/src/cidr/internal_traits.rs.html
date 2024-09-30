@@ -414,7 +414,7 @@
 <a href="#413" id="413">413</a>
 <a href="#414" id="414">414</a>
 <a href="#415" id="415">415</a>
-<a href="#416" id="416">416</a></pre></div><pre class="rust"><code><span class="kw">use </span>std::net::{
+<a href="#416" id="416">416</a></pre></div><pre class="rust"><code><span class="kw">use </span>core::net::{
 	IpAddr,
 	Ipv4Addr,
 	Ipv6Addr,
@@ -632,7 +632,7 @@
 			// * if Ipv6Addr has a different size than [u8; 16] transmute won't compile
 			// * if the size matches, Ipv6Addr can't store any other data - it must store exactly the octets
 			// * it is unlikely std would ever store this in another endianness
-			</span><span class="kw">unsafe </span>{ std::mem::transmute(ip) }
+			</span><span class="kw">unsafe </span>{ core::mem::transmute(ip) }
 		}
 		<span class="attr">#[cfg(feature = <span class="string">"no_unsafe"</span>)]
 		</span>{

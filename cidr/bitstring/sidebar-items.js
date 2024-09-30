@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["bit_string","fixed_bit_string","utils"],"struct":["BitLengthString"]};
+window.SIDEBAR_ITEMS = {"mod":["fixed_bit_string","utils"],"struct":["BitLengthString"],"trait":["BitString","FixedBitString"]};

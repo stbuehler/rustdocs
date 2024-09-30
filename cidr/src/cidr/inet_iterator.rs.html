@@ -235,24 +235,7 @@
 <a href="#234" id="234">234</a>
 <a href="#235" id="235">235</a>
 <a href="#236" id="236">236</a>
-<a href="#237" id="237">237</a>
-<a href="#238" id="238">238</a>
-<a href="#239" id="239">239</a>
-<a href="#240" id="240">240</a>
-<a href="#241" id="241">241</a>
-<a href="#242" id="242">242</a>
-<a href="#243" id="243">243</a>
-<a href="#244" id="244">244</a>
-<a href="#245" id="245">245</a>
-<a href="#246" id="246">246</a>
-<a href="#247" id="247">247</a>
-<a href="#248" id="248">248</a>
-<a href="#249" id="249">249</a>
-<a href="#250" id="250">250</a>
-<a href="#251" id="251">251</a>
-<a href="#252" id="252">252</a>
-<a href="#253" id="253">253</a>
-<a href="#254" id="254">254</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
+<a href="#237" id="237">237</a></pre></div><pre class="rust"><code><span class="kw">use crate</span>::{
 	internal_traits::PrivInetPair,
 	num::NumberOfAddresses,
 	Address,
@@ -370,89 +353,72 @@
 		Ipv4Cidr,
 		Ipv6Cidr,
 	};
-	<span class="kw">use </span>std::net::{
+	<span class="kw">use </span>core::net::{
 		IpAddr,
 		Ipv4Addr,
 		Ipv6Addr,
 	};
 
+	<span class="kw">fn </span>check_list_iter&lt;T: PartialEq + core::fmt::Debug&gt;(
+		data: <span class="kw">impl </span>AsRef&lt;[T]&gt;,
+		iter: <span class="kw">impl </span>IntoIterator&lt;Item = T&gt;,
+	) {
+		<span class="kw">let </span><span class="kw-2">mut </span>iter = iter.into_iter();
+		<span class="kw">for </span>elem <span class="kw">in </span>data.as_ref() {
+			<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(elem), iter.next().as_ref());
+		}
+		<span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, iter.next());
+	}
+
+	<span class="kw">fn </span>check_iter_iter&lt;T1, T2&gt;(
+		iter1: <span class="kw">impl </span>IntoIterator&lt;Item = T1&gt;,
+		iter2: <span class="kw">impl </span>IntoIterator&lt;Item = T2&gt;,
+	) <span class="kw">where
+		</span>T1: core::fmt::Debug + PartialEq&lt;T2&gt;,
+		T2: core::fmt::Debug,
+	{
+		<span class="kw">let </span><span class="kw-2">mut </span>iter2 = iter2.into_iter();
+		<span class="kw">for </span>elem <span class="kw">in </span>iter1 {
+			<span class="macro">assert_eq!</span>(elem, iter2.next().expect(<span class="string">"second iterator too short"</span>));
+		}
+		<span class="macro">assert!</span>(iter2.next().is_none(), <span class="string">"second iterator too many elements"</span>);
+	}
+
 	<span class="kw">fn </span>test_v4(s: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, l: <span class="kw-2">&amp;</span>[Ipv4Addr]) {
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;Ipv4Cidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l
+		check_list_iter(l, s.parse::&lt;Ipv4Cidr&gt;().unwrap().iter().addresses());
+
+		check_iter_iter(
+			s.parse::&lt;IpCidr&gt;().unwrap().iter().addresses(),
+			l.iter().map(|e: <span class="kw-2">&amp;</span>Ipv4Addr| IpAddr::V4(<span class="kw-2">*</span>e)),
 		);
 
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;IpCidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l.iter().map(|e| IpAddr::V4(<span class="kw-2">*</span>e)).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
+		check_iter_iter(
+			s.parse::&lt;Ipv4Cidr&gt;().unwrap().iter().addresses().rev(),
+			l.iter().cloned().rev(),
 		);
 
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;Ipv4Cidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.rev()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l.iter().cloned().rev().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-		);
-
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;IpCidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.rev()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l.iter().map(|e| IpAddr::V4(<span class="kw-2">*</span>e)).rev().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+		check_iter_iter(
+			s.parse::&lt;IpCidr&gt;().unwrap().iter().addresses().rev(),
+			l.iter().map(|e| IpAddr::V4(<span class="kw-2">*</span>e)).rev(),
 		);
 	}
 
 	<span class="kw">fn </span>test_v6(s: <span class="kw-2">&amp;</span><span class="lifetime">'static </span>str, l: <span class="kw-2">&amp;</span>[Ipv6Addr]) {
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;Ipv6Cidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l
+		check_list_iter(l, s.parse::&lt;Ipv6Cidr&gt;().unwrap().iter().addresses());
+
+		check_iter_iter(
+			s.parse::&lt;IpCidr&gt;().unwrap().iter().addresses(),
+			l.iter().map(|e: <span class="kw-2">&amp;</span>Ipv6Addr| IpAddr::V6(<span class="kw-2">*</span>e)),
 		);
 
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;IpCidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l.iter().map(|e| IpAddr::V6(<span class="kw-2">*</span>e)).collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+		check_iter_iter(
+			s.parse::&lt;Ipv6Cidr&gt;().unwrap().iter().addresses().rev(),
+			l.iter().cloned().rev(),
 		);
 
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;Ipv6Cidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.rev()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l.iter().cloned().rev().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-		);
-
-		<span class="macro">assert_eq!</span>(
-			s.parse::&lt;IpCidr&gt;()
-				.unwrap()
-				.iter()
-				.addresses()
-				.rev()
-				.collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
-			l.iter().map(|e| IpAddr::V6(<span class="kw-2">*</span>e)).rev().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;(),
+		check_iter_iter(
+			s.parse::&lt;IpCidr&gt;().unwrap().iter().addresses().rev(),
+			l.iter().map(|e| IpAddr::V6(<span class="kw-2">*</span>e)).rev(),
 		);
 	}
 

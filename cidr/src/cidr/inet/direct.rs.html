@@ -461,19 +461,20 @@
 <a href="#460" id="460">460</a>
 <a href="#461" id="461">461</a>
 <a href="#462" id="462">462</a>
-<a href="#463" id="463">463</a></pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"bitstring"</span>)]
+<a href="#463" id="463">463</a>
+<a href="#464" id="464">464</a>
+<a href="#465" id="465">465</a></pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"bitstring"</span>)]
 </span><span class="kw">use </span>bitstring::FixedBitString;
 
 <span class="kw">use </span>core::{
 	fmt,
+	net::{
+		Ipv4Addr,
+		Ipv6Addr,
+	},
 	str::FromStr,
 };
-<span class="kw">use </span>std::net::{
-	Ipv4Addr,
-	Ipv6Addr,
-};
 
-<span class="kw">use </span><span class="kw">super</span>::from_str::inet_from_str;
 <span class="kw">use crate</span>::{
 	errors::<span class="kw-2">*</span>,
 	internal_traits::{
@@ -532,7 +533,10 @@
 
 			<span class="kw">fn </span>shared_prefix_len(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; usize {
 				<span class="kw">let </span>max_len = core::cmp::min(<span class="self">self</span>.network_length, other.network_length) <span class="kw">as </span>usize;
-				FixedBitString::shared_prefix_len(<span class="kw-2">&amp;</span><span class="self">self</span>.address, <span class="kw-2">&amp;</span>other.address, max_len)
+				core::cmp::min(
+					FixedBitString::shared_prefix_len(<span class="kw-2">&amp;</span><span class="self">self</span>.address, <span class="kw-2">&amp;</span>other.address),
+					max_len,
+				)
 			}
 		}
 
@@ -832,7 +836,7 @@
 			<span class="kw">type </span><span class="prelude-val">Err </span>= NetworkParseError;
 
 			<span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="self">Self</span>, NetworkParseError&gt; {
-				inet_from_str(s)
+				<span class="kw">crate</span>::parsers::parse_inet(s, FromStr::from_str)
 			}
 		}
 

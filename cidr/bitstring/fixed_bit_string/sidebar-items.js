@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Iter"],"trait":["FixedBitString"]};
+window.SIDEBAR_ITEMS = {"struct":["Iter"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"trait":["BigEndianBitString"]};
+window.SIDEBAR_ITEMS = {};

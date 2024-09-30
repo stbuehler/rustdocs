@@ -331,19 +331,31 @@
 <a href="#330" id="330">330</a>
 <a href="#331" id="331">331</a>
 <a href="#332" id="332">332</a>
-<a href="#333" id="333">333</a></pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"bitstring"</span>)]
+<a href="#333" id="333">333</a>
+<a href="#334" id="334">334</a>
+<a href="#335" id="335">335</a>
+<a href="#336" id="336">336</a>
+<a href="#337" id="337">337</a>
+<a href="#338" id="338">338</a>
+<a href="#339" id="339">339</a>
+<a href="#340" id="340">340</a>
+<a href="#341" id="341">341</a>
+<a href="#342" id="342">342</a>
+<a href="#343" id="343">343</a>
+<a href="#344" id="344">344</a>
+<a href="#345" id="345">345</a>
+<a href="#346" id="346">346</a></pre></div><pre class="rust"><code><span class="attr">#[cfg(feature = <span class="string">"bitstring"</span>)]
 </span><span class="kw">use </span>bitstring::FixedBitString;
 
 <span class="kw">use </span>core::{
 	fmt,
+	net::{
+		Ipv4Addr,
+		Ipv6Addr,
+	},
 	str::FromStr,
 };
-<span class="kw">use </span>std::net::{
-	Ipv4Addr,
-	Ipv6Addr,
-};
 
-<span class="kw">use </span><span class="kw">super</span>::from_str::cidr_from_str;
 <span class="kw">use crate</span>::{
 	errors::<span class="kw-2">*</span>,
 	internal_traits::{
@@ -405,7 +417,10 @@
 
 			<span class="kw">fn </span>shared_prefix_len(<span class="kw-2">&amp;</span><span class="self">self</span>, other: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; usize {
 				<span class="kw">let </span>max_len = core::cmp::min(<span class="self">self</span>.network_length, other.network_length) <span class="kw">as </span>usize;
-				FixedBitString::shared_prefix_len(<span class="kw-2">&amp;</span><span class="self">self</span>.address, <span class="kw-2">&amp;</span>other.address, max_len)
+				core::cmp::min(
+					FixedBitString::shared_prefix_len(<span class="kw-2">&amp;</span><span class="self">self</span>.address, <span class="kw-2">&amp;</span>other.address),
+					max_len,
+				)
 			}
 		}
 
@@ -605,7 +620,7 @@
 			<span class="kw">type </span><span class="prelude-val">Err </span>= NetworkParseError;
 
 			<span class="kw">fn </span>from_str(s: <span class="kw-2">&amp;</span>str) -&gt; <span class="prelude-ty">Result</span>&lt;<span class="macro-nonterminal">$n</span>, NetworkParseError&gt; {
-				cidr_from_str(s)
+				<span class="kw">crate</span>::parsers::parse_cidr(s, FromStr::from_str)
 			}
 		}
 
@@ -632,35 +647,46 @@
 
 <span class="attr">#[cfg(test)]
 </span><span class="kw">mod </span>tests {
-	<span class="kw">use </span>std::net::Ipv4Addr;
+	<span class="kw">use </span>core::net::Ipv4Addr;
 
 	<span class="kw">use </span><span class="kw">crate</span>::Ipv4Cidr;
+
+	<span class="kw">fn </span>check_list_iter&lt;T: PartialEq + core::fmt::Debug&gt;(
+		data: <span class="kw">impl </span>AsRef&lt;[T]&gt;,
+		iter: <span class="kw">impl </span>IntoIterator&lt;Item = T&gt;,
+	) {
+		<span class="kw">let </span><span class="kw-2">mut </span>iter = iter.into_iter();
+		<span class="kw">for </span>elem <span class="kw">in </span>data.as_ref() {
+			<span class="macro">assert_eq!</span>(<span class="prelude-val">Some</span>(elem), iter.next().as_ref());
+		}
+		<span class="macro">assert_eq!</span>(<span class="prelude-val">None</span>, iter.next());
+	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>v4_ref_into_iter() {
 		<span class="kw">let </span>cidr = Ipv4Cidr::new(Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>), <span class="number">30</span>).unwrap();
-		<span class="macro">assert_eq!</span>(
-			<span class="macro">vec!</span>[
+		check_list_iter(
+			[
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>),
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>),
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>),
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>),
 			],
-			cidr.into_iter().addresses().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
+			cidr.into_iter().addresses(),
 		);
 	}
 
 	<span class="attr">#[test]
 	</span><span class="kw">fn </span>v4_owned_into_iter() {
 		<span class="kw">let </span>cidr = Ipv4Cidr::new(Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>), <span class="number">30</span>).unwrap();
-		<span class="macro">assert_eq!</span>(
-			<span class="macro">vec!</span>[
+		check_list_iter(
+			[
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">0</span>),
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>),
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>),
 				Ipv4Addr::new(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>),
 			],
-			cidr.into_iter().addresses().collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
+			cidr.into_iter().addresses(),
 		);
 	}
 }

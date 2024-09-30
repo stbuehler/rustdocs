@@ -101,12 +101,16 @@
 <a href="#100" id="100">100</a>
 <a href="#101" id="101">101</a>
 <a href="#102" id="102">102</a>
-<a href="#103" id="103">103</a></pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(docsrs, feature(doc_auto_cfg))]
+<a href="#103" id="103">103</a>
+<a href="#104" id="104">104</a>
+<a href="#105" id="105">105</a>
+<a href="#106" id="106">106</a>
+<a href="#107" id="107">107</a></pre></div><pre class="rust"><code><span class="attr">#![cfg_attr(docsrs, feature(doc_auto_cfg))]
 #![cfg_attr(not(feature = <span class="string">"std"</span>), no_std)]
 #![cfg_attr(feature = <span class="string">"no_unsafe"</span>, forbid(unsafe_code))]
 #![warn(missing_docs)]
 #![warn(rust_2018_idioms)]
-#![doc(html_root_url = <span class="string">"https://docs.rs/cidr/0.2.3"</span>)]
+#![doc(html_root_url = <span class="string">"https://docs.rs/cidr/0.3.0"</span>)]
 #![allow(clippy::match_like_matches_macro)]
 
 </span><span class="doccomment">//! This library provides types to represent an IP network ([`Cidr`]) or
@@ -114,12 +118,15 @@
 //!
 //! The naming follows the names of the [PostgreSQL data types](https://www.postgresql.org/docs/current/static/datatype-net-types.html)
 //!
-//! Address parsing also accepts IPv4 address with less than four octets
-//! (but always parses those as decimal); this is deprecated and will be
-//! removed in 0.3.0.
+//! By default address parsing is done using `FromStr` from the standard
+//! library, which is rather strict in the inputs it accepts.
+//! [`Cidr`] types don't accept addresses with host-bits set (i.e. `127.0.0.1/8`
+//! isn't valid; it should be `127.0.0.0/8`).
+//!
+//! Custom parsing can be implemented using the helpers in the [`parsers`] module.
 //!
 //! If the `#` flag is used with the `Display` formatting (i.e. `{:#}`) the
-//! prefix will be shown even for host addresses (added in `0.1.1`).
+//! prefix length will be shown even for host addresses (added in `0.1.1`).
 //!
 //! # Feature `no_unsafe`
 //!
@@ -128,8 +135,7 @@
 //!
 //! # Feature `std`
 //!
-//! Enabled by default, also mandatory right now because [`std::net`] isn't
-//! available in [`core`].
+//! Enabled by default, currently unused.
 //!
 //! # Feature `serde`
 //!
@@ -156,8 +162,8 @@
 //!
 //! [bitstring-trees]: https://crates.io/crates/bitstring-trees
 //!
-//! [`Ipv4Addr`]: std::net::Ipv4Addr
-//! [`Ipv6Addr`]: std::net::Ipv6Addr
+//! [`Ipv4Addr`]: core::net::Ipv4Addr
+//! [`Ipv6Addr`]: core::net::Ipv6Addr
 
 </span><span class="kw">pub use </span><span class="self">self</span>::{
 	cidr::{
@@ -189,6 +195,9 @@
 	},
 };
 
+<span class="attr">#[macro_use]
+</span><span class="kw">mod </span>display_buffer;
+
 <span class="kw">pub mod </span>errors;
 <span class="kw">pub mod </span>parsers;
 
@@ -201,7 +210,6 @@
 <span class="kw">mod </span>inet_iterator;
 <span class="kw">mod </span>inet_pair;
 <span class="kw">mod </span>internal_traits;
-<span class="kw">mod </span>local_addr_parser;
 <span class="kw">mod </span>num;
 <span class="kw">mod </span>traits;
 </code></pre></div></section></main></body></html>
