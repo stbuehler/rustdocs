@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["map","map of bit strings prefixes to values"],["set","set of bit strings prefixes"]]});
+window.SIDEBAR_ITEMS = {"mod":["full_map","iter","map","set","tree","walk_mut"]};
