@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["u128","u16","u32","u8"]};
