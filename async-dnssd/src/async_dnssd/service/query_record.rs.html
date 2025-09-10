@@ -37,7 +37,7 @@
 <a href=#37 id=37 data-nosnippet>37</a>}
 <a href=#38 id=38 data-nosnippet>38</a>
 <a href=#39 id=39 data-nosnippet>39</a><span class="macro">bitflags::bitflags!</span> {
-<a href=#40 id=40 data-nosnippet>40</a>	<span class="doccomment">/// Flags for [`QueryRecordResult`](struct.QueryRecordResult.html)
+<a href=#40 id=40 data-nosnippet>40</a>	<span class="doccomment">/// Flags for [`QueryRecordResult`]
 <a href=#41 id=41 data-nosnippet>41</a>	</span><span class="attr">#[derive(Default)]
 <a href=#42 id=42 data-nosnippet>42</a>	</span><span class="kw">pub struct </span>QueriedRecordFlags: ffi::DNSServiceFlags {
 <a href=#43 id=43 data-nosnippet>43</a>		<span class="doccomment">/// Indicates at least one more result is pending in the queue.  If
@@ -198,10 +198,7 @@
 <a href=#198 id=198 data-nosnippet>198</a>/// Uses [`query_record_extended`] with default [`QueryRecordData`].
 <a href=#199 id=199 data-nosnippet>199</a>///
 <a href=#200 id=200 data-nosnippet>200</a>/// See [`DNSServiceQueryRecord`](https://developer.apple.com/documentation/dnssd/1804747-dnsservicequeryrecord).
-<a href=#201 id=201 data-nosnippet>201</a>///
-<a href=#202 id=202 data-nosnippet>202</a>/// [`query_record_extended`]: fn.query_record_extended.html
-<a href=#203 id=203 data-nosnippet>203</a>/// [`QueryRecordData`]: struct.QueryRecordData.html
-<a href=#204 id=204 data-nosnippet>204</a></span><span class="attr">#[doc(alias = <span class="string">"DNSServiceQueryRecord"</span>)]
-<a href=#205 id=205 data-nosnippet>205</a></span><span class="kw">pub fn </span>query_record(fullname: <span class="kw-2">&amp;</span>str, rr_type: Type) -&gt; QueryRecord {
-<a href=#206 id=206 data-nosnippet>206</a>	query_record_extended(fullname, rr_type, QueryRecordData::default())
-<a href=#207 id=207 data-nosnippet>207</a>}</code></pre></div></section></main></body></html>
+<a href=#201 id=201 data-nosnippet>201</a></span><span class="attr">#[doc(alias = <span class="string">"DNSServiceQueryRecord"</span>)]
+<a href=#202 id=202 data-nosnippet>202</a></span><span class="kw">pub fn </span>query_record(fullname: <span class="kw-2">&amp;</span>str, rr_type: Type) -&gt; QueryRecord {
+<a href=#203 id=203 data-nosnippet>203</a>	query_record_extended(fullname, rr_type, QueryRecordData::default())
+<a href=#204 id=204 data-nosnippet>204</a>}</code></pre></div></section></main></body></html>
